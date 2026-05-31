@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 80" width="400" height="64">
+  <style>
+    .title {
+      font-family: 'Outfit', 'Playfair Display', -apple-system, sans-serif;
+      font-weight: 800;
+      font-size: 38px;
+      fill: #FF4D3D;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+  </style>
+  <text x="250" y="40" class="title">🔱 CholooPujoo</text>
+</svg>
