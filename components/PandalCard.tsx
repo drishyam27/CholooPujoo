@@ -16,7 +16,7 @@ interface PandalCardProps {
 
 const crowdConfig: Record<CrowdLevel, { color: string; bg: string; pulse: boolean }> = {
   Medium: { color: "#4ade80", bg: "rgba(74,222,128,0.15)", pulse: false },
-  High: { color: "#f87171", bg: "rgba(248,113,113,0.15)", pulse: true }, // Changed from yellow to red as requested
+  High: { color: "#facc15", bg: "rgba(250,204,21,0.15)", pulse: false },
   Extreme: { color: "#f87171", bg: "rgba(248,113,113,0.15)", pulse: true },
 };
 
@@ -24,22 +24,17 @@ export default function PandalCard({
   id,
   name,
   location,
-  crowdLevel: initialCrowdLevel,
+  crowdLevel,
   imageUrl,
 }: PandalCardProps) {
   const { bookmarkedIds, toggleBookmark, completedIds, toggleCompleted } =
     useAppContext();
 
-  const [currentCrowdLevel, setCurrentCrowdLevel] = useState<CrowdLevel>(initialCrowdLevel);
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   const isBookmarked = bookmarkedIds.includes(id);
   const isCompleted = completedIds.includes(id);
-  const crowd = crowdConfig[currentCrowdLevel];
-
-  const handleReportCrowd = () => {
-    setCurrentCrowdLevel((prev) => (prev === "Medium" ? "High" : "Medium"));
-  };
+  const crowd = crowdConfig[crowdLevel];
 
   return (
     <>
@@ -79,69 +74,59 @@ export default function PandalCard({
             <div className="flex items-center justify-between flex-wrap gap-3">
               {/* Crowd indicator */}
               <div
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium"
                 style={{ background: crowd.bg, color: crowd.color }}
               >
                 <span
                   className={`w-2 h-2 rounded-full ${crowd.pulse ? "animate-pulse" : ""}`}
                   style={{ background: crowd.color }}
                 />
-                {currentCrowdLevel} Crowd
+                {crowdLevel} Crowd
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 <button
-                  onClick={handleReportCrowd}
-                  className="px-2.5 py-1.5 rounded-xl border border-white/10 bg-white/5 text-[11px] font-medium text-white/60 hover:text-accent hover:bg-accent/10 hover:border-accent/20 transition-all duration-200 cursor-pointer"
-                  title="Toggle crowd status to simulate reporting"
+                  onClick={() => toggleBookmark(id)}
+                  className={`p-2 rounded-xl transition-all duration-200 cursor-pointer ${
+                    isBookmarked
+                      ? "bg-accent/20 text-accent"
+                      : "hover:bg-white/10 text-white/50 hover:text-white"
+                  }`}
+                  style={isBookmarked ? { color: "var(--accent)" } : {}}
+                  title={isBookmarked ? "Remove bookmark" : "Bookmark"}
+                  id={`bookmark-${id}`}
                 >
-                  Report Crowd
+                  <Bookmark
+                    className="w-4 h-4"
+                    fill={isBookmarked ? "currentColor" : "none"}
+                  />
                 </button>
 
-                <div className="flex items-center gap-1">
-                  <button
-                    onClick={() => toggleBookmark(id)}
-                    className={`p-2 rounded-xl transition-all duration-200 cursor-pointer ${
-                      isBookmarked
-                        ? "bg-accent/20 text-accent"
-                        : "hover:bg-white/10 text-white/50 hover:text-white"
-                    }`}
-                    style={isBookmarked ? { color: "var(--accent)" } : {}}
-                    title={isBookmarked ? "Remove bookmark" : "Bookmark"}
-                    id={`bookmark-${id}`}
-                  >
-                    <Bookmark
-                      className="w-4 h-4"
-                      fill={isBookmarked ? "currentColor" : "none"}
-                    />
-                  </button>
+                <button
+                  onClick={() => setIsMapOpen(true)}
+                  className="p-2 rounded-xl hover:bg-white/10 text-white/50 hover:text-white transition-all duration-200 cursor-pointer"
+                  title="View Map"
+                  id={`directions-${id}`}
+                >
+                  <Navigation className="w-4 h-4" />
+                </button>
 
-                  <button
-                    onClick={() => setIsMapOpen(true)}
-                    className="p-2 rounded-xl hover:bg-white/10 text-white/50 hover:text-white transition-all duration-200 cursor-pointer"
-                    title="View Map"
-                    id={`directions-${id}`}
-                  >
-                    <Navigation className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={() => toggleCompleted(id)}
-                    className={`p-2 rounded-xl transition-all duration-200 cursor-pointer ${
-                      isCompleted
-                        ? "bg-green-500/20 text-green-400"
-                        : "hover:bg-white/10 text-white/50 hover:text-white"
-                    }`}
-                    title={isCompleted ? "Mark as not visited" : "Mark as visited"}
-                    id={`complete-${id}`}
-                  >
-                    <CheckCircle
-                      className="w-4 h-4"
-                      fill={isCompleted ? "currentColor" : "none"}
-                    />
-                  </button>
-                </div>
+                <button
+                  onClick={() => toggleCompleted(id)}
+                  className={`p-2 rounded-xl transition-all duration-200 cursor-pointer ${
+                    isCompleted
+                      ? "bg-green-500/20 text-green-400"
+                      : "hover:bg-white/10 text-white/50 hover:text-white"
+                  }`}
+                  title={isCompleted ? "Mark as not visited" : "Mark as visited"}
+                  id={`complete-${id}`}
+                >
+                  <CheckCircle
+                    className="w-4 h-4"
+                    fill={isCompleted ? "currentColor" : "none"}
+                  />
+                </button>
               </div>
             </div>
           </div>
