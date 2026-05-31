@@ -1,4 +1,4 @@
-# 🏮 CholooPujoo (চল পূজো)
+# 🏮 CholooPujoo
 > **A Premium, Mobile-First Discovery & Itinerary Platform for Kolkata’s Durga Puja Festival**
 
 ---
