@@ -45,12 +45,9 @@ export default function LoginPage() {
     router.push("/");
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin = () => {
     setIsGoogleLoading(true);
-    // Simulate auth delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
     login();
-    router.push("/");
   };
 
   return (

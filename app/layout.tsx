@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
 import { AppContextProvider } from "./context/AppContext";
+import NextAuthProvider from "./context/NextAuthProvider";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -29,9 +30,11 @@ export default function RootLayout({
       className={`${outfit.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
-        <AppContextProvider>
-          {children}
-        </AppContextProvider>
+        <NextAuthProvider>
+          <AppContextProvider>
+            {children}
+          </AppContextProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

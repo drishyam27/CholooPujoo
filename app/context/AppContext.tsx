@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 interface AppContextType {
   isLoggedIn: boolean;
@@ -19,25 +20,20 @@ export const AppContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { data: session, status } = useSession();
+  const isLoggedIn = status === "authenticated";
+
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const [completedIds, setCompletedIds] = useState<string[]>([]);
 
   // Simple local storage persistence
   useEffect(() => {
-    const storedLogin = localStorage.getItem("isLoggedIn");
-    if (storedLogin === "true") setIsLoggedIn(true);
-
     const storedBookmarks = localStorage.getItem("bookmarkedIds");
     if (storedBookmarks) setBookmarkedIds(JSON.parse(storedBookmarks));
 
     const storedCompleted = localStorage.getItem("completedIds");
     if (storedCompleted) setCompletedIds(JSON.parse(storedCompleted));
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isLoggedIn", isLoggedIn.toString());
-  }, [isLoggedIn]);
 
   useEffect(() => {
     localStorage.setItem("bookmarkedIds", JSON.stringify(bookmarkedIds));
@@ -47,8 +43,8 @@ export const AppContextProvider = ({
     localStorage.setItem("completedIds", JSON.stringify(completedIds));
   }, [completedIds]);
 
-  const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+  const login = () => signIn("google");
+  const logout = () => signOut({ callbackUrl: "/login" });
 
   const toggleBookmark = (id: string) => {
     setBookmarkedIds((prev) =>
