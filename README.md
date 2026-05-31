@@ -1,4 +1,6 @@
-# 🔱 CholooPujoo
+<h1 align="center">
+  <span style="color: #FF4D3D; font-size: 2.25em;">🔱 CholooPujoo</span>
+</h1>
 
 <p align="center">
   <img src="public/images/project-icon-3d.png" alt="CholooPujoo 3D Icon" width="220" />
