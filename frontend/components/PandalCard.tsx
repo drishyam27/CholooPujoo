@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useAppContext } from "@/app/context/AppContext";
+import { useAppContext } from "@/frontend/context/AppContext";
 import { Bookmark, CheckCircle, Navigation, X } from "lucide-react";
-import type { CrowdLevel } from "@/lib/mockData";
+import type { CrowdLevel } from "@/frontend/lib/mockData";
 
 interface PandalCardProps {
   id: string;

@@ -100,9 +100,6 @@ choloopujoo/
 │   ├── category/
 │   │   └── [slug]/
 │   │       └── page.tsx           # Categorized Pandal lists
-│   ├── context/
-│   │   ├── AppContext.tsx         # Custom global React context (Bookmarks, Visited)
-│   │   └── NextAuthProvider.tsx   # NextAuth client SessionProvider wrapper
 │   ├── itinerary/
 │   │   └── page.tsx               # Itinerary Dashboard (WhatsApp sharing)
 │   ├── login/
@@ -110,16 +107,22 @@ choloopujoo/
 │   ├── globals.css                # Custom 'Espresso & Ember' theme & variables
 │   ├── layout.tsx                 # Root layout wrapping all page context providers
 │   └── page.tsx                   # Main exploration landing page
-├── components/                    # Reusable React components
-│   ├── Navbar.tsx                 # Sleek, responsive floating navigation header
-│   └── PandalCard.tsx             # Interactive Pandal card, Actions & Route Map Modal
-├── lib/                           # Utility scripts and helper functions
-│   ├── mongodb.ts                 # Mongoose cached connection utility
-│   ├── mongodb-client.ts          # Raw MongoClient cached promise for NextAuth
-│   └── mockData.ts                # Structured initial Pandal static details
-├── models/                        # Mongoose schemas
-│   ├── User.ts                    # User model (name, email, image)
-│   └── Pandal.ts                  # Pandal model (name, location, status)
+├── backend/                       # ⚙️ All backend-specific services & database setups
+│   ├── models/                    # Mongoose database schemas
+│   │   ├── User.ts                # User model schema
+│   │   └── Pandal.ts              # Pandal model schema
+│   ├── mongodb.ts                 # Mongoose cached connection layer
+│   └── mongodb-client.ts          # Raw MongoClient cached promise for NextAuth Adapter
+├── frontend/                      # 🎨 All client-side UI components, contexts, and helper data
+│   ├── components/                # Reusable client components
+│   │   ├── Navbar.tsx             # Sleek navigation header
+│   │   ├── CategoryCard.tsx       # Immersive category card
+│   │   └── PandalCard.tsx         # Interactive card with Route Map Modal
+│   ├── context/                   # Frontend context wrappers
+│   │   ├── AppContext.tsx         # Global React context (Bookmarks, Visited state)
+│   │   └── NextAuthProvider.tsx   # NextAuth client session provider wrapper
+│   └── lib/                       # Frontend helper data
+│       └── mockData.ts            # Local fallback mock Pandal lists
 ├── public/                        # Static assets (images, icons, styles)
 │   ├── images/                    # Custom atmospheric Pandal graphics
 │   └── durga-eyes.jpg             # High-res favicon and icon

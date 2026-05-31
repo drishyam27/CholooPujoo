@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useAppContext } from "@/app/context/AppContext";
+import { useAppContext } from "@/frontend/context/AppContext";
 import { Flame, Map, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 

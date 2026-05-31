@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useAppContext } from "@/app/context/AppContext";
+import { useAppContext } from "@/frontend/context/AppContext";
 import { Flame, Eye, EyeOff } from "lucide-react";
 
 const GoogleIcon = () => (

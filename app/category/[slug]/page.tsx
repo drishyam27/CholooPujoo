@@ -2,10 +2,10 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useAppContext } from "@/app/context/AppContext";
-import Navbar from "@/components/Navbar";
-import PandalCard from "@/components/PandalCard";
-import { pandals } from "@/lib/mockData";
+import { useAppContext } from "@/frontend/context/AppContext";
+import Navbar from "@/frontend/components/Navbar";
+import PandalCard from "@/frontend/components/PandalCard";
+import { pandals } from "@/frontend/lib/mockData";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 

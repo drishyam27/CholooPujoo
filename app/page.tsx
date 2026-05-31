@@ -1,11 +1,11 @@
 "use client";
 
-import { useAppContext } from "@/app/context/AppContext";
+import { useAppContext } from "@/frontend/context/AppContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import CategoryCard from "@/components/CategoryCard";
-import { pandals } from "@/lib/mockData";
+import Navbar from "@/frontend/components/Navbar";
+import CategoryCard from "@/frontend/components/CategoryCard";
+import { pandals } from "@/frontend/lib/mockData";
 import { Flame } from "lucide-react";
 
 export default function HomePage() {
