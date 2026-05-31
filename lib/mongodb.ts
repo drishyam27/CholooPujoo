@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import dns from "dns";
+
+// Override Node.js DNS servers to Google DNS to resolve MongoDB SRV records on Windows/local ISPs
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 interface MongooseCache {
   conn: typeof mongoose | null;
