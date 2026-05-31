@@ -1,4 +1,9 @@
 # 🏮 CholooPujoo
+
+<p align="center">
+  <img src="public/images/project-icon-3d.png" alt="CholooPujoo 3D Icon" width="220" />
+</p>
+
 > **A Premium, Mobile-First Discovery & Itinerary Platform for Kolkata’s Durga Puja Festival**
 
 ---
