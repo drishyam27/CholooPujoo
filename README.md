@@ -1,4 +1,4 @@
-# 🏮 CholooPujoo
+# 🔱 CholooPujoo
 
 <p align="center">
   <img src="public/images/project-icon-3d.png" alt="CholooPujoo 3D Icon" width="220" />
