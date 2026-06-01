@@ -25,19 +25,8 @@ interface RecommendationData {
 export default function DDICompanion({ visitedIds }: DDICompanionProps) {
   const { toggleCompleted, completedIds } = useAppContext();
   
-  const [currentPandalId, setCurrentPandalId] = useState(() => {
-    if (visitedIds && visitedIds.length > 0) {
-      return visitedIds[visitedIds.length - 1];
-    }
-    return pandals.length > 0 ? pandals[0].id : "";
-  });
-  const [pandalSearchQuery, setPandalSearchQuery] = useState(() => {
-    if (visitedIds && visitedIds.length > 0) {
-      const lastPandalId = visitedIds[visitedIds.length - 1];
-      return pandals.find((p) => p.id === lastPandalId)?.name || "";
-    }
-    return pandals.length > 0 ? pandals[0].name : "";
-  });
+  const [currentPandalId, setCurrentPandalId] = useState("");
+  const [pandalSearchQuery, setPandalSearchQuery] = useState("");
   const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
   const searchDropdownRef = useRef<HTMLDivElement>(null);
   
@@ -45,6 +34,21 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
   const [recommendation, setRecommendation] = useState<RecommendationData | null>(null);
   const [recText, setRecText] = useState("");
   const [showMap, setShowMap] = useState(false);
+
+  // Auto-select their last checked-off visited pandal on mount / visited list updates
+  useEffect(() => {
+    if (visitedIds && visitedIds.length > 0 && !currentPandalId) {
+      const lastPandalId = visitedIds[visitedIds.length - 1];
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCurrentPandalId(lastPandalId);
+      const lastPandalName = pandals.find((p) => p.id === lastPandalId)?.name || "";
+      setPandalSearchQuery(lastPandalName);
+    } else if (!currentPandalId && pandals.length > 0) {
+      // Default to first pandal in the list
+      setCurrentPandalId(pandals[0].id);
+      setPandalSearchQuery(pandals[0].name);
+    }
+  }, [visitedIds, currentPandalId]);
 
   // Close search suggestions dropdown on clicking outside
   useEffect(() => {
