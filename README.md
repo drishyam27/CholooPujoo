@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/images/title.svg" alt="🔱 CholooPujoo" width="400" />
+  <img src="public/images/title.svg" alt="🔱 CholooPujoo 🔱" width="400" />
 </p>
 
 <p align="center">
