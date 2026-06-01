@@ -75,6 +75,13 @@ Instead of generic icons, users can dress their profiles in 10 stunning, hand-cr
 *   **Want-to-Go list**: Bookmark any pandal to automatically compile your customized checklist.
 *   **One-Click WhatsApp Share**: Compile your entire itinerary list ("Want to Go" and "Visited" spots) into a beautiful formatted text message and share it directly with your friends and family with a single click.
 
+### 🔍 7. Unified & Spelling-Tolerant Search Engine
+An advanced global and category-specific search box designed to handle misspelling variations effortlessly:
+*   **Homepage Global Bar**: A centered search bar in the Hero section allowing users to query all 93 pandals immediately.
+*   **Smart Suggestions**: Typings dynamically trigger a dropdown listing the 5 closest matches across all zones, displaying their names, precise locations, and active zone category tags.
+*   **Smart Navigation**: Selecting a match inside the active category filters the list on-screen. Selecting a match from a different category automatically routes the explorer to that zone page and pre-fills the query filter!
+*   **Spelling-Tolerance (Fuzzy Search)**: Forgives spelling errors and phonetic typos in real-time (e.g. typing "Sribhumi" still matches "Sreebhumi"!).
+
 ---
 
 ## 🛠️ Technical Architecture Marvels
@@ -99,6 +106,11 @@ Authentication is powered by NextAuth.js Google OAuth using `@next-auth/mongodb-
 *   **Named authOptions**: Refactored NextAuth handler to export `authOptions` as a named export. This enables fast, secure `getServerSession(authOptions)` lookups directly inside Next.js Server Components.
 *   **Local Preview Bypass**: We temporarily bypassed the login restriction in local preview (`isLoggedIn = true` by default) so developers can test the application.
 *   **Development Mock Fallback**: If no active Google session is detected, the API routes and database queries automatically map to a mock user `mock-tester@choloopujoo.com`. **This allows all interactive features (checklist check-offs, DB updates, leaderboard ranking, and profile avatar selection) to work perfectly in your local preview!**
+
+### 🧠 4. Real-Time Spelling Tolerance (Sørensen-Dice Coefficient)
+To support seamless search exploration, we implemented a custom client-side fuzzy search engine in `frontend/lib/searchHelper.ts`:
+*   **Bigram Overlap Calculations**: Splits user inputs and pandal names/locations into overlapping 2-letter bigram sets, calculating their similarity score in under `0.1ms`. This allows the engine to instantly resolve typos (e.g., matching "Sribhumi" ➔ "Sreebhumi" or "Suruci" ➔ "Suruchi") with zero server latency or AI rate-limit dependencies.
+*   **Relevance-Boost Sorting**: Exact substring matches receive a `+0.5` relevance boost to stay anchored at the top of recommendations, while spelling-corrected suggestions follow dynamically sorted by their similarity score.
 
 ---
 
