@@ -223,7 +223,7 @@ export default function HomePage() {
                 Dugga Dugga Intelligence <span className="text-[9px] uppercase tracking-widest px-2 py-0.5 rounded bg-accent/20 text-accent font-black border border-accent/30">AI Chat</span>
               </h3>
               <p className="text-sm opacity-60 mt-1 max-w-xl">
-                Thakuma is online! Let her guide your **Thakur Darshan** path, check live crowd levels, and calculate curfew constraints in real-time.
+                Dugga Dugga Intelligence (DDI) is online! Let your wise path assistant guide your **Thakur Darshan** journey, check live crowd levels, and calculate curfew constraints in real-time.
               </p>
             </div>
           </div>
@@ -233,7 +233,7 @@ export default function HomePage() {
             className="px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:brightness-110 active:scale-95 cursor-pointer relative z-10 whitespace-nowrap shadow-[0_0_15px_rgba(255,77,61,0.2)] flex items-center gap-2"
             style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-hover))", color: "#fff" }}
           >
-            <span>Ask Thakuma AI</span>
+            <span>Ask DDI AI</span>
             <Sparkles className="w-4 h-4" />
           </button>
         </section>

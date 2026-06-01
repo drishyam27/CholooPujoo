@@ -53,13 +53,13 @@ export default function ChatbotPage() {
               className="text-3xl sm:text-4xl font-bold flex flex-col sm:flex-row sm:items-center gap-2"
               style={{ fontFamily: "var(--font-playfair), serif" }}
             >
-              <span>Talk to</span>
+              <span>Dugga Dugga</span>
               <span className="text-accent flex items-center gap-2 justify-center sm:justify-start" style={{ color: "var(--accent)" }}>
-                Thakuma AI <Sparkles className="w-5 h-5 animate-pulse text-accent" style={{ color: "var(--accent)" }} />
+                Intelligence (DDI) <Sparkles className="w-5 h-5 animate-pulse text-accent" style={{ color: "var(--accent)" }} />
               </span>
             </h1>
             <p className="text-sm opacity-55 max-w-xl">
-              Ask about any of Kolkata&apos;s 93 pandals, calculate travel times, check crowds, or plan around curfew. Thakuma is here to bless your path!
+              Your real-time path companion, live traffic crawler, crowd monitor, and curfew-safe route planner for Kolkata&apos;s grandest festival!
             </p>
           </div>
 

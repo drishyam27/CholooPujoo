@@ -79,7 +79,7 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
 
 // Helper to calculate live crowd level based on TomTom traffic data
 async function getLiveCrowdLevel(lat: number, lng: number): Promise<string> {
-  const apiKey = process.env.TOMTOM_API_KEY;
+  const apiKey = process.env.TOMTOM_API_KEY || "mDQOyEpPOUF23uZTosuVGhQ2bBv1mKNu";
   if (!apiKey) {
     return getFallbackCrowdLevel();
   }
@@ -186,8 +186,8 @@ ${catalogText}
 - Bold key names and crowd levels (e.g., **Sreebhumi**, **High Crowd**).
 - If you recommend one specific next pandal for them to visit, you MUST append '[RECOMMEND: pandal-id]' at the very end of your response, replacing 'pandal-id' with the actual ID from the list (e.g. '[RECOMMEND: north-31]'). Only recommend one specific pandal ID at the end. If no specific next stop is decided, do not append it.`;
 
-    const groqKey = process.env.GROQ_API_KEY || process.env.GROK_API_KEY;
-    const geminiKey = process.env.GEMINI_API_KEY;
+    const groqKey = process.env.GROQ_API_KEY || process.env.GROK_API_KEY || "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";
+    const geminiKey = process.env.GEMINI_API_KEY || "AQ.Ab8RN6KHSnFxvHYQSornxXfYh047zKMz1MG2HPjXwL482m0wMg";
 
     let responseText = "";
 

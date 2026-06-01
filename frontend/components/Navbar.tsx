@@ -15,7 +15,7 @@ export default function Navbar() {
   const navLinks = [
     { href: "/", label: "Explore", icon: Flame },
     { href: "/itinerary", label: "My Itinerary", icon: Map },
-    { href: "/chatbot", label: "Ask Thakuma", icon: MessageSquare },
+    { href: "/chatbot", label: "DDI Chat", icon: MessageSquare },
     { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
     { href: "/profile", label: "Profile", icon: User },
   ];

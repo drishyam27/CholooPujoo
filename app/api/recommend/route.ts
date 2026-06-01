@@ -80,7 +80,7 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
 
 // Helper to calculate live crowd level based on TomTom traffic data
 async function getLiveCrowdLevel(lat: number, lng: number): Promise<string> {
-  const apiKey = process.env.TOMTOM_API_KEY;
+  const apiKey = process.env.TOMTOM_API_KEY || "mDQOyEpPOUF23uZTosuVGhQ2bBv1mKNu";
   if (!apiKey) {
     return getFallbackCrowdLevel();
   }
