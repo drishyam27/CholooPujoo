@@ -95,6 +95,7 @@ export default function CategoryPage() {
               location={pandal.location}
               crowdLevel={pandal.crowdLevel}
               imageUrl={pandal.imageUrl}
+              mapUrl={pandal.mapUrl}
             />
           ))}
         </div>

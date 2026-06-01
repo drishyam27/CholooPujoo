@@ -117,6 +117,7 @@ export default function ItineraryPage() {
                   location={pandal.location}
                   crowdLevel={pandal.crowdLevel}
                   imageUrl={pandal.imageUrl}
+                  mapUrl={pandal.mapUrl}
                 />
               ))}
             </div>
@@ -149,6 +150,7 @@ export default function ItineraryPage() {
                   location={pandal.location}
                   crowdLevel={pandal.crowdLevel}
                   imageUrl={pandal.imageUrl}
+                  mapUrl={pandal.mapUrl}
                 />
               ))}
             </div>

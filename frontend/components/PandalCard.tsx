@@ -12,6 +12,7 @@ interface PandalCardProps {
   location: string;
   crowdLevel: CrowdLevel;
   imageUrl: string;
+  mapUrl?: string;
 }
 
 const crowdConfig: Record<CrowdLevel, { color: string; bg: string; pulse: boolean }> = {
@@ -26,6 +27,7 @@ export default function PandalCard({
   location,
   crowdLevel,
   imageUrl,
+  mapUrl,
 }: PandalCardProps) {
   const { bookmarkedIds, toggleBookmark, completedIds, toggleCompleted } =
     useAppContext();
@@ -155,11 +157,18 @@ export default function PandalCard({
               </button>
             </div>
 
-            {/* Map Placeholder Body */}
-            <div className="h-60 rounded-xl bg-white/5 border border-dashed border-white/10 flex flex-col items-center justify-center text-center p-6 gap-3">
-              <div className="w-8 h-8 rounded-full border-2 border-accent border-t-transparent animate-spin" />
-              <p className="text-sm font-medium text-white/70">Interactive Map Loading...</p>
-              <p className="text-xs text-white/40">Integrating Leaflet / Mapbox soon for real-time navigation</p>
+            {/* Live Google Maps Embed iframe with dark thematic custom filter */}
+            <div className="h-60 rounded-xl overflow-hidden border border-[rgba(255,77,61,0.2)] bg-black/40 relative shadow-inner">
+              <iframe
+                title={`Map of ${name}`}
+                width="100%"
+                height="100%"
+                style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)" }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(name + ", Kolkata")}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+              />
             </div>
 
             {/* Footer / Info */}
@@ -168,7 +177,7 @@ export default function PandalCard({
               <button
                 onClick={() => {
                   window.open(
-                    `https://www.google.com/maps/search/${encodeURIComponent(name + " Kolkata")}`,
+                    mapUrl || `https://www.google.com/maps/search/${encodeURIComponent(name + " Kolkata")}`,
                     "_blank"
                   );
                 }}
