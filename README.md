@@ -6,8 +6,6 @@
   <img src="public/images/project-icon-3d.png" alt="CholooPujoo 3D Icon" width="200" />
 </p>
 
-<h1 align="center">🔱 CholooPujoo 🔱</h1>
-
 <p align="center">
   <strong>A High-Fidelity, Mobile-First Discovery &amp; Itinerary Platform for Kolkata’s Grand Durga Puja Festival</strong>
 </p>
