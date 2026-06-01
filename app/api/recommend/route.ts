@@ -154,8 +154,16 @@ export async function POST(request: Request) {
     // Generate traditional Bengali recommendation description (Grok/Gemini fallback style)
     let aiText = "";
 
+    const didiBlessings = [
+      `Dugga-Dugga! Bacha (my child), since you are currently at **${currentPandal.name}**, you must make **${recPandal.name}** your next Thakur Darshan stop! It's just a quick ${travelTime} away. The crowd there is **${recPandal.crowdLevel}** right now, so it's the perfect time to go. You will be absolutely mesmerized by their spectacular theme showcasing **${theme}** this year! Safe travels, and bolo Dugga!`,
+      
+      `Dugga-Dugga! Bacha, aami dekchi tumi **${currentPandal.name}**-e aacho. Cholo, ekhon **${recPandal.name}**-er dike jao! It is merely a ${travelTime} journey from here. With a **${recPandal.crowdLevel}** crowd, you can explore their beautiful pandal very comfortably. Their exquisite theme of **${theme}** is a true visual feast! Safe travels, aar mathaye chepe jeo na!`,
+      
+      `Dugga-Dugga! Thakur Darshan is incomplete without visiting **${recPandal.name}** next, my child! From **${currentPandal.name}**, it will take you a ${travelTime}. The crowd level is **${recPandal.crowdLevel}** right now, which is highly favorable. Go and experience their magnificent theme displaying **${theme}** this autumn! May Maa Durga bless your path, and Dugga-Dugga!`
+    ];
+    
     // Simulated high-fidelity intelligence response utilizing motherly Dugga Dugga tone
-    aiText = `Dugga-Dugga! My child, since you are currently at **${currentPandal.name}**, I suggest you ${travelTime} to **${recPandal.name}** next! Its crowd level is currently **${recPandal.crowdLevel}**, making it highly suitable. You will absolutely adore their magnificent theme featuring **${theme}** this year! Safe travels, and Dugga-Dugga!`;
+    aiText = didiBlessings[Math.floor((currentPandal.name.length + recPandal.name.length) % didiBlessings.length)];
 
     // Dynamic AI Check - Support live LLM generation securely in backend if key is set
     const apiKey = process.env.GROK_API_KEY || process.env.GEMINI_API_KEY;
