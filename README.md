@@ -88,6 +88,16 @@ An advanced global and category-specific search box designed to handle misspelli
 *   **Smart Navigation**: Selecting a match inside the active category filters the list on-screen. Selecting a match from a different category automatically routes the explorer to that zone page and pre-fills the query filter!
 *   **Spelling-Tolerance (Fuzzy Search)**: Forgives spelling errors and phonetic typos in real-time (e.g. typing "Sribhumi" still matches "Sreebhumi"!).
 
+### 🧠 8. Dugga Dugga Intelligence (DDI) AI Path Companion
+A premium, highly interactive glassmorphic routing assistant situated directly inside the User Dashboard:
+*   **Why is it named "Dugga Dugga"?** 🪔  
+    In traditional Bengali households, when someone steps out of the house to begin a journey, elders lovingly say *"Dugga Dugga!"* as a prayer to Maa Durga for absolute safety, guidance, and protection on the path. **Dugga Dugga Intelligence (DDI)** merges this beautiful, centuries-old Bengali tradition of wishing safe travel with state-of-the-art navigation algorithms—guiding puja explorers on their physical journey from one pandal to the next with motherly love and wisdom.
+*   **Autocomplete Search Box**: Replaced standard tedious dropdowns with an autocomplete, spelling-tolerant location search to quickly establish your current starting point.
+*   **Dynamic Route Recommendation**: Employs Haversine formulas to find and recommend the optimal next unvisited pandal, computing walking/driving travel times on the fly.
+*   **Familiar Grandmotherly AI Blessings**: Integrates a highly unique, traditional Bengali grandmother ("Thakuma") persona. She delivers navigations as warm maternal blessings, urging safety, warning about crowds, and sharing details about the recommended pandal's artistic themes.
+*   **Interactive Next-Pandal Card & Map**: Renders inline dark-themed route maps, instant check-off checkmarks, and distance metadata.
+*   **Instant Loading Transitions**: Employs rotating traditional glowing **Alpana / Mandala Motifs** in the center of loading states. This native loader operates globally across the application, transforming raw database queries and route transitions into stunning, lag-free micro-interactions!
+
 ---
 
 ## 🛠️ Technical Architecture Marvels
@@ -117,6 +127,18 @@ Authentication is powered by NextAuth.js Google OAuth using `@next-auth/mongodb-
 To support seamless search exploration, we implemented a custom client-side fuzzy search engine in `frontend/lib/searchHelper.ts`:
 *   **Bigram Overlap Calculations**: Splits user inputs and pandal names/locations into overlapping 2-letter bigram sets, calculating their similarity score in under `0.1ms`. This allows the engine to instantly resolve typos (e.g., matching "Sribhumi" ➔ "Sreebhumi" or "Suruci" ➔ "Suruchi") with zero server latency or AI rate-limit dependencies.
 *   **Relevance-Boost Sorting**: Exact substring matches receive a `+0.5` relevance boost to stay anchored at the top of recommendations, while spelling-corrected suggestions follow dynamically sorted by their similarity score.
+
+### 🚦 5. TomTom Live Traffic Congestion Analyzer
+To solve the massive challenge of crowd estimations at temporary festival sites, we built a real-time traffic-proxy analyzer in `app/api/recommend/route.ts`:
+*   **Segment Speed Queries**: The endpoint fetches live road speeds around the recommended coordinates using TomTom's flow Segment REST API.
+*   **Congestion Mapping**: Calculates the ratio of current road speed to ideal free-flow speed. A ratio under `0.4` represents crawl speeds (gridlock) indicating heavy crowds (🔴 **High Crowd**), while a ratio above `0.75` indicates clear streets (🟢 **Low Crowd**).
+*   **Robust Off-Grid Fallback**: Includes a native fallback to Indian Standard Time (IST) time-of-day crowd algorithms, ensuring a seamless user experience even if third-party APIs timeout or hit limits.
+
+### 🔮 6. Secure Gemini API Key Integration
+The AI routing engine securely leverages Google's free-tier **Gemini API** (`gemini-1.5-flash`) for real-time natural language generation:
+*   **LLM Context-Aware Prompting**: Feeds live calculated distances, travel times, themes, and TomTom crowd levels into the LLM context.
+*   **Traditional Persona Delivery**: Instructs the model to generate responses strictly in the voice of "Dugga-Dugga," wishing safe travels and adjusting advice depending on the live congestion levels!
+*   **Private Environment Keys**: Completely hidden behind server-side process environment variables (`GEMINI_API_KEY`, `TOMTOM_API_KEY`) to follow zero-trust security.
 
 ---
 
