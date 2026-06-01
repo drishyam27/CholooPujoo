@@ -67,7 +67,7 @@ A dynamic ranking board displaying the top 10 pujo hoppers in the system:
 
 ### 🎭 5. Traditional Durga Pujo Avatar Selector
 Instead of generic icons, users can dress their profiles in 10 stunning, hand-crafted Pujo-themed illustrations:
-*   👩‍🦰 **Girls Avatars (5 options)**: Dressed in traditional sarees, including *Shreya (Laal Paar Saree)*, *Pooja (Mustard Anjali)*, *Riya (Sandhi Pujo Royal)*, *Tanima (Diyas of Ekadashi)*, and *Debolina (Sindoor Khela Crimson)*.
+*   👩‍🦰 **Girls Avatars (5 options)**: Dressed in traditional sarees, including *Shreya (Laal Paar Saree)*, *Pooja (Mustard Anjali)*, *Riya (Sandhi Pujo Royal)*, *Tiyasha (Diyas of Ekadashi)*, and *Debolina (Sindoor Khela Crimson)*.
 *   🧔 **Boys Avatars (5 options)**: Dressed in traditional dhuti panjabi, featuring 3 stylishly bearded options (*Aniket*, *Raj*, *Drishyam*) and 2 clean-shaved options (*Joy*, *Sayan*) to match the elegant age and aesthetic criteria of the girls' avatars.
 *   **Interactive Modal Selector**: Click your profile picture to open a scrollable modal, pick your look, and click "Save Selection" to sync it instantly to MongoDB.
 
