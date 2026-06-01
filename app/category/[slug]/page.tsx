@@ -204,7 +204,7 @@ export default function CategoryPage() {
           </div>
 
           {/* Pandal List */}
-          <div className="space-y-4 relative z-10">
+          <div className="space-y-4 relative">
             {filteredPandals.map((pandal) => (
               <PandalCard
                 key={pandal.id}
