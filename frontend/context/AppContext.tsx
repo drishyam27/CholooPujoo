@@ -20,7 +20,7 @@ export const AppContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { status } = useSession();
+  useSession();
   const isLoggedIn = true; // Bypassed Google Login for preview
 
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
@@ -53,10 +53,23 @@ export const AppContextProvider = ({
     );
   };
 
-  const toggleCompleted = (id: string) => {
+  const toggleCompleted = async (id: string) => {
+    const isCurrentlyCompleted = completedIds.includes(id);
     setCompletedIds((prev) =>
       prev.includes(id) ? prev.filter((cId) => cId !== id) : [...prev, id]
     );
+
+    if (!isCurrentlyCompleted) {
+      try {
+        await fetch("/api/user/visit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ pandalId: id }),
+        });
+      } catch (error) {
+        console.error("Failed to log visit in database:", error);
+      }
+    }
   };
 
   return (

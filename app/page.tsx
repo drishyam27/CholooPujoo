@@ -49,7 +49,7 @@ export default function HomePage() {
         <section className="text-center mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-accent text-xs uppercase tracking-widest mb-6">
             <Flame className="w-3.5 h-3.5" style={{ color: "var(--accent)" }} />
-            <span style={{ color: "var(--accent)" }}>Puja Season 2025</span>
+            <span style={{ color: "var(--accent)" }}>Puja Season 2026</span>
           </div>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl mb-4 leading-tight"
@@ -68,6 +68,19 @@ export default function HomePage() {
               Durga Puja
             </span>
           </h1>
+          
+          {/* Bengali Festive Slogan */}
+          <p
+            className="text-2xl sm:text-3xl md:text-4xl mb-6 font-semibold tracking-wide"
+            style={{
+              fontFamily: "var(--font-playfair), serif",
+              color: "rgba(255, 255, 255, 0.95)",
+              textShadow: "0 0 20px rgba(255, 77, 61, 0.4)",
+            }}
+          >
+            বলো দুগ্গা মাই কি জয়!
+          </p>
+
           <p className="text-base sm:text-lg opacity-50 max-w-xl mx-auto">
             Navigate Kolkata&apos;s most celebrated pandals. From heritage households to
             modern marvels — your festival companion awaits.
