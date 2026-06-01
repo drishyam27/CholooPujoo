@@ -7,6 +7,12 @@
 </p>
 
 <p align="center">
+  <a href="https://choloopujoo.vercel.app/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Live%20Demo-choloopujoo.vercel.app-FF4D3D?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  </a>
+</p>
+
+<p align="center">
   <strong>A High-Fidelity, Mobile-First Discovery &amp; Itinerary Platform for Kolkata’s Grand Durga Puja Festival</strong>
 </p>
 
