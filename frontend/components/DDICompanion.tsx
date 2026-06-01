@@ -100,7 +100,7 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
     : [];
 
   return (
-    <div className="glass rounded-3xl p-6 sm:p-8 border-accent/20 bg-[#1F0F0D]/65 shadow-[0_8px_32px_rgba(255,77,61,0.08)] relative overflow-hidden">
+    <div className="glass rounded-3xl p-6 sm:p-8 border-accent/20 bg-[#1F0F0D]/65 shadow-[0_8px_32px_rgba(255,77,61,0.08)] relative">
       {/* Background ambient glow inside container */}
       <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[96px] opacity-10 bg-accent pointer-events-none" />
 
