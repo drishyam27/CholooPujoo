@@ -186,7 +186,7 @@ ${catalogText}
 - Bold key names and crowd levels (e.g., **Sreebhumi**, **High Crowd**).
 - If you recommend one specific next pandal for them to visit, you MUST append '[RECOMMEND: pandal-id]' at the very end of your response, replacing 'pandal-id' with the actual ID from the list (e.g. '[RECOMMEND: north-31]'). Only recommend one specific pandal ID at the end. If no specific next stop is decided, do not append it.`;
 
-    const groqKey = process.env.GROK_API_KEY;
+    const groqKey = process.env.GROQ_API_KEY || process.env.GROK_API_KEY;
     const geminiKey = process.env.GEMINI_API_KEY;
 
     let responseText = "";

@@ -224,7 +224,7 @@ export async function POST(request: Request) {
     aiText = didiBlessings[Math.floor((currentPandal.name.length + recPandal.name.length) % didiBlessings.length)];
 
     // Dynamic AI Check - Support live LLM generation securely in backend if key is set
-    const apiKey = process.env.GROK_API_KEY || process.env.GEMINI_API_KEY;
+    const apiKey = process.env.GROQ_API_KEY || process.env.GROK_API_KEY || process.env.GEMINI_API_KEY;
     if (apiKey) {
       try {
         const prompt = `You are a warm, wise traditional Bengali grandmother and navigator named 'Dugga-Dugga'. Write a highly engaging 2-sentence recommendation to go to next pandal. Current location: ${currentPandal.name}. Next Pandal: ${recPandal.name} (${travelTime} away, Live Crowd Level: ${liveCrowd}, Theme: ${theme}). Start with 'Dugga-Dugga!' and wish them safe travels. Keep it under 65 words.`;
