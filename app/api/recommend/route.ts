@@ -78,6 +78,60 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
   return R * c;
 }
 
+// Helper to calculate live crowd level based on TomTom traffic data
+async function getLiveCrowdLevel(lat: number, lng: number): Promise<string> {
+  const apiKey = process.env.TOMTOM_API_KEY;
+  if (!apiKey) {
+    return getFallbackCrowdLevel();
+  }
+
+  try {
+    const url = `https://api.tomtom.com/traffic/services/4/flowSegmentData/relative-compact/10/json?key=${apiKey}&point=${lat},${lng}`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(3000) });
+    if (!res.ok) throw new Error(`TomTom API responded with status ${res.status}`);
+
+    const data = await res.json();
+    const flowData = data.flowSegmentData;
+
+    if (flowData && flowData.currentSpeed !== undefined && flowData.freeFlowSpeed !== undefined) {
+      const current = flowData.currentSpeed;
+      const freeFlow = flowData.freeFlowSpeed;
+
+      if (freeFlow > 0) {
+        const ratio = current / freeFlow;
+        console.log(`[TomTom Live Traffic] Point: ${lat},${lng} | Speed Ratio: ${ratio.toFixed(2)} (${current}/${freeFlow} km/h)`);
+        if (ratio < 0.4) {
+          return "High";
+        } else if (ratio < 0.75) {
+          return "Medium";
+        } else {
+          return "Low";
+        }
+      }
+    }
+  } catch (err) {
+    console.error("TomTom live crowd calculation failed, falling back to time-of-day simulation:", err);
+  }
+
+  return getFallbackCrowdLevel();
+}
+
+function getFallbackCrowdLevel(): string {
+  const now = new Date();
+  // Adjust to Indian Standard Time (IST: UTC + 5:30)
+  const istOffset = 5.5 * 60 * 60 * 1000;
+  const istTime = new Date(now.getTime() + istOffset);
+  const hour = istTime.getUTCHours();
+
+  if (hour >= 5 && hour < 12) {
+    return "Low";
+  } else if (hour >= 12 && hour < 17) {
+    return "Medium";
+  } else {
+    return "High";
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { currentPandalId, visitedIds } = await request.json();
@@ -151,15 +205,19 @@ export async function POST(request: Request) {
 
     const theme = pandalThemes[recPandal.id] || defaultThemes[Math.floor((recPandal.name.length) % defaultThemes.length)];
     
+    // Get live crowd level from TomTom or fallback
+    const recCoords = coordinates[recPandal.id] || zoneCoordinates[recPandal.category];
+    const liveCrowd = await getLiveCrowdLevel(recCoords.lat, recCoords.lng);
+
     // Generate traditional Bengali recommendation description (Grok/Gemini fallback style)
     let aiText = "";
 
     const didiBlessings = [
-      `Dugga-Dugga! Bacha (my child), since you are currently at **${currentPandal.name}**, you must make **${recPandal.name}** your next Thakur Darshan stop! It's just a quick ${travelTime} away. The crowd there is **${recPandal.crowdLevel}** right now, so it's the perfect time to go. You will be absolutely mesmerized by their spectacular theme showcasing **${theme}** this year! Safe travels, and bolo Dugga!`,
+      `Dugga-Dugga! Bacha (my child), since you are currently at **${currentPandal.name}**, you must make **${recPandal.name}** your next Thakur Darshan stop! It's just a quick ${travelTime} away. The crowd there is **${liveCrowd}** right now, so it's the perfect time to go. You will be absolutely mesmerized by their spectacular theme showcasing **${theme}** this year! Safe travels, and bolo Dugga!`,
       
-      `Dugga-Dugga! Bacha, aami dekchi tumi **${currentPandal.name}**-e aacho. Cholo, ekhon **${recPandal.name}**-er dike jao! It is merely a ${travelTime} journey from here. With a **${recPandal.crowdLevel}** crowd, you can explore their beautiful pandal very comfortably. Their exquisite theme of **${theme}** is a true visual feast! Safe travels, aar mathaye chepe jeo na!`,
+      `Dugga-Dugga! Bacha, aami dekchi tumi **${currentPandal.name}**-e aacho. Cholo, ekhon **${recPandal.name}**-er dike jao! It is merely a ${travelTime} journey from here. With a **${liveCrowd}** crowd, you can explore their beautiful pandal very comfortably. Their exquisite theme of **${theme}** is a true visual feast! Safe travels, aar mathaye chepe jeo na!`,
       
-      `Dugga-Dugga! Thakur Darshan is incomplete without visiting **${recPandal.name}** next, my child! From **${currentPandal.name}**, it will take you a ${travelTime}. The crowd level is **${recPandal.crowdLevel}** right now, which is highly favorable. Go and experience their magnificent theme displaying **${theme}** this autumn! May Maa Durga bless your path, and Dugga-Dugga!`
+      `Dugga-Dugga! Thakur Darshan is incomplete without visiting **${recPandal.name}** next, my child! From **${currentPandal.name}**, it will take you a ${travelTime}. The crowd level is **${liveCrowd}** right now, which is highly favorable. Go and experience their magnificent theme displaying **${theme}** this autumn! May Maa Durga bless your path, and Dugga-Dugga!`
     ];
     
     // Simulated high-fidelity intelligence response utilizing motherly Dugga Dugga tone
@@ -169,7 +227,7 @@ export async function POST(request: Request) {
     const apiKey = process.env.GROK_API_KEY || process.env.GEMINI_API_KEY;
     if (apiKey) {
       try {
-        const prompt = `You are a warm, wise traditional Bengali grandmother and navigator named 'Dugga-Dugga'. Write a highly engaging 2-sentence recommendation to go to next pandal. Current location: ${currentPandal.name}. Next Pandal: ${recPandal.name} (${travelTime} away, Crowd: ${recPandal.crowdLevel}, Theme: ${theme}). Start with 'Dugga-Dugga!' and wish them safe travels. Keep it under 65 words.`;
+        const prompt = `You are a warm, wise traditional Bengali grandmother and navigator named 'Dugga-Dugga'. Write a highly engaging 2-sentence recommendation to go to next pandal. Current location: ${currentPandal.name}. Next Pandal: ${recPandal.name} (${travelTime} away, Live Crowd Level: ${liveCrowd}, Theme: ${theme}). Start with 'Dugga-Dugga!' and wish them safe travels. Keep it under 65 words.`;
         
         let responseText = "";
         
@@ -216,7 +274,7 @@ export async function POST(request: Request) {
         id: recPandal.id,
         name: recPandal.name,
         location: recPandal.location,
-        crowdLevel: recPandal.crowdLevel,
+        crowdLevel: liveCrowd,
         imageUrl: recPandal.imageUrl,
         mapUrl: recPandal.mapUrl,
         distance: distanceVal,
