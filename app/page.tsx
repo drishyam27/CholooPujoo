@@ -208,6 +208,36 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* DDI Chatbot Call to Action Banner */}
+        <section className="mt-12 sm:mt-16 glass rounded-3xl p-6 sm:p-8 border-accent/20 bg-[#1F0F0D]/65 shadow-[0_8px_32px_rgba(255,77,61,0.06)] relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+          {/* Ambient lighting glows */}
+          <div className="absolute top-0 right-0 w-32 h-32 rounded-full blur-[64px] opacity-20 bg-accent pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full blur-[64px] opacity-10 bg-accent pointer-events-none" />
+
+          <div className="flex items-center gap-4 relative z-10 flex-col sm:flex-row text-center sm:text-left">
+            <div className="w-16 h-16 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center flex-shrink-0 text-accent text-3xl shadow-[0_0_20px_rgba(255,77,61,0.15)] animate-pulse">
+              👵
+            </div>
+            <div>
+              <h3 className="text-xl sm:text-2xl font-bold flex items-center gap-2 justify-center sm:justify-start" style={{ fontFamily: "var(--font-theme-serif), var(--font-serif), serif" }}>
+                Dugga Dugga Intelligence <span className="text-[9px] uppercase tracking-widest px-2 py-0.5 rounded bg-accent/20 text-accent font-black border border-accent/30">AI Chat</span>
+              </h3>
+              <p className="text-sm opacity-60 mt-1 max-w-xl">
+                Thakuma is online! Let her guide your **Thakur Darshan** path, check live crowd levels, and calculate curfew constraints in real-time.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => router.push("/chatbot")}
+            className="px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:brightness-110 active:scale-95 cursor-pointer relative z-10 whitespace-nowrap shadow-[0_0_15px_rgba(255,77,61,0.2)] flex items-center gap-2"
+            style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-hover))", color: "#fff" }}
+          >
+            <span>Ask Thakuma AI</span>
+            <Sparkles className="w-4 h-4" />
+          </button>
+        </section>
+
         {/* Stats Strip */}
         <section className="mt-12 sm:mt-16 glass rounded-2xl p-6 sm:p-8">
           <div className="grid grid-cols-3 gap-4 text-center">
