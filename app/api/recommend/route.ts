@@ -86,7 +86,7 @@ async function getLiveCrowdLevel(lat: number, lng: number): Promise<string> {
   }
 
   try {
-    const url = `https://api.tomtom.com/traffic/services/4/flowSegmentData/relative-compact/10/json?key=${apiKey}&point=${lat},${lng}`;
+    const url = `https://api.tomtom.com/traffic/services/4/flowSegmentData/relative/10/json?key=${apiKey}&point=${lat},${lng}`;
     const res = await fetch(url, { signal: AbortSignal.timeout(3000) });
     if (!res.ok) throw new Error(`TomTom API responded with status ${res.status}`);
 
