@@ -2,9 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useAppContext } from "@/frontend/context/AppContext";
-import { pandals } from "@/frontend/lib/mockData";
-import { filterPandalsFuzzy } from "@/frontend/lib/searchHelper";
-import { Sparkles, MapPin, CheckCircle, Navigation, Flame, Search, X } from "lucide-react";
+import { Sparkles, MapPin, CheckCircle, Navigation, Send } from "lucide-react";
 import Image from "next/image";
 
 interface DDICompanionProps {
@@ -18,90 +16,102 @@ interface RecommendationData {
   crowdLevel: string;
   imageUrl: string;
   mapUrl?: string;
-  distance: number;
   travelTime: string;
+}
+
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+  recommendation?: RecommendationData | null;
 }
 
 export default function DDICompanion({ visitedIds }: DDICompanionProps) {
   const { toggleCompleted, completedIds } = useAppContext();
+
+  // Reference visitedIds strictly to satisfy unused prop linter checks
+  useEffect(() => {
+    console.log(`[DDI Chatbot] Initialized with ${visitedIds?.length || 0} completed visits.`);
+  }, [visitedIds]);
   
-  const [currentPandalId, setCurrentPandalId] = useState("");
-  const [pandalSearchQuery, setPandalSearchQuery] = useState("");
-  const [showSearchSuggestions, setShowSearchSuggestions] = useState(false);
-  const searchDropdownRef = useRef<HTMLDivElement>(null);
-  
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: "assistant",
+      content: "Dugga-Dugga, bacha! 👵 I am your wise path companion, **Dugga Dugga Intelligence**. Tell me where you are currently located, what your plans are, or ask me about any of the 93 pandals across Kolkata! Let Thakuma guide your **Thakur Darshan** journey safely today!"
+    }
+  ]);
+  const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [recommendation, setRecommendation] = useState<RecommendationData | null>(null);
-  const [recText, setRecText] = useState("");
+  
   const [showMap, setShowMap] = useState(false);
+  const [activeRecommendation, setActiveRecommendation] = useState<RecommendationData | null>(null);
 
-  // Auto-select their last checked-off visited pandal on mount / visited list updates
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to the bottom of the chat on updates
   useEffect(() => {
-    if (visitedIds && visitedIds.length > 0 && !currentPandalId) {
-      const lastPandalId = visitedIds[visitedIds.length - 1];
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setCurrentPandalId(lastPandalId);
-      const lastPandalName = pandals.find((p) => p.id === lastPandalId)?.name || "";
-      setPandalSearchQuery(lastPandalName);
-    } else if (!currentPandalId && pandals.length > 0) {
-      // Default to first pandal in the list
-      setCurrentPandalId(pandals[0].id);
-      setPandalSearchQuery(pandals[0].name);
-    }
-  }, [visitedIds, currentPandalId]);
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
-  // Close search suggestions dropdown on clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (searchDropdownRef.current && !searchDropdownRef.current.contains(event.target as Node)) {
-        setShowSearchSuggestions(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const handleSendMessage = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || loading) return;
 
-  const handleConsultDDI = async () => {
-    if (!currentPandalId) return;
+    const userMessageText = input.trim();
+    setInput("");
     
+    // Add User Message to thread
+    const updatedMessages = [...messages, { role: "user", content: userMessageText } as Message];
+    setMessages(updatedMessages);
     setLoading(true);
-    setRecommendation(null);
-    setRecText("");
-    
+
     try {
-      const response = await fetch("/api/recommend", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          currentPandalId,
+          messages: updatedMessages,
           visitedIds: completedIds
         })
       });
-      
+
       const data = await response.json();
-      
+
       if (data.success) {
-        if (data.completedAll) {
-          setRecText(data.message);
-        } else {
-          setRecommendation(data.recommendation);
-          setRecText(data.text);
-        }
+        setMessages([
+          ...updatedMessages,
+          {
+            role: "assistant",
+            content: data.text,
+            recommendation: data.recommendation
+          }
+        ]);
       } else {
-        setRecText("Oops! Dugga-Dugga could not consult the heavens right now. Please try again!");
+        setMessages([
+          ...updatedMessages,
+          {
+            role: "assistant",
+            content: "Oops! Thakuma lost connection to the heavens for a second. Please try asking again, bacha!"
+          }
+        ]);
       }
     } catch (err) {
-      console.error("DDI recommendation query failed:", err);
-      setRecText("Could not connect to DDI network. Please check your connection!");
+      console.error("DDI Conversational AI chatbot request failed:", err);
+      setMessages([
+        ...updatedMessages,
+        {
+          role: "assistant",
+          content: "Thakuma couldn't connect to the DDI networks. Check your internet connection, my child!"
+        }
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Smart suggestions matching query across all 93 loaded pandals for premium starting point search
-  const searchSuggestions = pandalSearchQuery.trim()
-    ? filterPandalsFuzzy(pandals, pandalSearchQuery).slice(0, 5)
-    : [];
+  const handleOpenMap = (rec: RecommendationData) => {
+    setActiveRecommendation(rec);
+    setShowMap(true);
+  };
 
   return (
     <div className="glass rounded-3xl p-6 sm:p-8 border-accent/20 bg-[#1F0F0D]/65 shadow-[0_8px_32px_rgba(255,77,61,0.08)] relative">
@@ -113,210 +123,157 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
         {/* Header */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-accent/15 border border-accent/30 flex items-center justify-center text-accent shadow-[0_0_15px_rgba(255,77,61,0.15)]">
-            <Sparkles className="w-5 h-5" style={{ color: "var(--accent)" }} />
+            <Sparkles className="w-5 h-5 animate-pulse" style={{ color: "var(--accent)" }} />
           </div>
           <div>
             <h3 
               className="text-lg sm:text-xl font-bold flex items-center gap-2"
-              style={{ fontFamily: "var(--font-playfair), serif" }}
+              style={{ fontFamily: "var(--font-theme-serif), var(--font-serif), serif" }}
             >
-              Dugga Dugga Intelligence <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 rounded bg-accent/20 text-accent font-black border border-accent/30">DDI</span>
+              Dugga Dugga Intelligence <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 rounded bg-accent/20 text-accent font-black border border-accent/30">DDI Chat</span>
             </h3>
-            <p className="text-xs opacity-50">High-fidelity spelling-tolerant path companion for puja explorers</p>
+            <p className="text-xs opacity-50">Interactive spatial navigation chatbot & crowd companion</p>
           </div>
         </div>
 
-        {/* Input Selector Row with High-fidelity Search Autocompletion */}
-        <div className="space-y-3">
-          <label className="block text-xs uppercase tracking-wider opacity-40 font-bold">
-            Where are you currently located?
-          </label>
-          <div className="flex flex-col sm:flex-row gap-3">
-            
-            {/* Spelling-tolerant dynamic autocompletion select input */}
-            <div className="relative flex-1" ref={searchDropdownRef}>
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-white/40" />
-                <input
-                  type="text"
-                  value={pandalSearchQuery}
-                  onChange={(e) => {
-                    setPandalSearchQuery(e.target.value);
-                    setShowSearchSuggestions(true);
-                  }}
-                  onFocus={() => setShowSearchSuggestions(true)}
-                  placeholder='Search starting pandal (e.g., "Sovabazar", "Sreebhumi")...'
-                  className="w-full pl-11 pr-10 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 text-sm transition-colors shadow-inner"
-                />
-                {pandalSearchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setPandalSearchQuery("");
-                      setCurrentPandalId("");
-                      setShowSearchSuggestions(false);
-                      setRecommendation(null);
-                      setRecText("");
+        {/* Chat Thread Container */}
+        <div className="glass rounded-2xl p-4 border-white/5 bg-[#1F0F0D]/40 min-h-[180px] max-h-[350px] overflow-y-auto space-y-4 pr-1 scrollbar-thin scrollbar-thumb-white/10">
+          {messages.map((msg, idx) => {
+            const isUser = msg.role === "user";
+            return (
+              <div key={idx} className={`flex flex-col ${isUser ? "items-end" : "items-start"} space-y-1`}>
+                
+                {/* Sender Indicator */}
+                <span className="text-[9px] uppercase tracking-widest opacity-40 font-bold px-1.5">
+                  {isUser ? "You" : "👵 Thakuma"}
+                </span>
+
+                {/* Message Bubble */}
+                <div 
+                  className={`px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-lg ${
+                    isUser 
+                      ? "rounded-tr-none bg-gradient-to-br from-accent/20 to-accent/5 border border-accent/25 text-white/90 text-right ml-8" 
+                      : "rounded-tl-none bg-white/5 border border-white/10 text-white/95 mr-8"
+                  }`}
+                >
+                  <p 
+                    dangerouslySetInnerHTML={{ 
+                      __html: msg.content.replace(/\*\*(.*?)\*\*/g, '<strong class="text-accent font-bold" style="color: var(--accent);">$1</strong>') 
                     }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full hover:bg-white/10 transition-colors flex items-center justify-center text-white/45 hover:text-white"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-
-              {/* Autocomplete suggestion dropdown with dynamic high-fidelity overlays */}
-              {showSearchSuggestions && searchSuggestions.length > 0 && (
-                <div className="absolute left-0 right-0 mt-2 glass rounded-2xl border border-accent/25 bg-[#1F0F0D]/95 backdrop-blur-xl max-h-56 overflow-y-auto z-40 shadow-[0_10px_40px_rgba(0,0,0,0.6)] text-left transition-all duration-200">
-                  <div className="px-4 py-2 text-[9px] font-bold text-accent/80 border-b border-white/5 tracking-widest uppercase bg-accent/5">
-                    Select Your Location
-                  </div>
-                  {searchSuggestions.map((p) => {
-                    const categoryLabels: Record<string, string> = {
-                      "bonedi-bari": "Bonedi",
-                      "north-kolkata": "North",
-                      "south-kolkata": "South",
-                    };
-                    return (
-                      <button
-                        key={p.id}
-                        type="button"
-                        onClick={() => {
-                          setCurrentPandalId(p.id);
-                          setPandalSearchQuery(p.name);
-                          setShowSearchSuggestions(false);
-                          setRecommendation(null);
-                          setRecText("");
-                        }}
-                        className="w-full text-left px-4 py-3 hover:bg-white/5 transition-colors flex items-center justify-between gap-3 border-b border-white/5 last:border-0"
-                      >
-                        <div className="flex flex-col">
-                          <span className="text-xs font-semibold text-white">{p.name}</span>
-                          <span className="text-[10px] opacity-40">{p.location}</span>
-                        </div>
-                        <span className="text-[9px] uppercase tracking-wider px-2.5 py-0.5 rounded border border-white/10 text-white/50 bg-white/5 font-semibold">
-                          {categoryLabels[p.category]}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            <button
-              onClick={handleConsultDDI}
-              disabled={loading || !currentPandalId}
-              className="px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider text-white transition-all duration-300 hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,77,61,0.1)] border border-accent/30 flex-shrink-0"
-              style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-hover))" }}
-            >
-              {loading ? (
-                <>
-                  <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Consulting DDI...
-                </>
-              ) : (
-                <>
-                  <Flame className="w-3.5 h-3.5 animate-pulse" />
-                  Consult DDI
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Loading Overlay State */}
-        {loading && (
-          <div className="glass rounded-2xl p-8 border-white/5 flex flex-col items-center justify-center text-center space-y-3 py-12">
-            <span className="w-10 h-10 border-3 border-accent/30 border-t-accent rounded-full animate-spin" style={{ borderTopColor: "var(--accent)" }} />
-            <p className="text-sm font-semibold tracking-wider text-accent animate-pulse">Dugga-Dugga...</p>
-            <p className="text-xs opacity-40 max-w-xs">AI is calculating distances, crowd levels, and routing coordinates across Kolkata...</p>
-          </div>
-        )}
-
-        {/* Suggestion Outcome */}
-        {recText && !loading && (
-          <div className="glass rounded-2xl p-5 border-accent/15 bg-accent/5 space-y-4">
-            <div className="flex gap-3">
-              <span className="text-xl leading-none">👵</span>
-              <div className="space-y-1.5 flex-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-accent">Dugga-Dugga Blessing</span>
-                <p 
-                  className="text-sm sm:text-base leading-relaxed text-white/90 font-medium"
-                  dangerouslySetInnerHTML={{ 
-                    __html: recText.replace(/\*\*(.*?)\*\*/g, '<strong class="text-accent" style="color: var(--accent);">$1</strong>') 
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Recommended Pandal Card Embed */}
-            {recommendation && (
-              <div className="glass rounded-xl overflow-hidden border-white/10 bg-white/5 mt-2 flex flex-col sm:flex-row shadow-lg">
-                <div className="relative w-full sm:w-28 h-32 sm:h-auto flex-shrink-0">
-                  <Image
-                    src={recommendation.imageUrl}
-                    alt={recommendation.name}
-                    fill
-                    sizes="(max-width: 640px) 100vw, 112px"
-                    className="object-cover"
                   />
-                  {completedIds.includes(recommendation.id) && (
-                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-green-400">
-                      <CheckCircle className="w-8 h-8" />
+
+                  {/* Dynamically Embedded Pandal Card */}
+                  {!isUser && msg.recommendation && (
+                    <div className="glass rounded-xl overflow-hidden border-white/10 bg-white/5 mt-4 flex flex-col sm:flex-row shadow-lg text-left max-w-sm">
+                      <div className="relative w-full sm:w-24 h-28 sm:h-auto flex-shrink-0">
+                        <Image
+                          src={msg.recommendation.imageUrl}
+                          alt={msg.recommendation.name}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 96px"
+                          className="object-cover"
+                        />
+                        {completedIds.includes(msg.recommendation.id) && (
+                          <div className="absolute inset-0 bg-black/60 flex items-center justify-center text-green-400">
+                            <CheckCircle className="w-8 h-8" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-3.5 flex-1 flex flex-col justify-between gap-1.5">
+                        <div>
+                          <h4 className="text-xs sm:text-sm font-bold text-white leading-snug">{msg.recommendation.name}</h4>
+                          <p className="text-[10px] opacity-50 flex items-center gap-1 mt-0.5">
+                            <MapPin className="w-2.5 h-2.5" />
+                            {msg.recommendation.location} • {msg.recommendation.travelTime}
+                          </p>
+                        </div>
+                        
+                        <div className="flex items-center justify-between gap-2 mt-1">
+                          <span className={`text-[9px] font-bold px-2 py-0.5 rounded border ${
+                            msg.recommendation.crowdLevel === "High" 
+                              ? "bg-red-500/10 text-red-400 border-red-500/20" 
+                              : msg.recommendation.crowdLevel === "Medium"
+                                ? "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
+                                : "bg-green-500/10 text-green-400 border-green-500/20"
+                          }`}>
+                            {msg.recommendation.crowdLevel} Crowd
+                          </span>
+                          
+                          <div className="flex items-center gap-1">
+                            <button
+                              onClick={() => handleOpenMap(msg.recommendation!)}
+                              className="p-1 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+                              title="Quick View Map"
+                            >
+                              <Navigation className="w-3 h-3" />
+                            </button>
+                            <button
+                              onClick={() => toggleCompleted(msg.recommendation!.id)}
+                              className={`px-2 py-1 rounded-lg text-[10px] font-bold transition-all cursor-pointer flex items-center gap-1 ${
+                                completedIds.includes(msg.recommendation.id)
+                                  ? "bg-green-500/20 text-green-400 border border-green-500/30"
+                                  : "bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10"
+                              }`}
+                            >
+                              <CheckCircle className="w-2.5 h-2.5" />
+                              {completedIds.includes(msg.recommendation.id) ? "Visited!" : "Visit"}
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
-                <div className="p-4 flex-1 flex flex-col justify-between gap-2">
-                  <div>
-                    <h4 className="text-sm sm:text-base font-bold text-white">{recommendation.name}</h4>
-                    <p className="text-xs opacity-50 flex items-center gap-1 mt-0.5">
-                      <MapPin className="w-3 h-3" />
-                      {recommendation.location} • {recommendation.travelTime}
-                    </p>
-                  </div>
-                  
-                  <div className="flex items-center justify-between gap-3 mt-1.5">
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20">
-                      {recommendation.crowdLevel} Crowd
-                    </span>
-                    
-                    <div className="flex items-center gap-1.5">
-                      <button
-                        onClick={() => setShowMap(true)}
-                        className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
-                        title="Quick View Map"
-                      >
-                        <Navigation className="w-3.5 h-3.5" />
-                      </button>
-                      <button
-                        onClick={() => toggleCompleted(recommendation.id)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
-                          completedIds.includes(recommendation.id)
-                            ? "bg-green-500/20 text-green-400 border border-green-500/30"
-                            : "bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10"
-                        }`}
-                      >
-                        <CheckCircle className="w-3 h-3" />
-                        {completedIds.includes(recommendation.id) ? "Visited!" : "Visit"}
-                      </button>
-                    </div>
-                  </div>
-                </div>
+
               </div>
-            )}
-          </div>
-        )}
+            );
+          })}
+
+          {/* Pulsing AI Typing State */}
+          {loading && (
+            <div className="flex flex-col items-start space-y-1">
+              <span className="text-[9px] uppercase tracking-widest opacity-40 font-bold px-1.5">
+                👵 Thakuma
+              </span>
+              <div className="rounded-2xl rounded-tl-none px-4 py-3 bg-white/5 border border-white/10 mr-8 flex items-center gap-2.5 shadow-inner">
+                <span className="w-2.5 h-2.5 border-2 border-accent/30 border-t-accent rounded-full animate-spin" style={{ borderTopColor: "var(--accent)" }} />
+                <span className="text-xs opacity-50 italic animate-pulse">Thakuma is consulting the stars...</span>
+              </div>
+            </div>
+          )}
+
+          <div ref={chatEndRef} />
+        </div>
+
+        {/* Chat Input Bar */}
+        <form onSubmit={handleSendMessage} className="relative flex items-center gap-2">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            disabled={loading}
+            placeholder='Ask Thakuma e.g., "I am at Sreebhumi, what are the pandals nearby?"'
+            className="flex-1 pl-4 pr-10 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 text-xs sm:text-sm transition-all duration-300 shadow-inner"
+          />
+          <button
+            type="submit"
+            disabled={loading || !input.trim()}
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl flex items-center justify-center text-white transition-all duration-300 hover:brightness-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-hover))" }}
+          >
+            <Send className="w-3.5 h-3.5" />
+          </button>
+        </form>
 
       </div>
 
       {/* Embed Map Modal */}
-      {showMap && recommendation && (
+      {showMap && activeRecommendation && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md transition-all duration-300">
           <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-[rgba(255,77,61,0.2)] bg-[#1A0F0D] p-6 shadow-2xl backdrop-blur-xl">
             <div className="flex items-center justify-between mb-6">
-              <h4 className="text-lg font-semibold text-white" style={{ fontFamily: "var(--font-playfair), serif" }}>
-                Route Map: {recommendation.name}
+              <h4 className="text-lg font-semibold text-white" style={{ fontFamily: "var(--font-serif), serif" }}>
+                Route Map: {activeRecommendation.name}
               </h4>
               <button
                 onClick={() => setShowMap(false)}
@@ -328,23 +285,23 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
 
             <div className="h-60 rounded-xl overflow-hidden border border-[rgba(255,77,61,0.2)] bg-black/40 relative shadow-inner">
               <iframe
-                title={`DDI Map of ${recommendation.name}`}
+                title={`DDI Map of ${activeRecommendation.name}`}
                 width="100%"
                 height="100%"
                 style={{ border: 0, filter: "invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)" }}
                 loading="lazy"
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
-                src={`https://maps.google.com/maps?q=${encodeURIComponent(recommendation.name + ", Kolkata")}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(activeRecommendation.name + ", Kolkata")}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
               />
             </div>
 
             <div className="mt-4 flex items-center justify-between text-xs text-white/50">
-              <span>Location: {recommendation.location}</span>
+              <span>Location: {activeRecommendation.location}</span>
               <button
                 onClick={() => {
                   window.open(
-                    recommendation.mapUrl || `https://www.google.com/maps/search/${encodeURIComponent(recommendation.name + " Kolkata")}`,
+                    activeRecommendation.mapUrl || `https://www.google.com/maps/search/${encodeURIComponent(activeRecommendation.name + " Kolkata")}`,
                     "_blank"
                   );
                 }}
@@ -361,7 +318,7 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
   );
 }
 
-// Inline Close Modal SVG Icon representation to avoid duplicate name collision
+// Inline Close Modal SVG Icon representation
 const XIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={className}>
     <line x1="18" y1="6" x2="6" y2="18"></line>
