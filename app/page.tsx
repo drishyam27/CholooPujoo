@@ -6,6 +6,7 @@ import { useEffect, useState, useRef } from "react";
 import Navbar from "@/frontend/components/Navbar";
 import CategoryCard from "@/frontend/components/CategoryCard";
 import { pandals } from "@/frontend/lib/mockData";
+import { filterPandalsFuzzy } from "@/frontend/lib/searchHelper";
 import { Flame, Search, X, Sparkles } from "lucide-react";
 
 export default function HomePage() {
@@ -35,14 +36,9 @@ export default function HomePage() {
 
   if (!isLoggedIn) return null;
 
-  // Smart suggestions matching query across all 93 loaded pandals globally
+  // Smart suggestions matching query across all 93 loaded pandals globally using fuzzy matching
   const suggestions = searchQuery.trim()
-    ? pandals
-        .filter((p) => {
-          const q = searchQuery.toLowerCase().trim();
-          return p.name.toLowerCase().includes(q) || p.location.toLowerCase().includes(q);
-        })
-        .slice(0, 5)
+    ? filterPandalsFuzzy(pandals, searchQuery).slice(0, 5)
     : [];
 
   const handleSuggestionClick = (pandal: typeof pandals[0]) => {
@@ -53,11 +49,8 @@ export default function HomePage() {
     e.preventDefault();
     if (!searchQuery.trim()) return;
 
-    // Find the first matching pandal
-    const match = pandals.find((p) => {
-      const q = searchQuery.toLowerCase().trim();
-      return p.name.toLowerCase().includes(q) || p.location.toLowerCase().includes(q);
-    });
+    // Find the first matching pandal using fuzzy spelling tolerance
+    const match = filterPandalsFuzzy(pandals, searchQuery)[0];
 
     if (match) {
       router.push(`/category/${match.category}?search=${encodeURIComponent(searchQuery.trim())}`);

@@ -6,6 +6,7 @@ import { useAppContext } from "@/frontend/context/AppContext";
 import Navbar from "@/frontend/components/Navbar";
 import PandalCard from "@/frontend/components/PandalCard";
 import { pandals } from "@/frontend/lib/mockData";
+import { filterPandalsFuzzy } from "@/frontend/lib/searchHelper";
 import { ArrowLeft, Search, X, Sparkles } from "lucide-react";
 import Link from "next/link";
 
@@ -68,24 +69,14 @@ export default function CategoryPage() {
 
   const meta = categoryMeta[slug];
 
-  // Smart suggestions matching query across all 93 loaded pandals for premium cross-discovery
+  // Smart suggestions matching query across all 93 loaded pandals for premium cross-discovery using fuzzy matching
   const suggestions = searchQuery.trim()
-    ? pandals
-        .filter((p) => {
-          const q = searchQuery.toLowerCase().trim();
-          return p.name.toLowerCase().includes(q) || p.location.toLowerCase().includes(q);
-        })
-        .slice(0, 5)
+    ? filterPandalsFuzzy(pandals, searchQuery).slice(0, 5)
     : [];
 
-  // Filtered pandals for the current category matching query
-  const filteredPandals = pandals
-    .filter((p) => p.category === slug)
-    .filter((p) => {
-      const q = searchQuery.toLowerCase().trim();
-      if (!q) return true;
-      return p.name.toLowerCase().includes(q) || p.location.toLowerCase().includes(q);
-    });
+  // Filtered pandals for the current category matching query using fuzzy spelling tolerance
+  const currentCategoryPandals = pandals.filter((p) => p.category === slug);
+  const filteredPandals = filterPandalsFuzzy(currentCategoryPandals, searchQuery);
 
   if (!meta) {
     return (
