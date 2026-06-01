@@ -12,40 +12,55 @@ import DDICompanion from "@/frontend/components/DDICompanion";
 export const revalidate = 0; // Ensure fresh profile rendering
 
 async function getProfileData() {
-  await dbConnect();
-  const session = await getServerSession(authOptions);
+  try {
+    await dbConnect();
+    const session = await getServerSession(authOptions);
 
-  let email = session?.user?.email;
-  const name = session?.user?.name || "Test Pujo Explorer";
-  const image = session?.user?.image || "/images/avatar-girl.png";
+    let email = session?.user?.email;
+    const name = session?.user?.name || "Test Pujo Explorer";
+    const image = session?.user?.image || "/images/avatar-girl.png";
 
-  // Development fallback for preview testing without session
-  if (!email) {
-    email = "mock-tester@choloopujoo.com";
+    // Development fallback for preview testing without session
+    if (!email) {
+      email = "mock-tester@choloopujoo.com";
+    }
+
+    // Find or create the user in MongoDB
+    let user = await User.findOne({ email });
+    if (!user) {
+      user = await User.create({
+        email,
+        name,
+        image,
+        visitedPandals: [],
+        visitCount: 0
+      });
+    } else if (!user.image || user.image.includes("dicebear.com")) {
+      user.image = "/images/avatar-girl.png";
+      await user.save();
+    }
+
+    // Calculate dynamic rank: number of users with strictly more visitCount than current user + 1
+    const rank = await User.countDocuments({ visitCount: { $gt: user.visitCount } }) + 1;
+
+    return {
+      user: JSON.parse(JSON.stringify(user)),
+      rank
+    };
+  } catch (error) {
+    console.error("Database connection failed. Falling back to local offline mock profile data:", error);
+    return {
+      user: {
+        email: "mock-tester@choloopujoo.com",
+        name: "Test Pujo Explorer (Offline Fallback)",
+        image: "/images/avatar-girl.png",
+        visitedPandals: ["south-12", "south-14", "north-31", "bonedi-3"],
+        visitCount: 4,
+        createdAt: new Date().toISOString()
+      },
+      rank: 1
+    };
   }
-
-  // Find or create the user in MongoDB
-  let user = await User.findOne({ email });
-  if (!user) {
-    user = await User.create({
-      email,
-      name,
-      image,
-      visitedPandals: [],
-      visitCount: 0
-    });
-  } else if (!user.image || user.image.includes("dicebear.com")) {
-    user.image = "/images/avatar-girl.png";
-    await user.save();
-  }
-
-  // Calculate dynamic rank: number of users with strictly more visitCount than current user + 1
-  const rank = await User.countDocuments({ visitCount: { $gt: user.visitCount } }) + 1;
-
-  return {
-    user: JSON.parse(JSON.stringify(user)),
-    rank
-  };
 }
 
 export default async function ProfilePage() {
