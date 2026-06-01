@@ -7,6 +7,7 @@ import dbConnect from "@/backend/mongodb";
 import User from "@/backend/models/User";
 import { pandals } from "@/frontend/lib/mockData";
 import AvatarSelector from "@/frontend/components/AvatarSelector";
+import DDICompanion from "@/frontend/components/DDICompanion";
 
 export const revalidate = 0; // Ensure fresh profile rendering
 
@@ -155,6 +156,9 @@ export default async function ProfilePage() {
             </div>
 
           </div>
+
+          {/* Dugga Dugga Intelligence (DDI) AI Companion Card */}
+          <DDICompanion visitedIds={visitedIds} />
 
           {/* Zones Progress Breakdown */}
           <div className="glass rounded-3xl p-6 sm:p-8 space-y-6">
