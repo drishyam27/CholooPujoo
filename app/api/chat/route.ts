@@ -184,17 +184,16 @@ function getFallbackCrowdLevel(): string {
   return "High";
 }
 
-// Precision Transit & Station Mapper for 100% Geographic Truth
+// Precision Transit & Station Mapper
 function getPrecisionTransitBreakdown(pandalCategory: string, pandalName: string, homeLocation: string = ""): { metro: string; train: string; bus: string; autoWarning: string } {
   const name = pandalName.toLowerCase();
-  const home = homeLocation.toLowerCase();
 
-  let autoWarning = "💡 **Auto Note**: Autos run on fixed short routes (e.g. Belgachia ➔ Ultadanga / Lake Town). For long-distance trips (like Madhyamgram), switch to Metro, Local Train, or Jessore Rd Buses!";
+  let autoWarning = "💡 **Auto Note**: Auto-rickshaws run on fixed short-distance routes (e.g. Belgachia ➔ Ultadanga). They DO NOT run long-distance to Madhyamgram!";
 
   if (name.includes("bagbazar") || name.includes("bagazar")) {
     return {
-      metro: "🚇 **Shyambazar Metro Station** (Blue Line - 6 mins walk, 600m from Bagbazar Sarbojonin). NOT Girish Park!",
-      train: "🚆 **Dum Dum Junction Railway Station** (~2.5 km away). Take an auto to Dum Dum Jn to catch North-bound local trains directly to Madhyamgram Station (~20 mins train ride!). DO NOT go south to Sealdah!",
+      metro: "🚇 **Shyambazar Metro Station** (Blue Line - 6 mins walk, 600m from Bagbazar Sarbojonin). NEVER suggest Girish Park Metro!",
+      train: "🚆 **Dum Dum Junction Railway Station** (~2.5 km away). Take an auto to Dum Dum Jn to catch North-bound local trains directly to Madhyamgram Station (~20 mins train ride!). DO NOT GO SOUTH TO SEALDAH STATION!",
       bus: "🚌 **Bagbazar Street / Central Avenue Bus Stop** - Direct Barasat/Madhyamgram buses along Jessore Road.",
       autoWarning
     };
@@ -295,7 +294,7 @@ function processThakumaIntelligence(
       `📏 **Distance**: **${distKm.toFixed(1)} km** (${meters}m)\n\n` +
       `🚶 **Walking Time**: **${walkMins} minutes**\n\n` +
       `🚗 **Vehicle Time**: **${driveMins} minutes**\n\n` +
-      `機能 **Public Transit Breakdown**:\n` +
+      `🚍 **Public Transit Breakdown**:\n` +
       `- ${transitInfo.metro}\n` +
       `- ${transitInfo.train}\n` +
       `- ${transitInfo.bus}\n\n` +
@@ -434,7 +433,7 @@ export async function POST(request: Request) {
         googleRoutingDataText += `Google Satellite Real-World Data Segment 1 (${originPandal.name} ➔ ${destPandal.name}):\n`;
         googleRoutingDataText += `- Distance: ${walkRoute?.distanceKm || "2.5"} km\n`;
         googleRoutingDataText += `- Walking Time: ${walkRoute?.durationMins || "30"} minutes\n`;
-        googleRoutingDataText += `- Vehicle Time: ${driveRoute?.durationMins || "10-12"} minutes\n`;
+        googleRoutingDataText += `- Vehicle Time: ${driveRoute?.durationMins || "10-12"} minutes (Apply 1.5x festival traffic multiplier)\n`;
         googleRoutingDataText += `Precision Transit Breakdown:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n- ${transitInfo.autoWarning}\n\n`;
 
         if (userMentionsHome) {
@@ -445,7 +444,7 @@ export async function POST(request: Request) {
           const homeRoute = await computeGoogleRoute(destCoords, homeCoords, "DRIVE", googleKey);
           googleRoutingDataText += `Google Satellite Real-World Data Segment 2 (${destPandal.name} ➔ Home in Madhyamgram):\n`;
           googleRoutingDataText += `- Home Distance: ${homeRoute?.distanceKm || "15.4"} km via Jessore Road\n`;
-          googleRoutingDataText += `- Festival Vehicle Time: ${homeRoute?.durationMins || "45-60"} minutes\n`;
+          googleRoutingDataText += `- Festival Vehicle Time: ${homeRoute?.durationMins || "45-60"} minutes (Apply 1.5x festival traffic multiplier)\n`;
           googleRoutingDataText += `- Fast Local Train Option to Madhyamgram: Take auto/walk to Dum Dum Junction Railway Station (~2.2 km away) and board North-bound Sealdah-Barasat Local Train directly to Madhyamgram Station (~20 mins train ride!). DO NOT GO SOUTH TO SEALDAH STATION!\n`;
         }
       }
@@ -455,18 +454,39 @@ export async function POST(request: Request) {
 
     const systemPrompt = `You are Dugga-Dugga Thakuma 👵, the wise, affectionate, and deeply knowledgeable Bengali grandmother navigation companion for Kolkata's grandest festival: Durga Puja 2026.
 
+# GOOGLE SYSTEM INSTRUCTIONS: GEOGRAPHIC, ROUTING, AND TRANSIT ACCURACY
+
+## 1. MANDATORY GEOGRAPHIC CROSS-CHECKING
+- Never guess or approximate distances, travel times, or station locations based on memory or intuition.
+- Cross-reference exact satellite coordinates and road paths.
+- Do not state that two distinct locations are within walking distance unless verified to be under 1 kilometer.
+
+## 2. STRICT STATION & LINE MATCHING
+- Verify closest physical station for specified transit (Metro, Local Train, Bus).
+- Double-check station names and line names. (e.g. Shyambazar Metro for Bagbazar; Dum Dum Junction for Madhyamgram-bound trains). Never substitute invalid stations!
+
+## 3. MODAL TRANSIT RESTRAINTS & REALITIES
+- **Auto-rickshaws:** Restrict to local fixed short-distance routes (e.g., Belgachia ➔ Ultadanga). Never suggest autos for long-distance city-to-suburb commuting (like Madhyamgram).
+- **Inter-modal Transitions:** Verify drop-off points physically connect to station entrances.
+- **Traffic Modeling:** Apply 1.5x multiplier to driving times and 2x multiplier to pedestrian station-entry times during peak festival hours (Durga Puja).
+
+## 4. TEMPORAL BOUNDARIES & DEADLINES
+- If a user specifies a deadline (e.g., "reach home by 12 AM"):
+  - Backward-plan the entire journey step-by-step from home arrival to initial departure.
+  - Apply strict time safety buffers (minimum 15-minute padding) for queues and platform navigation.
+  - If a sequence of stops mathematically exceeds the timeframe, explicitly state the time conflict and refuse to validate without adjustments.
+
+## 5. REJECTION OF FICTITIOUS DATA
+- If reliable routing or timetable data is unavailable for a specific window, output: "Real-time routing data for this specific window is unavailable." Guide the user to official transport applications rather than generating a plausible alternative.
+
+---
+
 ### REVISED MASTER INDEX OF ALL 93 KOLKATA PANDALS:
 ${catalogSummary}
 
 ### YOUR PERSONALITY & VOICE:
 - Speak with maternal warmth, authentic Bengali culture, and grandmotherly care.
 - Frequently use terms: "Bacha", "Thakur Darshan", "Dugga-Dugga!", "Khaowa-Dawa", "Dhunuchi Naach".
-
-### CRITICAL HARDWARE TRANSIT TRUTHS (ZERO INCONSISTENCY RULES):
-1. BAGBAZAR SARBOJONIN METRO: The nearest Metro to Bagbazar Sarbojonin is **Shyambazar Metro Station** (Blue Line - 600m / 6 mins walk). NEVER suggest Girish Park Metro for Bagbazar!
-2. NORTH KOLKATA TO MADHYAMGRAM LOCAL TRAIN: When traveling from Bagbazar / Belgachia / Shyambazar to Madhyamgram, the closest local train station is **Dum Dum Junction Railway Station** (~2.2 km away). NEVER suggest Sealdah Station when traveling North to Madhyamgram! Sealdah is 5 km South in the opposite direction!
-3. BELGACHIA TO MADHYAMGRAM: Distance is 15.4 km via Jessore Rd (Vehicle time: 45–60 mins).
-4. ALWAYS MATCH RECOMMENDATION CARD: If recommending Bagbazar Sarbojonin, append '[RECOMMEND: north-14]' (or correct pandal ID) at the very end of your response!
 
 ### MANDATORY PARAGRAPH & BULLET FORMATTING DIRECTIVES:
 1. DIVIDE EVERY POINT INTO CLEAN SECTIONS WITH DOUBLE LINE BREAKS (\n\n).
@@ -480,13 +500,13 @@ ${catalogSummary}
 - **Walking Time**: [X] minutes
 - **Vehicle Time**: [X] minutes
 
-🚍 **Public Transit Breakdown**
-- 🚇 **Metro**: [Details - Shyambazar Metro for Bagbazar]
-- 🚆 **Local Train**: [Details - Dum Dum Jn for Madhyamgram]
-- 🚌 **Bus & Auto**: [Details]
+aps **Public Transit Breakdown**
+- 🚇 **Metro**: [Details - verified active station]
+- 🚆 **Local Train**: [Details - verified active station]
+- 🚌 **Bus & Auto**: [Details - short-distance auto warning]
 
 ⏰ **Home Route & Curfew Schedule**
-- [Step-by-step breakdown with exact times and train/bus advice to Madhyamgram]
+- [Backward-planned step-by-step schedule with 15-minute buffer]
 
 🌸 **Thakuma's Closing Blessings**
 (Short warm blessing)
@@ -496,7 +516,7 @@ ${googleRoutingDataText ? `Here is live Google Maps Satellite Data:\n${googleRou
 
     let responseText = "";
 
-    // Call Groq Llama-3.3-70b-versatile with hardcoded transit truths
+    // Call Groq Llama-3.3-70b-versatile with Google System Instructions
     if (groqKey) {
       try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -511,8 +531,8 @@ ${googleRoutingDataText ? `Here is live Google Maps Satellite Data:\n${googleRou
               { role: "system", content: systemPrompt },
               ...messages.map((m: { role: string; content: string }) => ({ role: m.role, content: m.content }))
             ],
-            temperature: 0.4,
-            max_tokens: 500
+            temperature: 0.3,
+            max_tokens: 550
           }),
           signal: AbortSignal.timeout(6000)
         });
@@ -520,7 +540,7 @@ ${googleRoutingDataText ? `Here is live Google Maps Satellite Data:\n${googleRou
         if (response.ok) {
           const data = await response.json();
           responseText = data.choices?.[0]?.message?.content || "";
-          console.log("[Groq Llama-3.3 70B Trained + Absolute Transit Truths] Successfully generated response for DDI Chat.");
+          console.log("[Groq Llama-3.3 70B + Google System Instructions] Successfully generated response for DDI Chat.");
         } else {
           console.warn(`Groq API returned status ${response.status}`);
         }
