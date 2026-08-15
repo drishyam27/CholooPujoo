@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import dbConnect from "@/backend/mongodb";
-import User from "@/backend/models/User";
+import { supabase } from "@/backend/supabase";
 
 export async function POST(request: Request) {
   try {
@@ -12,10 +11,8 @@ export async function POST(request: Request) {
     const name = session?.user?.name || "Test Pujo Explorer";
     const image = session?.user?.image || "/images/avatar-girl.png";
 
-    // Auto-fallback to a mock user in local development preview if no session exists
     if (!email) {
       email = "mock-tester@choloopujoo.com";
-      console.log("No active NextAuth session found. Using mock explorer fallback for testing.");
     }
 
     const { pandalId } = await request.json();
@@ -23,44 +20,67 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Pandal ID is required" }, { status: 400 });
     }
 
-    await dbConnect();
-    
-    // Find or create the user (using upsert logic for development robustness)
-    let user = await User.findOne({ email });
+    // Find user in Supabase
+    let { data: user } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .single();
+
     if (!user) {
-      user = await User.create({
+      const { data: newUser } = await supabase
+        .from("users")
+        .insert({
+          email,
+          name,
+          image,
+          visited_pandals: [pandalId],
+          visit_count: 1
+        })
+        .select()
+        .single();
+
+      user = newUser || {
         email,
         name,
         image,
-        visitedPandals: [],
-        visitCount: 0
+        visited_pandals: [pandalId],
+        visit_count: 1
+      };
+
+      return NextResponse.json({
+        success: true,
+        message: "Pandal marked as visited in Supabase!",
+        visitedPandals: user.visited_pandals,
+        visitCount: user.visit_count
       });
     }
 
-    // Initialize visitedPandals array if missing
-    if (!user.visitedPandals) {
-      user.visitedPandals = [];
+    let visitedList: string[] = user.visited_pandals || user.visitedPandals || [];
+    
+    // Toggle or Add
+    if (visitedList.includes(pandalId)) {
+      visitedList = visitedList.filter((id) => id !== pandalId);
+    } else {
+      visitedList = [...visitedList, pandalId];
     }
 
-    // Add to visited list if not already present
-    if (!user.visitedPandals.includes(pandalId)) {
-      user.visitedPandals.push(pandalId);
-      user.visitCount = user.visitedPandals.length;
-      await user.save();
-      
-      return NextResponse.json({ 
-        success: true, 
-        message: "Pandal marked as visited in MongoDB!",
-        visitedPandals: user.visitedPandals,
-        visitCount: user.visitCount
-      });
-    }
+    const visitCount = visitedList.length;
 
-    return NextResponse.json({ 
-      success: true, 
-      message: "Pandal was already visited.",
-      visitedPandals: user.visitedPandals,
-      visitCount: user.visitCount
+    // Update record in Supabase
+    await supabase
+      .from("users")
+      .update({
+        visited_pandals: visitedList,
+        visit_count: visitCount
+      })
+      .eq("email", email);
+
+    return NextResponse.json({
+      success: true,
+      message: "Pandal visit checklist updated in Supabase!",
+      visitedPandals: visitedList,
+      visitCount
     });
   } catch (error: unknown) {
     const err = error as Error;

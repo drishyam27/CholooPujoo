@@ -1,8 +1,7 @@
 import Navbar from "@/frontend/components/Navbar";
 import Image from "next/image";
 import { Trophy, Medal, Award, Crown } from "lucide-react";
-import dbConnect from "@/backend/mongodb";
-import User from "@/backend/models/User";
+import { supabase } from "@/backend/supabase";
 
 interface LeaderboardUser {
   _id: string;
@@ -15,57 +14,54 @@ export const revalidate = 0; // Disable caching to ensure real-time dynamic lead
 
 async function getLeaderboardData() {
   try {
-    await dbConnect();
-    
-    // Ensure some mock competitors exist if database is fresh
-    const count = await User.countDocuments();
-    if (count === 0) {
-      await User.insertMany([
+    const { data: users, error } = await supabase
+      .from("users")
+      .select("id, name, image, visit_count, visited_pandals")
+      .order("visit_count", { ascending: false })
+      .limit(10);
+
+    if (!users || users.length === 0 || error) {
+      return [
         {
+          _id: "mock-1",
           name: "Anirban Bhattacharya",
-          email: "anirban@pujo.com",
-          image: "/images/avatar-boy.png",
-          visitedPandals: ["south-1", "south-2", "south-10", "south-12", "north-1", "north-31", "bonedi-4"],
+          image: "/images/avatar-boy-1-beard.png",
           visitCount: 7
         },
         {
+          _id: "mock-2",
           name: "Priyanka Sen",
-          email: "priyanka@pujo.com",
           image: "/images/avatar-girl.png",
-          visitedPandals: ["south-10", "south-12", "south-14", "north-1", "north-24"],
           visitCount: 5
         },
         {
+          _id: "mock-3",
           name: "Sourav Ganguly",
-          email: "sourav@pujo.com",
-          image: "/images/avatar-boy.png",
-          visitedPandals: ["south-24", "south-28", "north-31", "north-32"],
+          image: "/images/avatar-boy-3-beard.png",
           visitCount: 4
         },
         {
+          _id: "mock-4",
           name: "Subhashree Roy",
-          email: "subhashree@pujo.com",
-          image: "/images/avatar-girl.png",
-          visitedPandals: ["bonedi-1", "bonedi-3", "bonedi-4"],
+          image: "/images/avatar-girl-2.png",
           visitCount: 3
         }
-      ]);
+      ];
     }
 
-    const users = await User.find({})
-      .sort({ visitCount: -1 })
-      .limit(10)
-      .select("name image visitCount")
-      .lean();
-
-    return JSON.parse(JSON.stringify(users));
+    return users.map((u) => ({
+      _id: u.id,
+      name: u.name || "Explorer",
+      image: u.image || "/images/avatar-girl.png",
+      visitCount: u.visit_count || (u.visited_pandals ? u.visited_pandals.length : 0)
+    }));
   } catch (error) {
-    console.error("Database connection failed. Falling back to local offline mock leaderboard data:", error);
+    console.error("Supabase leaderboard fetch error:", error);
     return [
       {
         _id: "mock-1",
         name: "Anirban Bhattacharya",
-        image: "/images/avatar-boy.png",
+        image: "/images/avatar-boy-1-beard.png",
         visitCount: 7
       },
       {
@@ -77,13 +73,13 @@ async function getLeaderboardData() {
       {
         _id: "mock-3",
         name: "Sourav Ganguly",
-        image: "/images/avatar-boy.png",
+        image: "/images/avatar-boy-3-beard.png",
         visitCount: 4
       },
       {
         _id: "mock-4",
         name: "Subhashree Roy",
-        image: "/images/avatar-girl.png",
+        image: "/images/avatar-girl-2.png",
         visitCount: 3
       }
     ];

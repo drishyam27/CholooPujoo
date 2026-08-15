@@ -3,8 +3,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Navbar from "@/frontend/components/Navbar";
 import Link from "next/link";
 import { MapPin, Trophy, Calendar, CheckCircle2, Bookmark, ArrowRight, Activity } from "lucide-react";
-import dbConnect from "@/backend/mongodb";
-import User from "@/backend/models/User";
+import { supabase } from "@/backend/supabase";
 import { pandals } from "@/frontend/lib/mockData";
 import AvatarSelector from "@/frontend/components/AvatarSelector";
 
@@ -12,46 +11,78 @@ export const revalidate = 0; // Ensure fresh profile rendering
 
 async function getProfileData() {
   try {
-    await dbConnect();
     const session = await getServerSession(authOptions);
 
     let email = session?.user?.email;
     const name = session?.user?.name || "Test Pujo Explorer";
     const image = session?.user?.image || "/images/avatar-girl.png";
 
-    // Development fallback for preview testing without session
     if (!email) {
       email = "mock-tester@choloopujoo.com";
     }
 
-    // Find or create the user in MongoDB
-    let user = await User.findOne({ email });
-    if (!user) {
-      user = await User.create({
-        email,
-        name,
-        image,
-        visitedPandals: [],
-        visitCount: 0
-      });
-    } else if (!user.image || user.image.includes("dicebear.com")) {
-      user.image = "/images/avatar-girl.png";
-      await user.save();
+    // Find or create the user in Supabase
+    let { data: user, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    if (!user || error) {
+      // Create user record in Supabase
+      const { data: newUser, error: createError } = await supabase
+        .from("users")
+        .insert({
+          email,
+          name,
+          image,
+          visited_pandals: [],
+          visit_count: 0
+        })
+        .select()
+        .single();
+
+      if (createError || !newUser) {
+        console.warn("Supabase user creation notice:", createError?.message);
+        user = {
+          email,
+          name,
+          image,
+          visited_pandals: [],
+          visit_count: 0,
+          created_at: new Date().toISOString()
+        };
+      } else {
+        user = newUser;
+      }
     }
 
-    // Calculate dynamic rank: number of users with strictly more visitCount than current user + 1
-    const rank = await User.countDocuments({ visitCount: { $gt: user.visitCount } }) + 1;
+    const visitedPandals = user.visited_pandals || user.visitedPandals || [];
+    const visitCount = visitedPandals.length;
+
+    // Calculate dynamic global rank in Supabase
+    const { count } = await supabase
+      .from("users")
+      .select("*", { count: "exact", head: true })
+      .gt("visit_count", visitCount);
+
+    const rank = (count || 0) + 1;
 
     return {
-      user: JSON.parse(JSON.stringify(user)),
+      user: {
+        ...user,
+        visitedPandals,
+        visitCount,
+        createdAt: user.created_at || user.createdAt
+      },
       rank
     };
   } catch (error) {
-    console.error("Database connection failed. Falling back to local offline mock profile data:", error);
+    console.error("Supabase profile fetch error. Falling back to local offline mock profile data:", error);
     return {
       user: {
         email: "mock-tester@choloopujoo.com",
-        name: "Test Pujo Explorer (Offline Fallback)",
+        name: "Test Pujo Explorer",
         image: "/images/avatar-girl.png",
         visitedPandals: ["south-12", "south-14", "north-31", "bonedi-3"],
         visitCount: 4,

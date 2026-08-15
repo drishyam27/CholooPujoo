@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import dbConnect from "@/backend/mongodb";
-import User from "@/backend/models/User";
+import { supabase } from "@/backend/supabase";
 
 export async function POST(request: Request) {
   try {
@@ -10,7 +9,6 @@ export async function POST(request: Request) {
     
     let email = session?.user?.email;
 
-    // Fallback to mock user for local testing preview if no session is active
     if (!email) {
       email = "mock-tester@choloopujoo.com";
     }
@@ -20,19 +18,32 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Avatar URL is required" }, { status: 400 });
     }
 
-    await dbConnect();
-    
-    // Find and update the user's image in MongoDB
-    const user = await User.findOneAndUpdate(
-      { email },
-      { image: avatarUrl },
-      { new: true, upsert: true }
-    );
+    // Upsert user image in Supabase
+    const { data: user } = await supabase
+      .from("users")
+      .select("*")
+      .eq("email", email)
+      .single();
+
+    if (!user) {
+      await supabase.from("users").insert({
+        email,
+        name: session?.user?.name || "Test Pujo Explorer",
+        image: avatarUrl,
+        visited_pandals: [],
+        visit_count: 0
+      });
+    } else {
+      await supabase
+        .from("users")
+        .update({ image: avatarUrl })
+        .eq("email", email);
+    }
 
     return NextResponse.json({ 
       success: true, 
-      message: "Avatar updated successfully!",
-      image: user.image 
+      message: "Avatar updated successfully in Supabase!",
+      image: avatarUrl 
     });
   } catch (error: unknown) {
     const err = error as Error;
