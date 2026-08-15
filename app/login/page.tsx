@@ -17,8 +17,8 @@ const GoogleIcon = () => (
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, isLoggedIn } = useAppContext();
-  
+  const { login, loginGuest, isLoggedIn } = useAppContext();
+
   const [isSignUp, setIsSignUp] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -39,9 +39,8 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate auth delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    login();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    loginGuest();
     router.push("/");
   };
 

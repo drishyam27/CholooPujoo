@@ -10,6 +10,7 @@ interface AppContextType {
   userName?: string | null;
   userImage?: string | null;
   login: () => void;
+  loginGuest: () => void;
   logout: () => void;
   bookmarkedIds: string[];
   toggleBookmark: (id: string) => void;
@@ -25,13 +26,22 @@ export const AppContextProvider = ({
   children: React.ReactNode;
 }) => {
   const { data: session, status } = useSession();
-  
-  const userEmail = session?.user?.email;
-  const userName = session?.user?.name;
-  const userImage = session?.user?.image;
+  const [isGuest, setIsGuest] = useState(false);
 
-  // Real authentication check via NextAuth Google OAuth session
-  const isLoggedIn = status === "authenticated" || Boolean(userEmail);
+  const realEmail = session?.user?.email;
+  const userEmail = realEmail || (isGuest ? "mock-tester@choloopujoo.com" : null);
+  const userName = session?.user?.name || (isGuest ? "Guest Explorer" : null);
+  const userImage = session?.user?.image || "/images/avatar-girl.png";
+
+  // Check guest state in localStorage
+  useEffect(() => {
+    const guestState = localStorage.getItem("guestSession");
+    if (guestState === "true") {
+      setIsGuest(true);
+    }
+  }, []);
+
+  const isLoggedIn = status === "authenticated" || Boolean(realEmail) || isGuest;
 
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>([]);
   const [completedIds, setCompletedIds] = useState<string[]>([]);
@@ -75,8 +85,22 @@ export const AppContextProvider = ({
     localStorage.setItem("completedIds", JSON.stringify(completedIds));
   }, [completedIds]);
 
-  const login = () => signIn("google", { callbackUrl: "/" });
-  const logout = () => signOut({ callbackUrl: "/login" });
+  const login = () => {
+    localStorage.removeItem("guestSession");
+    setIsGuest(false);
+    signIn("google", { callbackUrl: "/" });
+  };
+
+  const loginGuest = () => {
+    localStorage.setItem("guestSession", "true");
+    setIsGuest(true);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("guestSession");
+    setIsGuest(false);
+    signOut({ callbackUrl: "/login" });
+  };
 
   const toggleBookmark = (id: string) => {
     setBookmarkedIds((prev) =>
@@ -110,6 +134,7 @@ export const AppContextProvider = ({
         userName,
         userImage,
         login,
+        loginGuest,
         logout,
         bookmarkedIds,
         toggleBookmark,
