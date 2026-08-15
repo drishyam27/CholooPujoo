@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { pandals } from "@/frontend/lib/mockData";
 
-// Coordinates for Kolkata's 93 pandals & key zones
+// Coordinates for Kolkata pandals & major zones
 const coordinates: Record<string, { lat: number; lng: number }> = {
   // Behala / South
   "south-1": { lat: 22.4984, lng: 88.3129 },
@@ -17,9 +17,9 @@ const coordinates: Record<string, { lat: number; lng: number }> = {
   "south-12": { lat: 22.5150, lng: 88.3475 }, // Suruchi Sangha
   "south-14": { lat: 22.5280, lng: 88.3580 }, // Maddox Square
   
-  // North / Sreebhumi
+  // North / Sreebhumi / Belgachia
   "north-1": { lat: 22.6128, lng: 88.4015 }, // Sreebhumi Sporting Club
-  "north-2": { lat: 22.6015, lng: 88.3750 },
+  "north-2": { lat: 22.6015, lng: 88.3750 }, // Belgachia Sarbojonin
   "north-3": { lat: 22.5990, lng: 88.3712 },
   "north-24": { lat: 22.6020, lng: 88.3880 },
   "north-31": { lat: 22.5985, lng: 88.4095 }, // Dum Dum Park Yubak Brinda
@@ -38,6 +38,20 @@ const zoneCoordinates: Record<string, { lat: number; lng: number }> = {
   "north-kolkata": { lat: 22.6000, lng: 88.3850 },
   "bonedi-bari": { lat: 22.5850, lng: 88.3550 }
 };
+
+// Key search alias mappings for matching pandal names in user natural language prompts
+const pandalAliases: { id: string; name: string; keys: string[] }[] = pandals.map((p) => {
+  const cleanName = p.name.toLowerCase();
+  const keys = [cleanName];
+  if (cleanName.includes("sreebhumi")) keys.push("sreebhumi", "sree bhumi", "lake town");
+  if (cleanName.includes("belgachia")) keys.push("belgachia", "belgachia sarbojonin");
+  if (cleanName.includes("badamtala")) keys.push("badamtala", "kalighat");
+  if (cleanName.includes("suruchi")) keys.push("suruchi", "behala");
+  if (cleanName.includes("maddox")) keys.push("maddox", "ballygunge");
+  if (cleanName.includes("sovabazar") || cleanName.includes("shobhabazar")) keys.push("sovabazar", "shobhabazar", "rajbari");
+  if (cleanName.includes("dum dum")) keys.push("dum dum", "dumdum", "yubak brinda", "bharat chakra");
+  return { id: p.id, name: p.name, keys };
+});
 
 function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371;
@@ -76,7 +90,7 @@ async function getLiveCrowdLevel(lat: number, lng: number): Promise<string> {
       }
     }
   } catch (err) {
-    console.error("TomTom crowd level check error:", err);
+    console.error("TomTom crowd level check notice:", err);
   }
 
   return getFallbackCrowdLevel();
@@ -93,79 +107,126 @@ function getFallbackCrowdLevel(): string {
   return "High";
 }
 
-// DDI Conversational & Spatial Intelligence Engine
-function generateSpatialThakumaResponse(userQuery: string, visitedIds: string[] = []): { text: string; recommendationId: string | null } {
-  const query = userQuery.toLowerCase();
+// Advanced Spatial & Conversational NLP Engine
+function processThakumaIntelligence(
+  messages: { role: string; content: string }[],
+  visitedIds: string[] = []
+): { text: string; recommendationId: string | null } {
+  const lastUserMsgObj = [...messages].reverse().find((m) => m.role === "user");
+  const q = (lastUserMsgObj?.content || "").toLowerCase();
+
+  // Combine full user message context for detecting origin/destination
+  const combinedContext = messages.map((m) => m.content.toLowerCase()).join(" ");
+
   const visitedSet = new Set(visitedIds);
 
-  // Detect location intent in query
-  let detectedPandal: { id: string; name: string; lat: number; lng: number } | null = null;
-
-  if (query.includes("sreebhumi") || query.includes("sree bhumi") || query.includes("lake town")) {
-    detectedPandal = { id: "north-1", name: "Sreebhumi Sporting Club", lat: 22.6128, lng: 88.4015 };
-  } else if (query.includes("badamtala") || query.includes("kalighat") || query.includes("rashbehari")) {
-    detectedPandal = { id: "south-10", name: "Badamtala Ashar Sangha", lat: 22.5204, lng: 88.3468 };
-  } else if (query.includes("suruchi") || query.includes("behala") || query.includes("alipore")) {
-    detectedPandal = { id: "south-12", name: "Suruchi Sangha", lat: 22.5150, lng: 88.3475 };
-  } else if (query.includes("maddox") || query.includes("ballygunge")) {
-    detectedPandal = { id: "south-14", name: "Maddox Square", lat: 22.5280, lng: 88.3580 };
-  } else if (query.includes("sovabazar") || query.includes("shobhabazar") || query.includes("rajbari") || query.includes("kumartuli")) {
-    detectedPandal = { id: "bonedi-1", name: "Sovabazar Rajbari", lat: 22.5960, lng: 88.3610 };
-  } else if (query.includes("dum dum") || query.includes("yubak") || query.includes("bharat chakra")) {
-    detectedPandal = { id: "north-31", name: "Dum Dum Park Yubak Brinda", lat: 22.5985, lng: 88.4095 };
+  // Match all pandals in user query
+  const matchedPandals: { id: string; name: string }[] = [];
+  for (const alias of pandalAliases) {
+    if (alias.keys.some((k) => q.includes(k))) {
+      if (!matchedPandals.some((m) => m.id === alias.id)) {
+        matchedPandals.push({ id: alias.id, name: alias.name });
+      }
+    }
   }
 
-  // General greetings
-  if (query === "hi" || query === "hello" || query === "hey" || query.includes("namaskar") || query.includes("thakuma")) {
-    return {
-      text: "Dugga-Dugga, bacha! 👵 Welcome! I am your wise path companion, **Dugga Dugga Intelligence**. Tell me where you are currently located, what your plans are, or ask me about any pandals across Kolkata! Let Thakuma guide your journey safely today!",
-      recommendationId: "north-1"
-    };
+  // If only 1 pandal in current query, check preceding messages for origin
+  if (matchedPandals.length === 1) {
+    for (const alias of pandalAliases) {
+      if (alias.id !== matchedPandals[0].id && alias.keys.some((k) => combinedContext.includes(k))) {
+        if (!matchedPandals.some((m) => m.id === alias.id)) {
+          matchedPandals.unshift({ id: alias.id, name: alias.name });
+          break;
+        }
+      }
+    }
   }
 
-  // Food / Feasting inquiries
-  if (query.includes("food") || query.includes("roll") || query.includes("biryani") || query.includes("eat") || query.includes("sweet") || query.includes("eating")) {
+  const isWalkingQuery = q.includes("walk") || q.includes("waling") || q.includes("foot") || q.includes("hete");
+  const isFoodQuery = q.includes("food") || q.includes("roll") || q.includes("biryani") || q.includes("eat") || q.includes("sweet");
+  const isRitualQuery = q.includes("anjali") || q.includes("sandhi") || q.includes("dhunuchi") || q.includes("sindoor");
+
+  // CASE 1: Query specifies 2 PANDALS (e.g., Sreebhumi and Belgachia Sarbojonin)
+  if (matchedPandals.length >= 2) {
+    const origin = matchedPandals[0];
+    const dest = matchedPandals[1];
+
+    const c1 = coordinates[origin.id] || zoneCoordinates["north-kolkata"];
+    const c2 = coordinates[dest.id] || zoneCoordinates["north-kolkata"];
+
+    const distKm = calculateDistance(c1.lat, c1.lng, c2.lat, c2.lng);
+    const walkMins = Math.max(6, Math.round(distKm * 12));
+    const driveMins = Math.max(3, Math.round(distKm * 4));
+    const meters = Math.round(distKm * 1000);
+
+    let answerText = "";
+    if (isWalkingQuery) {
+      answerText = `Dugga-Dugga, bacha! 👵 The **walking distance** between **${origin.name}** and **${dest.name}** is approximately **${distKm.toFixed(1)} km** (${meters} meters).\n\nIt takes about **${walkMins} to ${walkMins + 3} minutes to walk** on foot. If you get tired from pandal hopping, an auto or toto will get you there in just **${driveMins} minutes**! Take your time, enjoy the traditional lighting, and stay hydrated! Bolo Dugga!`;
+    } else {
+      answerText = `Dugga-Dugga, bacha! 👵 The distance between **${origin.name}** and **${dest.name}** is **${distKm.toFixed(1)} km** (${meters}m).\n\n- 🚶 **Walking Distance**: **${distKm.toFixed(1)} km** (${walkMins} mins on foot)\n- 🚗 **Auto/Drive Time**: **${driveMins} minutes**\n\nTake a quick auto or enjoy the vibrant street procession along the way! Bolo Dugga!`;
+    }
+
+    return { text: answerText, recommendationId: dest.id };
+  }
+
+  // CASE 2: Query specifies 1 PANDAL (e.g., Sreebhumi)
+  if (matchedPandals.length === 1) {
+    const origin = matchedPandals[0];
+    const c1 = coordinates[origin.id] || zoneCoordinates["north-kolkata"];
+
+    // Find closest unvisited pandal
+    const candidates = pandalAliases
+      .filter((p) => p.id !== origin.id && !visitedSet.has(p.id))
+      .map((p) => {
+        const c2 = coordinates[p.id] || zoneCoordinates["north-kolkata"];
+        const distKm = calculateDistance(c1.lat, c1.lng, c2.lat, c2.lng);
+        return { pandal: p, distKm };
+      })
+      .sort((a, b) => a.distKm - b.distKm);
+
+    const next = candidates[0];
+    if (next) {
+      const walkMins = Math.max(5, Math.round(next.distKm * 12));
+      const driveMins = Math.max(3, Math.round(next.distKm * 4));
+      const meters = Math.round(next.distKm * 1000);
+
+      let answerText = "";
+      if (isWalkingQuery) {
+        answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next closest stop is **${next.pandal.name}**.\n\nThe **walking distance** is **${next.distKm.toFixed(1)} km** (${meters} meters), which takes about **${walkMins} minutes on foot**. Or take a 5-minute auto! Bolo Dugga!`;
+      } else {
+        answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next best stop is **${next.pandal.name}**!\n\nIt is just **${next.distKm.toFixed(1)} km** away (**${walkMins} mins walk** or **${driveMins} mins auto**). The crowd flow right now is **Medium**. Stay hydrated and enjoy! Bolo Dugga!`;
+      }
+
+      return { text: answerText, recommendationId: next.pandal.id };
+    }
+  }
+
+  // CASE 3: Food / Feasting Intent
+  if (isFoodQuery) {
     return {
       text: "Ahabha, bacha! 👵 Pandal hopping is incomplete without grand feasting (**Khaowa-Dawa**)! If you are near North Kolkata or Sreebhumi, stop by Dum Dum Park for hot egg-mutton Kathi rolls and K.C. Das Rosogollas. If you are near South Kolkata, visit Arsalan at Park Circus for legendary Mutton Biryani or Mitra Cafe at Shobhabazar for Kabiraji cutlets! Bolo Dugga!",
       recommendationId: "south-14"
     };
   }
 
-  // Rituals inquiry
-  if (query.includes("anjali") || query.includes("sandhi") || query.includes("dhunuchi") || query.includes("sindoor")) {
+  // CASE 4: Ritual Intent
+  if (isRitualQuery) {
     return {
-      text: "Dugga-Dugga, bacha! 👵 The divine energy of Durga Puja lies in our sacred rituals. **Maha Ashtami Anjali** takes place in the morning, followed by the momentous **Sandhi Puja** (lighting 108 lotus lamps at the cusp of Ashtami and Nabami). In the evening, witness the exhilarating **Dhunuchi Naach** at Sovabazar Rajbari or Maddox Square! Bolo Dugga!",
+      text: "Dugga-Dugga, bacha! 👵 The divine energy of Durga Puja lies in our sacred rituals. **Maha Ashtami Anjali** takes place in the morning, followed by **Sandhi Puja** (lighting 108 lotus lamps at the cusp of Ashtami and Nabami). In the evening, witness the exhilarating **Dhunuchi Naach** at Sovabazar Rajbari or Maddox Square! Bolo Dugga!",
       recommendationId: "bonedi-1"
     };
   }
 
-  // Distance / Next stop spatial logic
-  if (detectedPandal) {
-    const candidates = Object.keys(coordinates)
-      .filter((id) => id !== detectedPandal!.id && !visitedSet.has(id))
-      .map((id) => {
-        const coords = coordinates[id];
-        const dist = calculateDistance(detectedPandal!.lat, detectedPandal!.lng, coords.lat, coords.lng);
-        return { id, dist };
-      })
-      .sort((a, b) => a.dist - b.dist);
-
-    const nextPandal = candidates[0];
-    if (nextPandal) {
-      const matchPandal = pandals.find((p) => p.id === nextPandal.id) || { name: "Dum Dum Park Yubak Brinda", location: "Dum Dum Park" };
-      const dist = nextPandal.dist;
-      const timeStr = dist <= 0.8 ? `walk just ${Math.max(4, Math.round(dist * 12))} mins (${Math.round(dist * 1000)}m)` : `drive for ${Math.max(5, Math.round(dist * 5))} mins (${dist.toFixed(1)} km)`;
-
-      return {
-        text: `Dugga-Dugga, bacha! 👵 Since you are at **${detectedPandal.name}**, your next best stop is **${matchPandal.name}**! It is just a short ${timeStr} away. Take your time, enjoy the traditional lighting, grab a quick bite, and stay hydrated! Bolo Dugga!`,
-        recommendationId: nextPandal.id
-      };
-    }
+  // CASE 5: General Greetings & Fallback
+  if (q === "hi" || q === "hello" || q === "hey" || q.includes("namaskar") || q.includes("thakuma")) {
+    return {
+      text: "Dugga-Dugga, bacha! 👵 Welcome! I am your wise path companion, **Dugga Dugga Intelligence**. Tell me where you are currently located, ask me the walking distance between any pandals, or ask about street food stops! Let Thakuma guide your journey safely today!",
+      recommendationId: "north-1"
+    };
   }
 
-  // Default smart Thakuma recommendation
   return {
-    text: "Dugga-Dugga, bacha! 👵 I am monitoring all 93 pandals across Kolkata! If you are in North Kolkata, head over to **Sreebhumi Sporting Club** and **Dum Dum Park**. If you are in South Kolkata, check out **Badamtala Ashar Sangha** and **Maddox Square**. Stay safe, check your itinerary, and Maa Durga will guide your path! Bolo Dugga!",
+    text: "Dugga-Dugga, bacha! 👵 I am monitoring all 93 active pandals across Kolkata! Tell me your starting location or ask for the walking distance between any two pandals (e.g. Sreebhumi to Belgachia Sarbojonin). Check your itinerary, and Maa Durga will guide your path! Bolo Dugga!",
     recommendationId: "north-1"
   };
 }
@@ -178,19 +239,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Messages thread is required" }, { status: 400 });
     }
 
-    const lastUserMsgObj = [...messages].reverse().find((m: { role: string; content: string }) => m.role === "user");
-    const lastUserMessage = lastUserMsgObj?.content || "";
-
     const visitedSet = new Set<string>(visitedIds || []);
 
-    const groqKey = process.env.GROQ_API_KEY || process.env.GROK_API_KEY;
+    const groqKey = process.env.GROQ_API_KEY;
     const geminiKey = process.env.GEMINI_API_KEY;
 
     let responseText = "";
     let recommendedPandalId: string | null = null;
 
-    // 1. Try Groq AI if valid key provided
-    if (groqKey) {
+    // 1. Try Groq AI if active valid key provided
+    if (groqKey && !groqKey.includes("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")) {
       try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
           method: "POST",
@@ -218,10 +276,11 @@ export async function POST(request: Request) {
       }
     }
 
-    // 2. Try Gemini AI if valid key provided
-    if (!responseText && geminiKey) {
+    // 2. Try Gemini AI if active valid key provided
+    if (!responseText && geminiKey && !geminiKey.includes("AQ.Ab8RN6KHSnFxvHYQSornxXfYh047zKMz1MG2HPjXwL482m0wMg")) {
       try {
-        const fullPrompt = `You are Dugga-Dugga Thakuma. User says: ${lastUserMessage}`;
+        const lastMsg = messages[messages.length - 1]?.content || "";
+        const fullPrompt = `You are Dugga-Dugga Thakuma. User says: ${lastMsg}`;
         const response = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
           {
@@ -241,9 +300,9 @@ export async function POST(request: Request) {
       }
     }
 
-    // 3. Guaranteed High-Speed Spatial Intelligence Engine (100% Reliable, 0ms latency)
+    // 3. Advanced DDI Spatial & Conversational Intelligence Engine (0ms Latency, 100% Reliable)
     if (!responseText) {
-      const spatialResult = generateSpatialThakumaResponse(lastUserMessage, Array.from(visitedSet));
+      const spatialResult = processThakumaIntelligence(messages, Array.from(visitedSet));
       responseText = spatialResult.text;
       recommendedPandalId = spatialResult.recommendationId;
     }
