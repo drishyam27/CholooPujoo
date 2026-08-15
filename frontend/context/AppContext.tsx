@@ -102,23 +102,10 @@ export const AppContextProvider = ({
     localStorage.setItem("completedIds", JSON.stringify(completedIds));
   }, [completedIds]);
 
-  const login = async () => {
+  const login = () => {
     localStorage.removeItem("guestSession");
     setIsGuest(false);
-
-    // Try Supabase Native OAuth with Google Provider
-    const origin = typeof window !== "undefined" ? window.location.origin : "";
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${origin}/`,
-      },
-    });
-
-    if (error) {
-      console.warn("Supabase OAuth redirect error, executing NextAuth fallback:", error.message);
-      signIn("google", { callbackUrl: "/" });
-    }
+    signIn("google", { callbackUrl: "/" });
   };
 
   const loginGuest = () => {
