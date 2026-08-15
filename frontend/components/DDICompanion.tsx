@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useAppContext } from "@/frontend/context/AppContext";
-import { Sparkles, MapPin, CheckCircle, Navigation, Send } from "lucide-react";
+import { Sparkles, MapPin, CheckCircle, Navigation, Send, RotateCcw } from "lucide-react";
 import Image from "next/image";
 
 interface DDICompanionProps {
@@ -25,20 +25,20 @@ interface Message {
   recommendation?: RecommendationData | null;
 }
 
+const DEFAULT_WELCOME_MESSAGE: Message = {
+  role: "assistant",
+  content: "Dugga-Dugga, bacha! 👵 I am your wise path companion, **Dugga Dugga Intelligence**. Tell me where you are currently located, what your plans are, or ask me about any of the 93 pandals across Kolkata! Let Thakuma guide your **Thakur Darshan** journey safely today!"
+};
+
 export default function DDICompanion({ visitedIds }: DDICompanionProps) {
-  const { toggleCompleted, completedIds } = useAppContext();
+  const { toggleCompleted, completedIds, userEmail } = useAppContext();
 
   // Reference visitedIds strictly to satisfy unused prop linter checks
   useEffect(() => {
     console.log(`[DDI Chatbot] Initialized with ${visitedIds?.length || 0} completed visits.`);
   }, [visitedIds]);
-  
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Dugga-Dugga, bacha! 👵 I am your wise path companion, **Dugga Dugga Intelligence**. Tell me where you are currently located, what your plans are, or ask me about any of the 93 pandals across Kolkata! Let Thakuma guide your **Thakur Darshan** journey safely today!"
-    }
-  ]);
+
+  const [messages, setMessages] = useState<Message[]>([DEFAULT_WELCOME_MESSAGE]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   
@@ -47,10 +47,76 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
 
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to the bottom of the chat on updates
+  // Load chat history from Supabase / localStorage on mount
+  useEffect(() => {
+    async function loadHistory() {
+      if (userEmail) {
+        try {
+          const res = await fetch("/api/chat/history");
+          const data = await res.json();
+          if (data.history && Array.isArray(data.history) && data.history.length > 0) {
+            setMessages(data.history);
+            return;
+          }
+        } catch (err) {
+          console.error("Failed to load chat history from Supabase:", err);
+        }
+      }
+
+      // Guest local storage fallback
+      const stored = localStorage.getItem("ddi_chat_history");
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setMessages(parsed);
+          }
+        } catch (e) {
+          console.error("Failed to parse local storage chat history:", e);
+        }
+      }
+    }
+
+    loadHistory();
+  }, [userEmail]);
+
+  // Auto-scroll to bottom of chat
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  // Helper to persist chat history
+  const persistHistory = async (newHistory: Message[]) => {
+    localStorage.setItem("ddi_chat_history", JSON.stringify(newHistory));
+    if (userEmail) {
+      try {
+        await fetch("/api/chat/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ history: newHistory }),
+        });
+      } catch (err) {
+        console.error("Failed to save chat history to Supabase:", err);
+      }
+    }
+  };
+
+  const handleClearHistory = async () => {
+    const freshHistory = [DEFAULT_WELCOME_MESSAGE];
+    setMessages(freshHistory);
+    localStorage.removeItem("ddi_chat_history");
+    if (userEmail) {
+      try {
+        await fetch("/api/chat/history", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ history: freshHistory }),
+        });
+      } catch (err) {
+        console.error("Failed to clear chat history in database:", err);
+      }
+    }
+  };
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,8 +125,8 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
     const userMessageText = input.trim();
     setInput("");
     
-    // Add User Message to thread
-    const updatedMessages = [...messages, { role: "user", content: userMessageText } as Message];
+    const userMsg: Message = { role: "user", content: userMessageText };
+    const updatedMessages = [...messages, userMsg];
     setMessages(updatedMessages);
     setLoading(true);
 
@@ -76,33 +142,32 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
 
       const data = await response.json();
 
+      let assistantMsg: Message;
       if (data.success) {
-        setMessages([
-          ...updatedMessages,
-          {
-            role: "assistant",
-            content: data.text,
-            recommendation: data.recommendation
-          }
-        ]);
+        assistantMsg = {
+          role: "assistant",
+          content: data.text,
+          recommendation: data.recommendation
+        };
       } else {
-        setMessages([
-          ...updatedMessages,
-          {
-            role: "assistant",
-            content: "Oops! Thakuma lost connection to the heavens for a second. Please try asking again, bacha!"
-          }
-        ]);
+        assistantMsg = {
+          role: "assistant",
+          content: "Oops! Thakuma lost connection to the heavens for a second. Please try asking again, bacha!"
+        };
       }
+
+      const finalHistory = [...updatedMessages, assistantMsg];
+      setMessages(finalHistory);
+      await persistHistory(finalHistory);
     } catch (err) {
       console.error("DDI Conversational AI chatbot request failed:", err);
-      setMessages([
-        ...updatedMessages,
-        {
-          role: "assistant",
-          content: "Thakuma couldn't connect to the DDI networks. Check your internet connection, my child!"
-        }
-      ]);
+      const errorMsg: Message = {
+        role: "assistant",
+        content: "Thakuma couldn't connect to the DDI networks. Check your internet connection, my child!"
+      };
+      const finalHistory = [...updatedMessages, errorMsg];
+      setMessages(finalHistory);
+      await persistHistory(finalHistory);
     } finally {
       setLoading(false);
     }
@@ -115,40 +180,51 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
 
   return (
     <div className="glass rounded-3xl p-6 sm:p-8 border-accent/20 bg-[#1F0F0D]/65 shadow-[0_8px_32px_rgba(255,77,61,0.08)] relative">
-      {/* Background ambient glow inside container */}
       <div className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[96px] opacity-10 bg-accent pointer-events-none" />
 
       <div className="relative z-10 space-y-6">
         
         {/* Header */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-accent/15 border border-accent/30 flex items-center justify-center text-accent shadow-[0_0_15px_rgba(255,77,61,0.15)]">
-            <Sparkles className="w-5 h-5 animate-pulse" style={{ color: "var(--accent)" }} />
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-accent/15 border border-accent/30 flex items-center justify-center text-accent shadow-[0_0_15px_rgba(255,77,61,0.15)]">
+              <Sparkles className="w-5 h-5 animate-pulse" style={{ color: "var(--accent)" }} />
+            </div>
+            <div>
+              <h3 
+                className="text-lg sm:text-xl font-bold flex items-center gap-2"
+                style={{ fontFamily: "var(--font-theme-serif), var(--font-serif), serif" }}
+              >
+                Dugga Dugga Intelligence <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 rounded bg-accent/20 text-accent font-black border border-accent/30">DDI Chat</span>
+              </h3>
+              <p className="text-xs opacity-50">Interactive spatial navigation chatbot & crowd companion</p>
+            </div>
           </div>
-          <div>
-            <h3 
-              className="text-lg sm:text-xl font-bold flex items-center gap-2"
-              style={{ fontFamily: "var(--font-theme-serif), var(--font-serif), serif" }}
+
+          {/* New Chat / Clear History Button */}
+          {messages.length > 1 && (
+            <button
+              onClick={handleClearHistory}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-[11px] text-white/60 hover:text-white hover:bg-white/10 hover:border-accent/30 transition-all cursor-pointer"
+              title="Start a new conversation"
             >
-              Dugga Dugga Intelligence <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 rounded bg-accent/20 text-accent font-black border border-accent/30">DDI Chat</span>
-            </h3>
-            <p className="text-xs opacity-50">Interactive spatial navigation chatbot & crowd companion</p>
-          </div>
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">New Chat</span>
+            </button>
+          )}
         </div>
 
         {/* Chat Thread Container */}
-        <div className="glass rounded-2xl p-4 border-white/5 bg-[#1F0F0D]/40 min-h-[180px] max-h-[350px] overflow-y-auto space-y-4 pr-1 scrollbar-thin scrollbar-thumb-white/10">
+        <div className="glass rounded-2xl p-4 border-white/5 bg-[#1F0F0D]/40 min-h-[220px] max-h-[400px] overflow-y-auto space-y-4 pr-1 scrollbar-thin scrollbar-thumb-white/10">
           {messages.map((msg, idx) => {
             const isUser = msg.role === "user";
             return (
               <div key={idx} className={`flex flex-col ${isUser ? "items-end" : "items-start"} space-y-1`}>
                 
-                {/* Sender Indicator */}
                 <span className="text-[9px] uppercase tracking-widest opacity-40 font-bold px-1.5">
                   {isUser ? "You" : "👵 Thakuma"}
                 </span>
 
-                {/* Message Bubble */}
                 <div 
                   className={`px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-lg ${
                     isUser 
@@ -162,7 +238,6 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
                     }}
                   />
 
-                  {/* Dynamically Embedded Pandal Card */}
                   {!isUser && msg.recommendation && (
                     <div className="glass rounded-xl overflow-hidden border-white/10 bg-white/5 mt-4 flex flex-col sm:flex-row shadow-lg text-left max-w-sm">
                       <div className="relative w-full sm:w-24 h-28 sm:h-auto flex-shrink-0">
@@ -229,7 +304,6 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
             );
           })}
 
-          {/* Pulsing AI Typing State */}
           {loading && (
             <div className="flex flex-col items-start space-y-1">
               <span className="text-[9px] uppercase tracking-widest opacity-40 font-bold px-1.5">
@@ -245,14 +319,14 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
           <div ref={chatEndRef} />
         </div>
 
-        {/* Chat Input Bar */}
+        {/* Input Bar */}
         <form onSubmit={handleSendMessage} className="relative flex items-center gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={loading}
-            placeholder='Ask Thakuma e.g., "I am at Sreebhumi, what are the pandals nearby?"'
+            placeholder='Ask Thakuma e.g., "I am at Sreebhumi, what are the best pandals and rolls nearby?"'
             className="flex-1 pl-4 pr-10 py-3.5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 focus:outline-none focus:border-accent/40 focus:ring-1 focus:ring-accent/20 text-xs sm:text-sm transition-all duration-300 shadow-inner"
           />
           <button
@@ -267,7 +341,7 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
 
       </div>
 
-      {/* Embed Map Modal */}
+      {/* Map Modal */}
       {showMap && activeRecommendation && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md transition-all duration-300">
           <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-[rgba(255,77,61,0.2)] bg-[#1A0F0D] p-6 shadow-2xl backdrop-blur-xl">
@@ -318,7 +392,6 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
   );
 }
 
-// Inline Close Modal SVG Icon representation
 const XIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={className}>
     <line x1="18" y1="6" x2="6" y2="18"></line>
