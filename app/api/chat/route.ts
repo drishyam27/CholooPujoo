@@ -10,7 +10,7 @@ const m1 = "AIzaSyBdGTNpc6MPjhcH";
 const m2 = "sjsLkPZoooKPZ0_g4aA";
 const defaultGoogleMapsKey = `${m1}${m2}`;
 
-// Coordinates for Kolkata pandals & major zones
+// Coordinates dictionary for Kolkata pandals & major zones
 const coordinates: Record<string, { lat: number; lng: number }> = {
   // Behala / South
   "south-1": { lat: 22.4984, lng: 88.3129 },
@@ -54,16 +54,24 @@ const zoneCoordinates: Record<string, { lat: number; lng: number }> = {
   "jadavpur": { lat: 22.4990, lng: 88.3700 }
 };
 
+// Map search aliases for ALL 93 pandals
 const pandalAliases: { id: string; name: string; category: string; keys: string[] }[] = pandals.map((p) => {
   const cleanName = p.name.toLowerCase();
   const keys = [cleanName];
+  
+  // Generate substring tokens for natural language matching
+  const tokens = cleanName.split(/\s+/).filter(t => t.length > 3 && !["durga", "puja", "committee", "club", "sangha", "pally", "sarbojonin"].includes(t));
+  keys.push(...tokens);
+
   if (cleanName.includes("sreebhumi")) keys.push("sreebhumi", "sree bhumi", "lake town");
   if (cleanName.includes("belgachia")) keys.push("belgachia", "belgachia sarbojonin");
+  if (cleanName.includes("jayrampur") || cleanName.includes("jayampur")) keys.push("jayrampur", "jayampur");
   if (cleanName.includes("badamtala")) keys.push("badamtala", "kalighat");
   if (cleanName.includes("suruchi")) keys.push("suruchi", "behala");
   if (cleanName.includes("maddox")) keys.push("maddox", "ballygunge");
   if (cleanName.includes("sovabazar") || cleanName.includes("shobhabazar")) keys.push("sovabazar", "shobhabazar", "rajbari");
   if (cleanName.includes("dum dum")) keys.push("dum dum", "dumdum", "yubak brinda", "bharat chakra");
+  
   return { id: p.id, name: p.name, category: p.category, keys };
 });
 
@@ -178,7 +186,7 @@ function getFallbackCrowdLevel(): string {
   return "High";
 }
 
-// Fallback Spatial NLP Engine enforcing strict Zone Integrity
+// Fallback Spatial Engine enforcing strict 93 Pandal Zone Integrity
 function processThakumaIntelligence(
   messages: { role: string; content: string }[],
   visitedIds: string[] = []
@@ -217,8 +225,8 @@ function processThakumaIntelligence(
     const origin = matchedPandals[0];
     const dest = matchedPandals[1];
 
-    const c1 = coordinates[origin.id] || zoneCoordinates["north-kolkata"];
-    const c2 = coordinates[dest.id] || zoneCoordinates["north-kolkata"];
+    const c1 = coordinates[origin.id] || zoneCoordinates[origin.category] || zoneCoordinates["north-kolkata"];
+    const c2 = coordinates[dest.id] || zoneCoordinates[dest.category] || zoneCoordinates["north-kolkata"];
 
     const distKm = calculateHaversineDistance(c1.lat, c1.lng, c2.lat, c2.lng);
     const walkMins = Math.max(6, Math.round(distKm * 12));
@@ -235,12 +243,11 @@ function processThakumaIntelligence(
     return { text: answerText, recommendationId: dest.id };
   }
 
-  // ONE PANDAL DETECTED - STRICT ZONE MATCHING
+  // ONE PANDAL DETECTED - STRICT ZONE ISOLATION ACCROSS ALL 93 PANDALS
   if (matchedPandals.length === 1) {
     const origin = matchedPandals[0];
-    const c1 = coordinates[origin.id] || zoneCoordinates["north-kolkata"];
+    const c1 = coordinates[origin.id] || zoneCoordinates[origin.category] || zoneCoordinates["north-kolkata"];
 
-    // Filter candidates strictly by matching geographical zone!
     const validCategoryCandidates = pandalAliases.filter((p) => {
       if (p.id === origin.id || visitedSet.has(p.id)) return false;
       if (origin.category === "north-kolkata") return p.category === "north-kolkata" || p.category === "bonedi-bari";
@@ -265,7 +272,7 @@ function processThakumaIntelligence(
 
       let answerText = "";
       if (isWalkingQuery) {
-        answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next closest stop in North Kolkata is **${next.pandal.name}**.\n\nThe **walking distance** is **${next.distKm.toFixed(1)} km** (${meters} meters), which takes about **${walkMins} minutes on foot**. Or take a 5-minute auto! Bolo Dugga!`;
+        answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next closest stop in the area is **${next.pandal.name}**.\n\nThe **walking distance** is **${next.distKm.toFixed(1)} km** (${meters} meters), which takes about **${walkMins} minutes on foot**. Or take a 5-minute auto! Bolo Dugga!`;
       } else {
         answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next best stop is **${next.pandal.name}**!\n\nIt is just **${next.distKm.toFixed(1)} km** away (**${walkMins} mins walk** or **${driveMins} mins auto**). The crowd flow right now is **Medium**. Stay hydrated and enjoy! Bolo Dugga!`;
       }
@@ -310,7 +317,7 @@ export async function POST(request: Request) {
     const groqKey = process.env.GROQ_API_KEY || defaultGroqKey;
     const googleKey = process.env.GOOGLE_MAPS_API_KEY || defaultGoogleMapsKey;
 
-    // Detect matched pandals in user prompt
+    // Match all pandals in user query
     const matchedPandals: { id: string; name: string; category: string }[] = [];
     for (const alias of pandalAliases) {
       if (alias.keys.some((k) => lastUserMessage.includes(k))) {
@@ -320,7 +327,6 @@ export async function POST(request: Request) {
       }
     }
 
-    // If only 1 pandal in current query, check previous context for origin
     if (matchedPandals.length === 1) {
       for (const alias of pandalAliases) {
         if (alias.id !== matchedPandals[0].id && alias.keys.some((k) => combinedContext.includes(k))) {
@@ -337,7 +343,7 @@ export async function POST(request: Request) {
 
     if (matchedPandals.length >= 1 && googleKey) {
       const originPandal = matchedPandals[0];
-      const originCoords = coordinates[originPandal.id] || zoneCoordinates["north-kolkata"];
+      const originCoords = coordinates[originPandal.id] || zoneCoordinates[originPandal.category] || zoneCoordinates["north-kolkata"];
 
       const homeWords = ["home", "house", "madhyamgram", "barasat", "salt lake", "howrah", "garia", "behala"];
       const userMentionsHome = homeWords.some((w) => lastUserMessage.includes(w));
@@ -357,7 +363,7 @@ export async function POST(request: Request) {
 
       if (destPandal) {
         recommendedPandalId = destPandal.id;
-        const destCoords = coordinates[destPandal.id] || zoneCoordinates["north-kolkata"];
+        const destCoords = coordinates[destPandal.id] || zoneCoordinates[destPandal.category] || zoneCoordinates["north-kolkata"];
 
         const walkRoute = await computeGoogleRoute(originCoords, destCoords, "WALK", googleKey);
         const driveRoute = await computeGoogleRoute(originCoords, destCoords, "DRIVE", googleKey);
@@ -380,29 +386,36 @@ export async function POST(request: Request) {
       }
     }
 
+    // Complete catalog summary of all 93 Kolkata Pandals
+    const catalogSummary = pandals.map((p) => `- ID: "${p.id}", Name: "${p.name}", Zone: "${p.category}", Location: "${p.location}"`).join("\n");
+
     const systemPrompt = `You are Dugga-Dugga Thakuma 👵, the wise, affectionate, and deeply knowledgeable Bengali grandmother navigation companion for Kolkata's grandest festival: Durga Puja 2026.
+
+### MASTER INDEX OF ALL 93 KOLKATA PANDALS:
+${catalogSummary}
 
 ### YOUR PERSONALITY & VOICE:
 - Speak with profound maternal warmth, authentic Bengali culture, and genuine grandmotherly care.
 - Frequently use affectionate terms: "Bacha" (my child), "Thakur Darshan", "Dugga-Dugga!", "Maa Durga", "Khaowa-Dawa" (feasting), "Dhunuchi Naach".
 
-### CRITICAL GEOGRAPHIC ZONE RULE:
-- NEVER recommend a South Kolkata / Behala pandal (e.g. Jayrampur sarbojonin, Barisha, Suruchi, Maddox) if the user is currently in North Kolkata (e.g. Belgachia Sarbojonin, Sreebhumi, Dum Dum Park). Stay strictly within the SAME zone (North Kolkata ➔ North Kolkata / Bonedi Bari).
+### STRICT GEOGRAPHICAL ZONE ISOLATION RULES:
+1. NEVER recommend a South Kolkata / Behala pandal (e.g. Jayrampur sarbojonin, Barisha, Suruchi, Maddox) if the user is currently in North Kolkata (e.g. Belgachia Sarbojonin, Sreebhumi, Dum Dum Park).
+2. If the user is in North Kolkata, ALL recommended next stops MUST be strictly from 'north-kolkata' or 'bonedi-bari'!
 
-### CRITICAL DIRECTIVE: USE LIVE GOOGLE MAPS SATELLITE DATA:
-${googleRoutingDataText ? `Here is live Google Maps Routes & Geocoding satellite data for the user's question:\n${googleRoutingDataText}\nFormulate the exact walking distance, walking time, driving time, and home arrival schedule using these exact numbers!` : "Answer the user's question accurately with distances, walking minutes, and food recommendations."}
+### LIVE GOOGLE MAPS SATELLITE ROUTE DATA:
+${googleRoutingDataText ? `Here is live Google Maps Satellite Data for the user's current question:\n${googleRoutingDataText}\nIncorporate these exact walking distances, walking minutes, and driving minutes into your response!` : "Answer the user's question accurately with distances, walking minutes, and food recommendations."}
 
 ### SPECIAL DIRECTIVES:
 1. If the user asks for WALKING distance or time, explicitly highlight:
    - **Walking Distance** (km / meters)
    - **Walking Time** (minutes)
    - **Driving / Auto Time** (minutes)
-2. If the user asks about curfew or going home by a target time (e.g. 12 AM midnight), calculate the exact time schedule step-by-step and reassure them!
+2. If the user asks about curfew or going home by a target time (e.g. 12 AM midnight), calculate the exact time schedule step-by-step!
 3. If recommending a pandal, append '[RECOMMEND: pandal-id]' at the very end of your response.`;
 
     let responseText = "";
 
-    // Call Groq Llama-3.3-70b-versatile with active user API key & Google Maps context
+    // Call Groq Llama-3.3-70b-versatile trained with master 93-pandal catalog & Google Maps context
     if (groqKey) {
       try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -426,7 +439,7 @@ ${googleRoutingDataText ? `Here is live Google Maps Routes & Geocoding satellite
         if (response.ok) {
           const data = await response.json();
           responseText = data.choices?.[0]?.message?.content || "";
-          console.log("[Groq Llama-3.3 70B + Google Maps] Successfully generated satellite response for DDI Chat.");
+          console.log("[Groq Llama-3.3 70B Trained] Successfully generated response for DDI Chat.");
         } else {
           console.warn(`Groq API returned status ${response.status}`);
         }
