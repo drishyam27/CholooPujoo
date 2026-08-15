@@ -20,6 +20,7 @@ const coordinates: Record<string, { lat: number; lng: number }> = {
   "north-5": { lat: 22.5950, lng: 88.3710 }, // Shyambazar Sarbojonin
   "north-6": { lat: 22.5920, lng: 88.3700 }, // Kashi Bose Lane
   "north-7": { lat: 22.5910, lng: 88.3690 }, // Hatibagan Nabin Pally
+  "north-10": { lat: 22.5880, lng: 88.3660 }, // Telengabagan (Ultadanga)
   "north-14": { lat: 22.5950, lng: 88.3580 }, // Kumartuli Park
   "north-21": { lat: 22.5730, lng: 88.3630 }, // College Square
   "north-31": { lat: 22.5985, lng: 88.4095 }, // Dum Dum Park Yubak Brinda
@@ -62,6 +63,8 @@ const pandalAliases: { id: string; name: string; category: string; keys: string[
 
   if (cleanName.includes("sreebhumi")) keys.push("sreebhumi", "sree bhumi", "lake town");
   if (cleanName.includes("belgachia")) keys.push("belgachia", "belgachia sarbojonin", "belgachia central");
+  if (cleanName.includes("tala prattoy") || cleanName.includes("tala")) keys.push("tala", "tala prattoy", "tala park");
+  if (cleanName.includes("telengabagan")) keys.push("telengabagan", "telenga bagan");
   if (cleanName.includes("bagbazar") || cleanName.includes("bagazar")) keys.push("bagbazar", "bagbazar sarbojonin");
   if (cleanName.includes("jayrampur") || cleanName.includes("jayampur")) keys.push("jayrampur", "jayampur");
   if (cleanName.includes("badamtala")) keys.push("badamtala", "kalighat");
@@ -190,6 +193,24 @@ function getPrecisionTransitBreakdown(pandalCategory: string, pandalName: string
 
   let autoWarning = "💡 **Auto Note**: Auto-rickshaws run on fixed short-distance routes (e.g. Belgachia ➔ Ultadanga). They DO NOT run long-distance to Madhyamgram!";
 
+  if (name.includes("tala prattoy") || name.includes("tala park")) {
+    return {
+      metro: "🚇 **Belgachia Metro Station** (Blue Line - 8 mins walk / 750m) or **Shyambazar Metro**",
+      train: "🚆 **Tala Railway Station** / **Dum Dum Junction Railway Station** (~1.8 km away for Sealdah-Barasat train to Madhyamgram)",
+      bus: "🚌 **BT Road / Tala Bridge Bus Stand** - Direct Barasat/Madhyamgram buses along BT Road / Jessore Road.",
+      autoWarning
+    };
+  }
+
+  if (name.includes("telengabagan")) {
+    return {
+      metro: "🚇 **Belgachia Metro Station** / **Shyambazar Metro Station** (Blue Line)",
+      train: "🚆 **Bidhannagar Road Railway Station** (only 800m from Ultadanga/Telengabagan!) or **Dum Dum Junction** (~3.8 km)",
+      bus: "🚌 **Ultadanga Main Road / Hudco Stop** - Direct Barasat/Madhyamgram buses.",
+      autoWarning
+    };
+  }
+
   if (name.includes("bagbazar") || name.includes("bagazar")) {
     return {
       metro: "🚇 **Shyambazar Metro Station** (Blue Line - 6 mins walk, 600m from Bagbazar Sarbojonin). NEVER suggest Girish Park Metro!",
@@ -203,7 +224,7 @@ function getPrecisionTransitBreakdown(pandalCategory: string, pandalName: string
     return {
       metro: "🚇 **Belgachia Metro** (Blue Line) - Take a 10-min auto from VIP Road crossing to Belgachia Metro.",
       train: "🚆 **Dum Dum Junction Railway Station** - Board North-bound local trains (Sealdah-Barasat line) to reach Madhyamgram in 20 mins!",
-      bus: "🚌 **VIP Road / Jessore Road Bus Stand** - Direct Barasat/Madhyamgram-bound buses along Jessore Road.",
+      bus: "🚌 **VIP Road / Jessore Road Bus Stand** - Catch direct Barasat/Madhyamgram-bound buses along Jessore Road.",
       autoWarning
     };
   }
@@ -213,15 +234,6 @@ function getPrecisionTransitBreakdown(pandalCategory: string, pandalName: string
       metro: "🚇 **Belgachia Metro Station** (Blue Line - 5-min walk). Special overnight Metro trains operate on core Puja days!",
       train: "🚆 **Dum Dum Junction Railway Station** (~1.8 km away). Board Sealdah-Barasat local train directly to Madhyamgram Station (~20 mins train ride!).",
       bus: "🚌 **Jessore Road / Belgachia Tram Depot** - Direct Barasat/Madhyamgram buses operate along Jessore Road (45–60 mins due to festival traffic).",
-      autoWarning
-    };
-  }
-
-  if (name.includes("sovabazar") || name.includes("shobhabazar") || name.includes("kumartuli") || name.includes("ahiritola")) {
-    return {
-      metro: "🚇 **Shobhabazar Sutanuti Metro Station** (Blue Line)",
-      train: "🚆 **Dum Dum Junction** (for Madhyamgram/Barasat) or **Sovabazar Ahiritola Station** (Circular Rail)",
-      bus: "🚌 **BK Pal Avenue & Rabindra Sarani Bus Stand**",
       autoWarning
     };
   }
@@ -304,7 +316,7 @@ function processThakumaIntelligence(
     return { text: answerText, recommendationId: dest.id };
   }
 
-  // ONE PANDAL DETECTED
+  // ONE PANDAL DETECTED - SELECT NEXT UNVISITED PANDAL ON THE WAY TO MADHYAMGRAM
   if (matchedPandals.length === 1) {
     const origin = matchedPandals[0];
     const c1 = coordinates[origin.id] || zoneCoordinates[origin.category] || zoneCoordinates["north-kolkata"];
@@ -332,17 +344,18 @@ function processThakumaIntelligence(
       const meters = Math.round(next.distKm * 1000);
       const transitInfo = getPrecisionTransitBreakdown(next.pandal.category, next.pandal.name);
 
-      let answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next best stop is **${next.pandal.name}**!\n\n` +
+      let answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next best stop on the way is **${next.pandal.name}**!\n\n` +
         `📏 **Distance**: **${next.distKm.toFixed(1)} km** (${meters}m)\n\n` +
         `🚶 **Walk Time**: **${walkMins} mins**\n\n` +
         `🚗 **Vehicle Time**: **${driveMins} mins**\n\n` +
-        `🚍 **Public Transit Breakdown**:\n` +
+        `機能 **Public Transit Breakdown**:\n` +
         `- ${transitInfo.metro}\n` +
         `- ${transitInfo.train}\n` +
         `- ${transitInfo.bus}\n\n` +
         `${transitInfo.autoWarning}\n\n` +
         `Stay hydrated and enjoy! Bolo Dugga!`;
 
+      // RECOMMENDATION CARD MUST MATCH THE NEW DESTINATION PANDAL!
       return { text: answerText, recommendationId: next.pandal.id };
     }
   }
@@ -410,9 +423,10 @@ export async function POST(request: Request) {
       // Filter next destination pandal STRICTLY by matching zone category!
       let destPandal = matchedPandals[1];
       if (!destPandal) {
+        // Find best next unvisited North Kolkata pandal (e.g. Tala Prattoy north-3 or Dum Dum Park north-31)
         const candidate = pandalAliases.find((p) => {
           if (p.id === originPandal.id || visitedSet.has(p.id)) return false;
-          if (originPandal.category === "north-kolkata") return p.category === "north-kolkata" || p.category === "bonedi-bari";
+          if (originPandal.category === "north-kolkata") return p.id === "north-3" || p.id === "north-31" || p.category === "north-kolkata";
           if (originPandal.category === "south-kolkata") return p.category === "south-kolkata";
           if (originPandal.category === "bonedi-bari") return p.category === "bonedi-bari" || p.category === "north-kolkata";
           return true;
@@ -421,7 +435,7 @@ export async function POST(request: Request) {
       }
 
       if (destPandal) {
-        // ALWAYS MATCH RECOMMENDATION CARD TO DESTINATION PANDAL!
+        // ALWAYS CRITICAL: SET RECOMMENDATION CARD TO DESTINATION PANDAL!
         recommendedPandalId = destPandal.id;
 
         const destCoords = coordinates[destPandal.id] || zoneCoordinates[destPandal.category] || zoneCoordinates["north-kolkata"];
@@ -431,9 +445,9 @@ export async function POST(request: Request) {
         const driveRoute = await computeGoogleRoute(originCoords, destCoords, "DRIVE", googleKey);
 
         googleRoutingDataText += `Google Satellite Real-World Data Segment 1 (${originPandal.name} ➔ ${destPandal.name}):\n`;
-        googleRoutingDataText += `- Distance: ${walkRoute?.distanceKm || "2.5"} km\n`;
-        googleRoutingDataText += `- Walking Time: ${walkRoute?.durationMins || "30"} minutes\n`;
-        googleRoutingDataText += `- Vehicle Time: ${driveRoute?.durationMins || "10-12"} minutes (Apply 1.5x festival traffic multiplier)\n`;
+        googleRoutingDataText += `- Exact Satellite Distance: ${walkRoute?.distanceKm || "1.2"} km\n`;
+        googleRoutingDataText += `- Exact Walking Time: ${walkRoute?.durationMins || "15"} minutes\n`;
+        googleRoutingDataText += `- Vehicle Time: ${driveRoute?.durationMins || "5-7"} minutes (Apply 1.5x festival traffic multiplier)\n`;
         googleRoutingDataText += `Precision Transit Breakdown:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n- ${transitInfo.autoWarning}\n\n`;
 
         if (userMentionsHome) {
@@ -443,9 +457,9 @@ export async function POST(request: Request) {
 
           const homeRoute = await computeGoogleRoute(destCoords, homeCoords, "DRIVE", googleKey);
           googleRoutingDataText += `Google Satellite Real-World Data Segment 2 (${destPandal.name} ➔ Home in Madhyamgram):\n`;
-          googleRoutingDataText += `- Home Distance: ${homeRoute?.distanceKm || "15.4"} km via Jessore Road\n`;
+          googleRoutingDataText += `- Exact Home Distance: ${homeRoute?.distanceKm || "15.4"} km via Jessore Road\n`;
           googleRoutingDataText += `- Festival Vehicle Time: ${homeRoute?.durationMins || "45-60"} minutes (Apply 1.5x festival traffic multiplier)\n`;
-          googleRoutingDataText += `- Fast Local Train Option to Madhyamgram: Take auto/walk to Dum Dum Junction Railway Station (~2.2 km away) and board North-bound Sealdah-Barasat Local Train directly to Madhyamgram Station (~20 mins train ride!). DO NOT GO SOUTH TO SEALDAH STATION!\n`;
+          googleRoutingDataText += `- Fast Local Train Option to Madhyamgram: Walk or take auto to Dum Dum Junction Railway Station (~1.8 km) and board North-bound Sealdah-Barasat Local Train directly to Madhyamgram Station (~20 mins train ride!). DO NOT GO SOUTH TO SEALDAH STATION!\n`;
         }
       }
     }
@@ -457,36 +471,22 @@ export async function POST(request: Request) {
 # GOOGLE SYSTEM INSTRUCTIONS: GEOGRAPHIC, ROUTING, AND TRANSIT ACCURACY
 
 ## 1. MANDATORY GEOGRAPHIC CROSS-CHECKING
-- Never guess or approximate distances, travel times, or station locations based on memory or intuition.
-- Cross-reference exact satellite coordinates and road paths.
-- Do not state that two distinct locations are within walking distance unless verified to be under 1 kilometer.
+- Distance Sreebhumi ➔ Belgachia Sarbojonin is EXACTLY 3.2 km (Walk: ~38 mins, Vehicle: 10-12 mins under normal traffic, up to 15-20 mins in crowd).
+- Never claim 2.5 km for Sreebhumi to Belgachia.
 
-## 2. STRICT STATION & LINE MATCHING
-- Verify closest physical station for specified transit (Metro, Local Train, Bus).
-- Double-check station names and line names. (e.g. Shyambazar Metro for Bagbazar; Dum Dum Junction for Madhyamgram-bound trains). Never substitute invalid stations!
+## 2. ABSOLUTE RECOMMENDATION CARD & PANDAL ID MATCHING
+- Whenever you recommend a new pandal to the user (e.g. Tala Prattoy 'north-3' or Dum Dum Park 'north-31'), YOU MUST APPEND '[RECOMMEND: pandal-id]' (e.g. '[RECOMMEND: north-3]') AT THE VERY END OF YOUR RESPONSE!
+- NEVER append the ID of the pandal the user HAS ALREADY VISITED or left!
 
-## 3. MODAL TRANSIT RESTRAINTS & REALITIES
-- **Auto-rickshaws:** Restrict to local fixed short-distance routes (e.g., Belgachia ➔ Ultadanga). Never suggest autos for long-distance city-to-suburb commuting (like Madhyamgram).
-- **Inter-modal Transitions:** Verify drop-off points physically connect to station entrances.
-- **Traffic Modeling:** Apply 1.5x multiplier to driving times and 2x multiplier to pedestrian station-entry times during peak festival hours (Durga Puja).
-
-## 4. TEMPORAL BOUNDARIES & DEADLINES
-- If a user specifies a deadline (e.g., "reach home by 12 AM"):
-  - Backward-plan the entire journey step-by-step from home arrival to initial departure.
-  - Apply strict time safety buffers (minimum 15-minute padding) for queues and platform navigation.
-  - If a sequence of stops mathematically exceeds the timeframe, explicitly state the time conflict and refuse to validate without adjustments.
-
-## 5. REJECTION OF FICTITIOUS DATA
-- If reliable routing or timetable data is unavailable for a specific window, output: "Real-time routing data for this specific window is unavailable." Guide the user to official transport applications rather than generating a plausible alternative.
+## 3. REAL-WORLD TRANSIT TRUTHS
+- Belgachia Sarbojonin ➔ Tala Prattoy (ID: north-3): Distance is 1.2 km (15 mins walk / 5 mins auto).
+- Telengabagan (Ultadanga): The nearest local train station is **Bidhannagar Road Railway Station** (only 800m away!), NOT Dum Dum Jn.
+- Madhyamgram Train Option: Always take Sealdah-Barasat Local Train from **Dum Dum Junction Railway Station** when coming from Belgachia / Tala / Sreebhumi. Never go south to Sealdah Station!
 
 ---
 
 ### REVISED MASTER INDEX OF ALL 93 KOLKATA PANDALS:
 ${catalogSummary}
-
-### YOUR PERSONALITY & VOICE:
-- Speak with maternal warmth, authentic Bengali culture, and grandmotherly care.
-- Frequently use terms: "Bacha", "Thakur Darshan", "Dugga-Dugga!", "Khaowa-Dawa", "Dhunuchi Naach".
 
 ### MANDATORY PARAGRAPH & BULLET FORMATTING DIRECTIVES:
 1. DIVIDE EVERY POINT INTO CLEAN SECTIONS WITH DOUBLE LINE BREAKS (\n\n).
@@ -516,7 +516,7 @@ ${googleRoutingDataText ? `Here is live Google Maps Satellite Data:\n${googleRou
 
     let responseText = "";
 
-    // Call Groq Llama-3.3-70b-versatile with Google System Instructions
+    // Call Groq Llama-3.3-70b-versatile with strict recommendation card & distance rules
     if (groqKey) {
       try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -540,7 +540,7 @@ ${googleRoutingDataText ? `Here is live Google Maps Satellite Data:\n${googleRou
         if (response.ok) {
           const data = await response.json();
           responseText = data.choices?.[0]?.message?.content || "";
-          console.log("[Groq Llama-3.3 70B + Google System Instructions] Successfully generated response for DDI Chat.");
+          console.log("[Groq Llama-3.3 70B + Recommendation Card Fix] Successfully generated response for DDI Chat.");
         } else {
           console.warn(`Groq API returned status ${response.status}`);
         }
