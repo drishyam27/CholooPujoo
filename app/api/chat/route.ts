@@ -69,7 +69,7 @@ const coordinates: Record<string, { lat: number; lng: number }> = {
   "north-14": { lat: 22.5950, lng: 88.3580 }, // Kumartuli Park
   "north-15": { lat: 22.5940, lng: 88.3570 }, // Kumartuli Sarbojonin
   "north-16": { lat: 22.5930, lng: 88.3560 }, // Ahiritola Sarbojonin
-  "north-17": { lat: 22.5920, lng: 88.3550 }, // Beniatola
+  "north-17": { lat: 22.5920, lng: 88.3540 }, // Beniatola
   "north-18": { lat: 22.5910, lng: 88.3540 }, // BK Pal Park
   "north-19": { lat: 22.5800, lng: 88.3620 }, // Chaltabagan
   "north-20": { lat: 22.5780, lng: 88.3630 }, // Rammohan Sarani
@@ -91,16 +91,16 @@ const coordinates: Record<string, { lat: number; lng: number }> = {
   "north-36": { lat: 22.6020, lng: 88.4030 },
 
   // ==================== BONEDI BARI PANDALS (19 items) ====================
-  "bonedi-1": { lat: 22.5960, lng: 88.3610 }, // Sovabazar Rajbari (Dev Family)
-  "bonedi-2": { lat: 22.5972, lng: 88.3590 }, // Chhoto Rajbari Sovabazar
+  "bonedi-1": { lat: 22.5960, lng: 88.3610 }, // Sovabazar Rajbari
+  "bonedi-2": { lat: 22.5972, lng: 88.3590 },
   "bonedi-3": { lat: 22.5680, lng: 88.3520 }, // Laha Bari
   "bonedi-4": { lat: 22.5645, lng: 88.3485 }, // Pathuriaghata Ghosh Bari
-  "bonedi-5": { lat: 22.5850, lng: 88.3550 }, // Rani Rashmoni Bari (Janbazar)
-  "bonedi-6": { lat: 22.5840, lng: 88.3540 }, // Thanthania Dutta Bari
-  "bonedi-7": { lat: 22.5830, lng: 88.3530 }, // Jorasanko Daw Bari
-  "bonedi-8": { lat: 22.5820, lng: 88.3520 }, // Sabarna Roy Choudhury Bari (Barisha)
-  "bonedi-9": { lat: 22.5810, lng: 88.3510 }, // Bowbazar Chunder Bari
-  "bonedi-10": { lat: 22.5800, lng: 88.3500 }, // Mallick Bari (Bhowanipore)
+  "bonedi-5": { lat: 22.5850, lng: 88.3550 },
+  "bonedi-6": { lat: 22.5840, lng: 88.3540 },
+  "bonedi-7": { lat: 22.5830, lng: 88.3530 },
+  "bonedi-8": { lat: 22.5820, lng: 88.3520 },
+  "bonedi-9": { lat: 22.5810, lng: 88.3510 },
+  "bonedi-10": { lat: 22.5800, lng: 88.3500 },
   "bonedi-11": { lat: 22.5790, lng: 88.3490 },
   "bonedi-12": { lat: 22.5780, lng: 88.3480 },
   "bonedi-13": { lat: 22.5770, lng: 88.3470 },
@@ -253,6 +253,66 @@ function getFallbackCrowdLevel(): string {
   return "High";
 }
 
+// Transit Station Mapping Helper
+function getTransitBreakdown(pandalCategory: string, pandalName: string): { metro: string; train: string; bus: string } {
+  const name = pandalName.toLowerCase();
+  
+  if (name.includes("sreebhumi") || name.includes("lake town")) {
+    return {
+      metro: "🚇 **Belgachia Metro** (Blue Line) / **Ultadanga Metro**",
+      train: "🚆 **Bidhannagar Road Railway Station** (Sealdah Main)",
+      bus: "🚌 **VIP Road / Lake Town Crossing Bus Stand** (Autos available 24x7 to Belgachia Metro)"
+    };
+  }
+
+  if (name.includes("belgachia")) {
+    return {
+      metro: "🚇 **Belgachia Metro Station** (Blue Line - 5 mins walk)",
+      train: "🚆 **Dum Dum Junction** / **Kolkata Station (Chitpur)**",
+      bus: "🚌 **Belgachia Tram Depot & Bus Stop** (Night Specials to Sealdah & Shyambazar)"
+    };
+  }
+
+  if (name.includes("sovabazar") || name.includes("shobhabazar") || name.includes("kumartuli") || name.includes("ahiritola")) {
+    return {
+      metro: "🚇 **Shobhabazar Sutanuti Metro Station** (Blue Line)",
+      train: "🚆 **Sovabazar Ahiritola Chakra Rail Station** (Circular Railway)",
+      bus: "🚌 **BK Pal Avenue & Rabindra Sarani Bus Stand**"
+    };
+  }
+
+  if (pandalCategory === "north-kolkata") {
+    return {
+      metro: "🚇 **Shyambazar / Belgachia Metro Station** (Blue Line)",
+      train: "🚆 **Dum Dum Junction Railway Station**",
+      bus: "🚌 **Shyambazar Five-Point Crossing Bus Stand**"
+    };
+  }
+
+  if (name.includes("badamtala") || name.includes("kalighat") || name.includes("66 pally") || name.includes("chetla")) {
+    return {
+      metro: "🚇 **Kalighat Metro Station** / **Jatin Das Park Metro** (Blue Line)",
+      train: "🚆 **Tollygunge Railway Station**",
+      bus: "🚌 **SP Mukherjee Road / Rashbehari Crossing Bus Stand**"
+    };
+  }
+
+  if (name.includes("behala") || name.includes("jayrampur") || name.includes("barisha") || name.includes("suruchi")) {
+    return {
+      metro: "🚇 **Taratala Metro** / **Behala Chowrasta Metro** (Purple Line)",
+      train: "🚆 **Majerhat Railway Station**",
+      bus: "🚌 **Diamond Harbour Road Bus Stand** (Autos to Taratala Metro)"
+    };
+  }
+
+  // Default South Kolkata Transit
+  return {
+    metro: "🚇 **Kalighat / Rabindra Sarobar / Park Street Metro** (Blue Line)",
+    train: "🚆 **Sealdah / Ballygunge Junction Railway Station**",
+    bus: "🚌 **Gariahat / Rashbehari Avenue Bus Stand**"
+  };
+}
+
 // Fallback Spatial Engine enforcing 100% 93-Pandal Zone Integrity
 function processThakumaIntelligence(
   messages: { role: string; content: string }[],
@@ -299,12 +359,13 @@ function processThakumaIntelligence(
     const walkMins = Math.max(6, Math.round(distKm * 12));
     const driveMins = Math.max(3, Math.round(distKm * 4));
     const meters = Math.round(distKm * 1000);
+    const transitInfo = getTransitBreakdown(dest.category, dest.name);
 
     let answerText = "";
     if (isWalkingQuery) {
-      answerText = `Dugga-Dugga, bacha! 👵 The **walking distance** between **${origin.name}** and **${dest.name}** is approximately **${distKm.toFixed(1)} km** (${meters} meters).\n\nIt takes about **${walkMins} to ${walkMins + 3} minutes to walk** on foot. If you get tired from pandal hopping, an auto or toto will get you there in just **${driveMins} minutes**! Take your time, enjoy the traditional lighting, and stay hydrated! Bolo Dugga!`;
+      answerText = `Dugga-Dugga, bacha! 👵 The **walking distance** between **${origin.name}** and **${dest.name}** is approximately **${distKm.toFixed(1)} km** (${meters} meters).\n\n- 🚶 **Walk Time**: **${walkMins} to ${walkMins + 3} minutes**\n- 🚗 **Auto/Car Time**: **${driveMins} minutes**\n\n🚍 **Public Transit Options**:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n\nTake your time, enjoy the traditional lighting, and stay hydrated! Bolo Dugga!`;
     } else {
-      answerText = `Dugga-Dugga, bacha! 👵 The distance between **${origin.name}** and **${dest.name}** is **${distKm.toFixed(1)} km** (${meters}m).\n\n- 🚶 **Walking Distance**: **${distKm.toFixed(1)} km** (${walkMins} mins on foot)\n- 🚗 **Auto/Drive Time**: **${driveMins} minutes**\n\nTake a quick auto or enjoy the vibrant street procession along the way! Bolo Dugga!`;
+      answerText = `Dugga-Dugga, bacha! 👵 The distance between **${origin.name}** and **${dest.name}** is **${distKm.toFixed(1)} km** (${meters}m).\n\n- 🚶 **Walking Distance**: **${distKm.toFixed(1)} km** (${walkMins} mins on foot)\n- 🚗 **Auto/Drive Time**: **${driveMins} minutes**\n\n🚍 **Public Transit Breakdown**:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n\nTake a quick metro or auto to save energy for pandal hopping! Bolo Dugga!`;
     }
 
     return { text: answerText, recommendationId: dest.id };
@@ -336,13 +397,9 @@ function processThakumaIntelligence(
       const walkMins = Math.max(5, Math.round(next.distKm * 12));
       const driveMins = Math.max(3, Math.round(next.distKm * 4));
       const meters = Math.round(next.distKm * 1000);
+      const transitInfo = getTransitBreakdown(next.pandal.category, next.pandal.name);
 
-      let answerText = "";
-      if (isWalkingQuery) {
-        answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next closest stop in the area is **${next.pandal.name}**.\n\nThe **walking distance** is **${next.distKm.toFixed(1)} km** (${meters} meters), which takes about **${walkMins} minutes on foot**. Or take a 5-minute auto! Bolo Dugga!`;
-      } else {
-        answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next best stop is **${next.pandal.name}**!\n\nIt is just **${next.distKm.toFixed(1)} km** away (**${walkMins} mins walk** or **${driveMins} mins auto**). The crowd flow right now is **Medium**. Stay hydrated and enjoy! Bolo Dugga!`;
-      }
+      let answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next best stop is **${next.pandal.name}**!\n\n- 📏 **Distance**: **${next.distKm.toFixed(1)} km** (${meters}m)\n- 🚶 **Walk Time**: **${walkMins} mins**\n- 🚗 **Auto/Car Time**: **${driveMins} mins**\n\n🚍 **Public Transit Breakdown**:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n\nStay hydrated and enjoy the dhak rhythms! Bolo Dugga!`;
 
       return { text: answerText, recommendationId: next.pandal.id };
     }
@@ -350,20 +407,20 @@ function processThakumaIntelligence(
 
   if (isFoodQuery) {
     return {
-      text: "Ahabha, bacha! 👵 Pandal hopping is incomplete without grand feasting (**Khaowa-Dawa**)! If you are near North Kolkata or Sreebhumi, stop by Dum Dum Park for hot egg-mutton Kathi rolls and K.C. Das Rosogollas. If you are near South Kolkata, visit Arsalan at Park Circus for legendary Mutton Biryani or Mitra Cafe at Shobhabazar for Kabiraji cutlets! Bolo Dugga!",
+      text: "Ahabha, bacha! 👵 Pandal hopping is incomplete without grand feasting (**Khaowa-Dawa**)! If you are near North Kolkata, take the **Shobhabazar Metro** to Mitra Cafe for Kabiraji cutlets, or head to Dum Dum Park for hot Kathi rolls. If you are near South Kolkata, take the **Kalighat / Park Street Metro** to Arsalan at Park Circus for Mutton Biryani! Bolo Dugga!",
       recommendationId: "south-14"
     };
   }
 
   if (isRitualQuery) {
     return {
-      text: "Dugga-Dugga, bacha! 👵 The divine energy of Durga Puja lies in our sacred rituals. **Maha Ashtami Anjali** takes place in the morning, followed by **Sandhi Puja** (lighting 108 lotus lamps at the cusp of Ashtami and Nabami). In the evening, witness the exhilarating **Dhunuchi Naach** at Sovabazar Rajbari or Maddox Square! Bolo Dugga!",
+      text: "Dugga-Dugga, bacha! 👵 The divine energy of Durga Puja lies in our sacred rituals. Take the **Shobhabazar Metro** to witness **Maha Ashtami Anjali** & **Dhunuchi Naach** at Sovabazar Rajbari! For South Kolkata, take the **Kalighat Metro** to Mudiali & Badamtala. Bolo Dugga!",
       recommendationId: "bonedi-1"
     };
   }
 
   return {
-    text: "Dugga-Dugga, bacha! 👵 I am monitoring all 93 active pandals across Kolkata! Tell me your starting location or ask for the walking distance between any two pandals (e.g. Sreebhumi to Belgachia Sarbojonin). Check your itinerary, and Maa Durga will guide your path! Bolo Dugga!",
+    text: "Dugga-Dugga, bacha! 👵 I am monitoring all 93 active pandals across Kolkata! Tell me your location or ask for travel options (Metro, Train, Bus, Walk, Drive). Bolo Dugga!",
     recommendationId: "north-1"
   };
 }
@@ -431,6 +488,7 @@ export async function POST(request: Request) {
       if (destPandal) {
         recommendedPandalId = destPandal.id;
         const destCoords = coordinates[destPandal.id] || zoneCoordinates[destPandal.category] || zoneCoordinates["north-kolkata"];
+        const transitInfo = getTransitBreakdown(destPandal.category, destPandal.name);
 
         const walkRoute = await computeGoogleRoute(originCoords, destCoords, "WALK", googleKey);
         const driveRoute = await computeGoogleRoute(originCoords, destCoords, "DRIVE", googleKey);
@@ -438,6 +496,7 @@ export async function POST(request: Request) {
         googleRoutingDataText += `Google Satellite Route 1 (${originPandal.name} ➔ ${destPandal.name}):\n`;
         if (walkRoute) googleRoutingDataText += `- Walking Distance: ${walkRoute.distanceKm} km (${walkRoute.distanceMeters} meters), Duration: ${walkRoute.durationMins} minutes\n`;
         if (driveRoute) googleRoutingDataText += `- Driving/Auto Distance: ${driveRoute.distanceKm} km, Duration: ${driveRoute.durationMins} minutes\n`;
+        googleRoutingDataText += `Transit Options:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n`;
 
         if (userMentionsHome) {
           const homeQuery = lastUserMessage.includes("madhyamgram") ? "Madhyamgram" : "Madhyamgram, Kolkata";
@@ -448,12 +507,12 @@ export async function POST(request: Request) {
           if (homeRoute) {
             googleRoutingDataText += `Google Satellite Route 2 (${destPandal.name} ➔ User's Home in Madhyamgram):\n`;
             googleRoutingDataText += `- Home Drive Distance: ${homeRoute.distanceKm} km, Drive Duration: ${homeRoute.durationMins} minutes\n`;
+            googleRoutingDataText += `- Local Train Option to Madhyamgram: Take Sealdah North Main Line / Barasat local from Dum Dum Jn to Madhyamgram Station (~25 mins train ride!)\n`;
           }
         }
       }
     }
 
-    // Complete catalog summary of all 93 Kolkata Pandals
     const catalogSummary = pandals.map((p) => `- ID: "${p.id}", Name: "${p.name}", Zone: "${p.category}", Location: "${p.location}"`).join("\n");
 
     const systemPrompt = `You are Dugga-Dugga Thakuma 👵, the wise, affectionate, and deeply knowledgeable Bengali grandmother navigation companion for Kolkata's grandest festival: Durga Puja 2026.
@@ -465,24 +524,26 @@ ${catalogSummary}
 - Speak with profound maternal warmth, authentic Bengali culture, and genuine grandmotherly care.
 - Frequently use affectionate terms: "Bacha" (my child), "Thakur Darshan", "Dugga-Dugga!", "Maa Durga", "Khaowa-Dawa" (feasting), "Dhunuchi Naach".
 
-### ABSOLUTE REVISION AUDIT - STRICT GEOGRAPHICAL ZONE ISOLATION RULES (100/100 MARKS GUARANTEE):
-1. NORTH KOLKATA ISOLATION: Never recommend a South Kolkata / Behala pandal (e.g. Jayrampur sarbojonin, Barisha, Suruchi, Maddox) if the user is currently in North Kolkata (e.g. Belgachia Sarbojonin, Sreebhumi, Dum Dum Park, Tala Prattoy). Stay strictly within North Kolkata ('north-kolkata' or 'bonedi-bari')!
-2. SOUTH KOLKATA ISOLATION: Never recommend a North Kolkata pandal if the user is currently in South Kolkata (e.g. Badamtala, Suruchi, Maddox, Behala). Stay strictly within South Kolkata ('south-kolkata')!
+### MANDATORY PUBLIC TRANSIT INCLUSION DIRECTIVE (METRO, LOCAL TRAIN, BUS):
+Whenever answering travel, distance, routing, or curfew questions, you MUST explicitly include a clear bulleted breakdown of:
+- 🚇 **Metro Station**: Nearest Kolkata Metro station (Blue/Green Line) & walk/auto connection.
+- 🚆 **Local Train**: Nearest Local Railway Station (e.g. Sealdah North line, Dum Dum Jn, Bidhannagar Road, Majerhat, Ballygunge).
+- 🚌 **Bus / Auto**: Nearest Bus stop / Auto stand (e.g. Belgachia Auto stand, VIP Road, Gariahat, Rashbehari).
 
-### LIVE GOOGLE MAPS SATELLITE ROUTE DATA:
-${googleRoutingDataText ? `Here is live Google Maps Satellite Data for the user's current question:\n${googleRoutingDataText}\nIncorporate these exact walking distances, walking minutes, and driving minutes into your response!` : "Answer the user's question accurately with distances, walking minutes, and food recommendations."}
+### STRICT GEOGRAPHICAL ZONE ISOLATION RULES:
+1. NORTH KOLKATA ISOLATION: Never recommend a South Kolkata / Behala pandal (e.g. Jayrampur sarbojonin, Barisha, Suruchi, Maddox) if the user is currently in North Kolkata. Stay strictly within North Kolkata ('north-kolkata' or 'bonedi-bari')!
+2. SOUTH KOLKATA ISOLATION: Never recommend a North Kolkata pandal if the user is currently in South Kolkata. Stay strictly within South Kolkata ('south-kolkata')!
+
+### LIVE GOOGLE MAPS SATELLITE ROUTE & TRANSIT DATA:
+${googleRoutingDataText ? `Here is live Google Maps & Transit data for the user's question:\n${googleRoutingDataText}\nIncorporate exact walking distance, driving time, AND Metro/Train/Bus details into your response!` : "Answer the user's question accurately with distances, walking minutes, Metro, Train, Bus options, and food recommendations."}
 
 ### SPECIAL DIRECTIVES:
-1. If the user asks for WALKING distance or time, explicitly highlight:
-   - **Walking Distance** (km / meters)
-   - **Walking Time** (minutes)
-   - **Driving / Auto Time** (minutes)
-2. If the user asks about curfew or going home by a target time (e.g. 12 AM midnight), calculate the exact time schedule step-by-step!
-3. If recommending a pandal, append '[RECOMMEND: pandal-id]' at the very end of your response.`;
+1. Highlight **Walking Distance**, **Walking Time**, **Driving/Auto Time**, **Metro**, **Local Train**, and **Bus Options**.
+2. If recommending a pandal, append '[RECOMMEND: pandal-id]' at the very end of your response.`;
 
     let responseText = "";
 
-    // Call Groq Llama-3.3-70b-versatile trained with master 93-pandal catalog & Google Maps context
+    // Call Groq Llama-3.3-70b-versatile trained with Metro, Train, Bus transit & Google Maps context
     if (groqKey) {
       try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -498,7 +559,7 @@ ${googleRoutingDataText ? `Here is live Google Maps Satellite Data for the user'
               ...messages.map((m: { role: string; content: string }) => ({ role: m.role, content: m.content }))
             ],
             temperature: 0.6,
-            max_tokens: 450
+            max_tokens: 500
           }),
           signal: AbortSignal.timeout(6000)
         });
@@ -506,7 +567,7 @@ ${googleRoutingDataText ? `Here is live Google Maps Satellite Data for the user'
         if (response.ok) {
           const data = await response.json();
           responseText = data.choices?.[0]?.message?.content || "";
-          console.log("[Groq Llama-3.3 70B Trained] Successfully generated response for DDI Chat.");
+          console.log("[Groq Llama-3.3 70B Trained + Transit] Successfully generated transit response for DDI Chat.");
         } else {
           console.warn(`Groq API returned status ${response.status}`);
         }
