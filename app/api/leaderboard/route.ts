@@ -10,55 +10,16 @@ export async function GET() {
       .limit(10);
 
     if (error) {
-      console.warn("Supabase leaderboard query error:", error.message);
+      console.warn("Supabase leaderboard query notice:", error.message);
     }
 
     if (!users || users.length === 0) {
-      const mockCompetitors = [
-        {
-          name: "Anirban Bhattacharya",
-          email: "anirban@pujo.com",
-          image: "/images/avatar-boy-1-beard.png",
-          visited_pandals: ["south-1", "south-2", "south-10", "south-12", "north-1", "north-31", "bonedi-4"],
-          visit_count: 7
-        },
-        {
-          name: "Priyanka Sen",
-          email: "priyanka@pujo.com",
-          image: "/images/avatar-girl.png",
-          visited_pandals: ["south-10", "south-12", "south-14", "north-1", "north-24"],
-          visit_count: 5
-        },
-        {
-          name: "Sourav Ganguly",
-          email: "sourav@pujo.com",
-          image: "/images/avatar-boy-3-beard.png",
-          visited_pandals: ["south-24", "south-28", "north-31", "north-32"],
-          visit_count: 4
-        },
-        {
-          name: "Subhashree Roy",
-          email: "subhashree@pujo.com",
-          image: "/images/avatar-girl-2.png",
-          visited_pandals: ["bonedi-1", "bonedi-3", "bonedi-4"],
-          visit_count: 3
-        }
-      ];
-
-      await supabase.from("users").insert(mockCompetitors);
-
-      return NextResponse.json(
-        mockCompetitors.map((u) => ({
-          name: u.name,
-          image: u.image,
-          visitCount: u.visit_count
-        }))
-      );
+      return NextResponse.json([]);
     }
 
     const formatted = users.map((u) => ({
       _id: u.id,
-      name: u.name || "Explorer",
+      name: u.name || "Pujo Explorer",
       image: u.image || "/images/avatar-girl.png",
       visitCount: u.visit_count || (u.visited_pandals ? u.visited_pandals.length : 0)
     }));
