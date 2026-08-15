@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { supabase } from "@/backend/supabase";
+import { User } from "@supabase/supabase-js";
 
 interface AppContextType {
   isLoggedIn: boolean;
@@ -25,13 +26,29 @@ export const AppContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { data: session, status } = useSession();
+  const { data: nextAuthSession, status } = useSession();
+  const [supabaseUser, setSupabaseUser] = useState<User | null>(null);
   const [isGuest, setIsGuest] = useState(false);
 
-  const realEmail = session?.user?.email;
+  // Listen to Supabase native auth state changes
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data?.user) setSupabaseUser(data.user);
+    });
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSupabaseUser(session?.user || null);
+    });
+
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, []);
+
+  const realEmail = supabaseUser?.email || nextAuthSession?.user?.email;
   const userEmail = realEmail || (isGuest ? "mock-tester@choloopujoo.com" : null);
-  const userName = session?.user?.name || (isGuest ? "Guest Explorer" : null);
-  const userImage = session?.user?.image || "/images/avatar-girl.png";
+  const userName = supabaseUser?.user_metadata?.full_name || nextAuthSession?.user?.name || (isGuest ? "Guest Explorer" : null);
+  const userImage = supabaseUser?.user_metadata?.avatar_url || nextAuthSession?.user?.image || "/images/avatar-girl.png";
 
   // Check guest state in localStorage
   useEffect(() => {
@@ -85,10 +102,23 @@ export const AppContextProvider = ({
     localStorage.setItem("completedIds", JSON.stringify(completedIds));
   }, [completedIds]);
 
-  const login = () => {
+  const login = async () => {
     localStorage.removeItem("guestSession");
     setIsGuest(false);
-    signIn("google", { callbackUrl: "/" });
+
+    // Try Supabase Native OAuth with Google Provider
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${origin}/`,
+      },
+    });
+
+    if (error) {
+      console.warn("Supabase OAuth redirect error, executing NextAuth fallback:", error.message);
+      signIn("google", { callbackUrl: "/" });
+    }
   };
 
   const loginGuest = () => {
@@ -96,9 +126,10 @@ export const AppContextProvider = ({
     setIsGuest(true);
   };
 
-  const logout = () => {
+  const logout = async () => {
     localStorage.removeItem("guestSession");
     setIsGuest(false);
+    await supabase.auth.signOut();
     signOut({ callbackUrl: "/login" });
   };
 
