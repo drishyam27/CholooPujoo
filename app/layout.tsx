@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
 import { AppContextProvider } from "@/frontend/context/AppContext";
 import NextAuthProvider from "@/frontend/context/NextAuthProvider";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -15,8 +16,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "CholooPujoo",
-  description: "Experience the Durga Puja festival in Kolkata",
+  title: "CholooPujoo - Kolkata's Ultimate Durga Puja Companion",
+  description: "Experience the spirit of Durga Puja in Kolkata with real-time crowd updates, DDI AI chatbot navigation, and live Maha Leaderboards.",
 };
 
 export default function RootLayout({
@@ -33,6 +34,7 @@ export default function RootLayout({
         <NextAuthProvider>
           <AppContextProvider>
             {children}
+            <Analytics />
           </AppContextProvider>
         </NextAuthProvider>
       </body>
