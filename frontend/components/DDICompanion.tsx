@@ -232,9 +232,18 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
                       : "rounded-tl-none bg-white/5 border border-white/10 text-white/95 mr-8"
                   }`}
                 >
-                  <p 
+                  <div 
+                    className="space-y-3 text-sm leading-relaxed"
                     dangerouslySetInnerHTML={{ 
-                      __html: msg.content.replace(/\*\*(.*?)\*\*/g, '<strong class="text-accent font-bold" style="color: var(--accent);">$1</strong>') 
+                      __html: msg.content
+                        // Convert **bold** to styled strong
+                        .replace(/\*\*(.*?)\*\*/g, '<strong class="text-accent font-semibold" style="color: var(--accent);">$1</strong>')
+                        // Convert bullet points (* item or - item) into clean bullet divs
+                        .replace(/(?:^|\n)[*|-]\s+(.*?)(?=\n|$)/g, '<div class="flex items-start gap-2 my-1 pl-2"><span class="text-accent mt-0.5">•</span><span>$1</span></div>')
+                        // Convert double newlines into paragraph breaks
+                        .replace(/\n\n/g, '<div class="h-2"></div>')
+                        // Convert single newlines into line breaks
+                        .replace(/\n/g, '<br />')
                     }}
                   />
 

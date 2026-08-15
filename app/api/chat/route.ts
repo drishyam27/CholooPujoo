@@ -44,7 +44,7 @@ const zoneCoordinates: Record<string, { lat: number; lng: number }> = {
   "south-kolkata": { lat: 22.5150, lng: 88.3500 },
   "north-kolkata": { lat: 22.6000, lng: 88.3850 },
   "bonedi-bari": { lat: 22.5850, lng: 88.3550 },
-  "madhyamgram": { lat: 22.6924, lng: 88.4653 }, // Google Maps exact pin for Madhyamgram
+  "madhyamgram": { lat: 22.6924, lng: 88.4653 },
   "barasat": { lat: 22.7225, lng: 88.4811 },
   "salt lake": { lat: 22.5800, lng: 88.4170 },
   "howrah": { lat: 22.5958, lng: 88.2636 },
@@ -186,7 +186,6 @@ function getFallbackCrowdLevel(): string {
 // Ultra-Accurate Real-World Transit Mapping for Kolkata & Suburbs
 function getTransitBreakdown(pandalCategory: string, pandalName: string, homeLocation: string = ""): { metro: string; train: string; bus: string; autoWarning: string } {
   const name = pandalName.toLowerCase();
-  const home = homeLocation.toLowerCase();
 
   let autoWarning = "💡 **Auto Note**: Autos run on fixed short routes (e.g. Belgachia ➔ Ultadanga / Lake Town). For long-distance trips (like Madhyamgram), switch to Metro, Local Train, or Jessore Rd Buses!";
 
@@ -264,9 +263,7 @@ function processThakumaIntelligence(
     }
   }
 
-  const isWalkingQuery = q.includes("walk") || q.includes("waling") || q.includes("foot") || q.includes("hete");
   const isFoodQuery = q.includes("food") || q.includes("roll") || q.includes("biryani") || q.includes("eat") || q.includes("sweet");
-  const isRitualQuery = q.includes("anjali") || q.includes("sandhi") || q.includes("dhunuchi") || q.includes("sindoor");
 
   // TWO PANDALS DETECTED
   if (matchedPandals.length >= 2) {
@@ -282,7 +279,17 @@ function processThakumaIntelligence(
     const meters = Math.round(distKm * 1000);
     const transitInfo = getTransitBreakdown(dest.category, dest.name);
 
-    let answerText = `Dugga-Dugga, bacha! 👵 The distance between **${origin.name}** and **${dest.name}** is **${distKm.toFixed(1)} km** (${meters}m).\n\n- 🚶 **Walking Distance**: **${distKm.toFixed(1)} km** (${walkMins} mins on foot)\n- 🚗 **Auto/Drive Time**: **${driveMins} minutes**\n\n🚍 **Public Transit Breakdown**:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n\n${transitInfo.autoWarning}\n\nBolo Dugga!`;
+    let answerText = `Dugga-Dugga, bacha! 👵 Here is your clear route breakdown:\n\n` +
+      `📍 **Segment**: **${origin.name}** ➔ **${dest.name}**\n\n` +
+      `📏 **Distance**: **${distKm.toFixed(1)} km** (${meters}m)\n\n` +
+      `🚶 **Walking Time**: **${walkMins} minutes**\n\n` +
+      `🚗 **Vehicle Time**: **${driveMins} minutes**\n\n` +
+      `🚍 **Public Transit Breakdown**:\n` +
+      `- ${transitInfo.metro}\n` +
+      `- ${transitInfo.train}\n` +
+      `- ${transitInfo.bus}\n\n` +
+      `${transitInfo.autoWarning}\n\n` +
+      `Bolo Dugga!`;
 
     return { text: answerText, recommendationId: dest.id };
   }
@@ -315,7 +322,16 @@ function processThakumaIntelligence(
       const meters = Math.round(next.distKm * 1000);
       const transitInfo = getTransitBreakdown(next.pandal.category, next.pandal.name);
 
-      let answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next best stop is **${next.pandal.name}**!\n\n- 📏 **Distance**: **${next.distKm.toFixed(1)} km** (${meters}m)\n- 🚶 **Walk Time**: **${walkMins} mins**\n- 🚗 **Auto/Car Time**: **${driveMins} mins**\n\n🚍 **Public Transit Breakdown**:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n\n${transitInfo.autoWarning}\n\nStay hydrated and enjoy! Bolo Dugga!`;
+      let answerText = `Dugga-Dugga, bacha! 👵 Since you are at **${origin.name}**, your next best stop is **${next.pandal.name}**!\n\n` +
+        `📏 **Distance**: **${next.distKm.toFixed(1)} km** (${meters}m)\n\n` +
+        `🚶 **Walk Time**: **${walkMins} mins**\n\n` +
+        `🚗 **Vehicle Time**: **${driveMins} mins**\n\n` +
+        `🚍 **Public Transit Breakdown**:\n` +
+        `- ${transitInfo.metro}\n` +
+        `- ${transitInfo.train}\n` +
+        `- ${transitInfo.bus}\n\n` +
+        `${transitInfo.autoWarning}\n\n` +
+        `Stay hydrated and enjoy! Bolo Dugga!`;
 
       return { text: answerText, recommendationId: next.pandal.id };
     }
@@ -395,7 +411,6 @@ export async function POST(request: Request) {
       }
 
       if (destPandal) {
-        // ALWAYS MATCH RECOMMENDATION CARD TO DESTINATION PANDAL!
         recommendedPandalId = destPandal.id;
 
         const destCoords = coordinates[destPandal.id] || zoneCoordinates[destPandal.category] || zoneCoordinates["north-kolkata"];
@@ -404,11 +419,11 @@ export async function POST(request: Request) {
         const walkRoute = await computeGoogleRoute(originCoords, destCoords, "WALK", googleKey);
         const driveRoute = await computeGoogleRoute(originCoords, destCoords, "DRIVE", googleKey);
 
-        googleRoutingDataText += `Google Satellite Real-World Data Segment 1 (${originPandal.name} ➔ ${destPandal.name}):\n`;
-        googleRoutingDataText += `- Distance: ${walkRoute?.distanceKm || "3.2"} km (${walkRoute?.distanceMeters || 3200} meters)\n`;
+        googleRoutingDataText += `Google Satellite Data Segment 1 (${originPandal.name} ➔ ${destPandal.name}):\n`;
+        googleRoutingDataText += `- Distance: ${walkRoute?.distanceKm || "3.2"} km\n`;
         googleRoutingDataText += `- Walking Time: ${walkRoute?.durationMins || "38"} minutes\n`;
-        googleRoutingDataText += `- Driving/Vehicle Time: ${driveRoute?.durationMins || "10-12"} minutes (Pedestrian crowd near Sreebhumi / Lake Town can stall cars)\n`;
-        googleRoutingDataText += `Transit Options:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n- ${transitInfo.autoWarning}\n\n`;
+        googleRoutingDataText += `- Vehicle Time: ${driveRoute?.durationMins || "10-12"} minutes (15-20 mins with festival pedestrian crowd)\n`;
+        googleRoutingDataText += `Transit Breakdown:\n- ${transitInfo.metro}\n- ${transitInfo.train}\n- ${transitInfo.bus}\n- ${transitInfo.autoWarning}\n\n`;
 
         if (userMentionsHome) {
           const homeQuery = lastUserMessage.includes("madhyamgram") ? "Madhyamgram" : "Madhyamgram, Kolkata";
@@ -416,10 +431,10 @@ export async function POST(request: Request) {
           if (!homeCoords) homeCoords = zoneCoordinates["madhyamgram"];
 
           const homeRoute = await computeGoogleRoute(destCoords, homeCoords, "DRIVE", googleKey);
-          googleRoutingDataText += `Google Satellite Real-World Data Segment 2 (${destPandal.name} ➔ User's Home in Madhyamgram):\n`;
-          googleRoutingDataText += `- Distance: ${homeRoute?.distanceKm || "15.4"} km via Jessore Road\n`;
-          googleRoutingDataText += `- Realistic Festival Vehicle Time: ${homeRoute?.durationMins || "45-60"} minutes (due to Jessore Road festival traffic diversions)\n`;
-          googleRoutingDataText += `- Best Home Transit Option: Walk/Auto to Dum Dum Junction Railway Station (~1.8 km) and take North-bound Sealdah-Barasat Local Train directly to Madhyamgram Station (~20 mins train ride!). Direct Barasat buses also run along Jessore Rd.\n`;
+          googleRoutingDataText += `Google Satellite Data Segment 2 (${destPandal.name} ➔ Home in Madhyamgram):\n`;
+          googleRoutingDataText += `- Home Distance: ${homeRoute?.distanceKm || "15.4"} km via Jessore Road\n`;
+          googleRoutingDataText += `- Festival Vehicle Time: ${homeRoute?.durationMins || "45-60"} minutes (due to festival traffic diversions)\n`;
+          googleRoutingDataText += `- Fast Local Train Option: Walk/Auto to Dum Dum Junction Railway Station (~1.8 km) and take North-bound Sealdah-Barasat Local Train directly to Madhyamgram Station (~20 mins train ride!).\n`;
         }
       }
     }
@@ -432,32 +447,43 @@ export async function POST(request: Request) {
 ${catalogSummary}
 
 ### YOUR PERSONALITY & VOICE:
-- Speak with profound maternal warmth, authentic Bengali culture, and genuine grandmotherly care.
-- Frequently use affectionate terms: "Bacha" (my child), "Thakur Darshan", "Dugga-Dugga!", "Maa Durga", "Khaowa-Dawa" (feasting), "Dhunuchi Naach".
+- Speak with maternal warmth, authentic Bengali culture, and grandmotherly care.
+- Frequently use terms: "Bacha", "Thakur Darshan", "Dugga-Dugga!", "Khaowa-Dawa", "Dhunuchi Naach".
 
-### REAL-WORLD KOLKATA TRANSIT RULES & TRUTHS (100% ACCURACY):
-1. Sreebhumi ➔ Belgachia Sarbojonin Distance: Exactly ~3.2 km (Walk: ~38 mins, Vehicle: 10–12 mins under normal traffic, up to 15–20 mins during festival crowd slowdowns).
-2. Belgachia ➔ Madhyamgram Distance: Exactly ~15.4 km via Jessore Road (Realistic festival travel time by bus/vehicle: 45–60 minutes due to Jessore Road diversions).
-3. AUTO REALITY: Auto-rickshaws in Kolkata run on short fixed routes (e.g., Belgachia ➔ Ultadanga / Lake Town). They DO NOT run all the way to Madhyamgram!
-4. HOW TO REACH MADHYAMGRAM AT NIGHT:
-   - Best & Fastest Option: Go to Dum Dum Junction Railway Station and board a North-bound Sealdah-Barasat Local Train (20 mins train ride straight to Madhyamgram Station!).
-   - Alternative: Catch a direct Barasat/Madhyamgram-bound Bus along Jessore Road.
-   - Metro Note: Kolkata Metro runs special overnight trains on core Puja nights (Belgachia Metro is a convenient 5-min walk from Belgachia Sarbojonin).
+### MANDATORY PARAGRAPH & BULLET FORMATTING DIRECTIVES (NEVER DENSE WALL OF TEXT):
+1. DIVIDE EVERY POINT INTO CLEAN SECTIONS WITH DOUBLE LINE BREAKS (\n\n).
+2. DO NOT WRITE LONG UNBROKEN PARAGRAPHS.
+3. USE THIS EXACT CLEAN STRUCTURE:
+
+👵 **Thakuma's Opening Summary**
+(1-2 short sentences)
+
+🗺️ **Route & Distance Breakdown**
+- **Distance**: [X.X] km
+- **Walking Time**: [X] minutes
+- **Vehicle Time**: [X] minutes
+
+🚍 **Public Transit Breakdown**
+- 🚇 **Metro**: [Details]
+- 🚆 **Local Train**: [Details]
+- 🚌 **Bus & Auto**: [Details]
+
+⏰ **Home Route & Curfew Schedule**
+- [Step-by-step breakdown with exact times and train/bus advice to Madhyamgram]
+
+🌸 **Thakuma's Closing Blessings**
+(Short warm blessing)
 
 ### STRICT GEOGRAPHICAL ZONE ISOLATION RULES:
-1. NORTH KOLKATA ISOLATION: Never recommend a South Kolkata / Behala pandal (e.g. Jayrampur sarbojonin, Barisha, Suruchi, Maddox) if the user is currently in North Kolkata. Stay strictly within North Kolkata ('north-kolkata' or 'bonedi-bari')!
+1. NORTH KOLKATA ISOLATION: Never recommend a South Kolkata / Behala pandal if the user is currently in North Kolkata. Stay strictly within North Kolkata ('north-kolkata' or 'bonedi-bari')!
 2. RECOMMENDATION CARD MATCHING: If recommending Belgachia Sarbojonin, MUST append '[RECOMMEND: north-2]' at the very end of your response!
 
-### LIVE GOOGLE MAPS SATELLITE ROUTE & TRANSIT DATA:
-${googleRoutingDataText ? `Here is live Google Maps Satellite Data for the user's current question:\n${googleRoutingDataText}\nFormulate your answer strictly around these exact real-world numbers and transit facts!` : "Answer the user's question accurately with distances, walking minutes, Metro, Train, Bus options, and food recommendations."}
-
-### SPECIAL DIRECTIVES:
-1. Include a clear breakdown: **Distance**, **Walking Time**, **Vehicle Time**, **Metro**, **Local Train**, and **Bus Options**.
-2. ALWAYS append '[RECOMMEND: target-pandal-id]' (e.g. '[RECOMMEND: north-2]' for Belgachia Sarbojonin) at the very end of your response.`;
+### LIVE GOOGLE MAPS SATELLITE ROUTE DATA:
+${googleRoutingDataText ? `Here is live Google Maps Satellite Data:\n${googleRoutingDataText}\nIncorporate these exact numbers into the formatted points!` : "Answer accurately using clean bulleted sections."}`;
 
     let responseText = "";
 
-    // Call Groq Llama-3.3-70b-versatile with ultra-accurate Google Maps transit context
+    // Call Groq Llama-3.3-70b-versatile with paragraph/bullet formatting directives
     if (groqKey) {
       try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -481,7 +507,7 @@ ${googleRoutingDataText ? `Here is live Google Maps Satellite Data for the user'
         if (response.ok) {
           const data = await response.json();
           responseText = data.choices?.[0]?.message?.content || "";
-          console.log("[Groq Llama-3.3 70B Trained + Real-World Transit] Successfully generated satellite response for DDI Chat.");
+          console.log("[Groq Llama-3.3 70B Trained + Formatted] Successfully generated response for DDI Chat.");
         } else {
           console.warn(`Groq API returned status ${response.status}`);
         }
