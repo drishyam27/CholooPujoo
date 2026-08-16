@@ -13,7 +13,8 @@ import {
   Volume2,
   VolumeX,
   Music,
-  Sparkles
+  Sparkles,
+  Activity
 } from "lucide-react";
 
 export default function CalendarDayPage() {
@@ -177,21 +178,36 @@ export default function CalendarDayPage() {
         </p>
       </div>
 
-      {/* Bottom: Floating Glassmorphic Audio Player Pill */}
+      {/* Bottom: Beat-Style Equalizer Floating Audio Player Pill */}
       <div className="relative z-20 w-full flex flex-col items-center gap-2 pt-2">
         
         {/* Floating Audio Bar */}
-        <div className="w-full max-w-xl glass-accent rounded-2xl sm:rounded-full border border-white/20 bg-[#1F0F0D]/90 backdrop-blur-2xl p-2.5 sm:p-3 px-3.5 sm:px-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center justify-between gap-2.5 sm:gap-4">
+        <div className="w-full max-w-xl glass-accent rounded-2xl sm:rounded-full border border-white/25 bg-[#1F0F0D]/90 backdrop-blur-2xl p-2.5 sm:p-3 px-3.5 sm:px-6 shadow-[0_20px_50px_rgba(0,0,0,0.95)] flex items-center justify-between gap-2.5 sm:gap-4 transition-all duration-300">
           
-          {/* Vinyl Disc Icon */}
-          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-accent/20 border border-accent/40 text-accent ${isPlaying ? "animate-spin" : ""}`}>
-            <Music className="w-4 h-4 sm:w-5 sm:h-5" />
+          {/* Animated Equalizer Beat Visualizer Icon */}
+          <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-accent/20 border border-accent/40 text-accent relative overflow-hidden shadow-inner">
+            {isPlaying ? (
+              <div className="flex items-end justify-center gap-0.5 h-4 sm:h-5 w-5">
+                <span className="w-1 bg-accent rounded-full animate-pulse" style={{ height: "65%", animationDuration: "0.5s" }} />
+                <span className="w-1 bg-amber-400 rounded-full animate-pulse" style={{ height: "100%", animationDuration: "0.7s" }} />
+                <span className="w-1 bg-accent rounded-full animate-pulse" style={{ height: "40%", animationDuration: "0.4s" }} />
+                <span className="w-1 bg-amber-400 rounded-full animate-pulse" style={{ height: "85%", animationDuration: "0.6s" }} />
+              </div>
+            ) : (
+              <Music className="w-4 h-4 sm:w-5 sm:h-5" />
+            )}
           </div>
 
-          {/* Song Info & Progress Slider */}
+          {/* Song Info & Equalizer Beat Header */}
           <div className="flex-1 min-w-0 space-y-0.5 sm:space-y-1 text-left">
-            <div className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-accent flex items-center gap-1">
+            <div className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-accent flex items-center gap-1.5">
               <span>Mahalaya Audio</span>
+              {isPlaying && (
+                <span className="inline-flex items-center gap-1 text-[9px] text-amber-300 font-bold bg-accent/30 px-1.5 py-0.5 rounded-full border border-accent/40 animate-pulse">
+                  <Activity className="w-2.5 h-2.5 animate-bounce text-amber-300" />
+                  <span>BEATS ACTIVE</span>
+                </span>
+              )}
             </div>
             <h4 className="text-xs sm:text-sm font-bold text-white truncate leading-tight">{songTitle}</h4>
             
@@ -210,11 +226,13 @@ export default function CalendarDayPage() {
             </div>
           </div>
 
-          {/* Play/Pause & Mute Button */}
+          {/* Play/Pause & Mute Button with Glowing Beat Pulse */}
           <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <button
               onClick={togglePlay}
-              className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-accent text-white hover:bg-accent-hover active:scale-95 transition-all duration-200 flex items-center justify-center shadow-lg cursor-pointer border border-accent/40"
+              className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-accent text-white hover:bg-accent-hover active:scale-95 transition-all duration-300 flex items-center justify-center shadow-lg cursor-pointer border border-accent/50 ${
+                isPlaying ? "shadow-[0_0_25px_rgba(255,77,61,0.8)] ring-2 ring-accent/60 animate-pulse" : ""
+              }`}
               title={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? <Pause className="w-4 h-4 sm:w-5 sm:h-5" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5" />}
