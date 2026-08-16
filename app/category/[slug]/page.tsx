@@ -163,7 +163,7 @@ export default function CategoryPage() {
 
             {/* Auto-suggest dropdown with high-fidelity styles */}
             {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute left-0 right-0 mt-2 glass rounded-2xl border border-accent/20 bg-[#1F0F0D]/95 backdrop-blur-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition-all duration-200">
+              <div className="absolute left-0 right-0 mt-2 glass rounded-2xl border border-accent/20 bg-[#1F0F0D]/95 backdrop-blur-xl max-h-60 overflow-y-auto custom-scrollbar shadow-[0_10px_40px_rgba(0,0,0,0.5)] transition-all duration-200">
                 <div className="px-4 py-2.5 text-[10px] font-semibold text-accent/80 border-b border-white/5 tracking-widest uppercase flex items-center gap-1.5 bg-accent/5">
                   <Sparkles className="w-3.5 h-3.5" style={{ color: "var(--accent)" }} />
                   Smart Recommendations

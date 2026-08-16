@@ -215,7 +215,7 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
         </div>
 
         {/* Chat Thread Container */}
-        <div className="glass rounded-2xl p-4 border-white/5 bg-[#1F0F0D]/40 min-h-[220px] max-h-[400px] overflow-y-auto space-y-4 pr-1 scrollbar-thin scrollbar-thumb-white/10">
+        <div className="glass rounded-2xl p-4 border-white/5 bg-[#1F0F0D]/40 min-h-[220px] max-h-[400px] overflow-y-auto space-y-4 pr-2 custom-scrollbar">
           {messages.map((msg, idx) => {
             const isUser = msg.role === "user";
             return (
