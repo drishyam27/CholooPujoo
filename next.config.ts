@@ -19,11 +19,6 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: "/DDI",
-        destination: "/ddi",
-        permanent: true,
-      },
-      {
         source: "/chatbot",
         destination: "/ddi",
         permanent: true,
