@@ -17,6 +17,12 @@ import {
   Activity
 } from "lucide-react";
 
+// Pre-calculated aesthetic audio waveform beat heights (36 frequency bars)
+const waveformBeatHeights = [
+  35, 60, 45, 80, 100, 65, 40, 90, 75, 50, 85, 95, 60, 40, 70, 85, 100, 65,
+  45, 90, 80, 55, 75, 90, 100, 60, 40, 70, 85, 50, 65, 90, 75, 45, 60, 40
+];
+
 export default function CalendarDayPage() {
   const { slug } = useParams();
   const router = useRouter();
@@ -34,6 +40,7 @@ export default function CalendarDayPage() {
   const [audioError, setAudioError] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const waveformRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -74,12 +81,14 @@ export default function CalendarDayPage() {
     }
   };
 
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (audioRef.current) {
-      const newTime = parseFloat(e.target.value);
-      audioRef.current.currentTime = newTime;
-      setAudioProgress(newTime);
-    }
+  const handleWaveformClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioRef.current || !waveformRef.current || !audioDuration) return;
+    const rect = waveformRef.current.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickRatio = Math.max(0, Math.min(1, clickX / rect.width));
+    const newTime = clickRatio * audioDuration;
+    audioRef.current.currentTime = newTime;
+    setAudioProgress(newTime);
   };
 
   const formatTime = (secs: number) => {
@@ -105,6 +114,8 @@ export default function CalendarDayPage() {
   const songTitle = day.slug === "mahalaya" 
     ? "Birendra Krishna Bhadra — Mahishasuramardini" 
     : `${day.englishTitle} — Pujo Beats`;
+
+  const progressPercent = audioDuration ? (audioProgress / audioDuration) * 100 : 0;
 
   return (
     <div className="fixed inset-0 z-[100] w-screen h-[100dvh] min-h-[100dvh] bg-[#1F0F0D] overflow-hidden flex flex-col justify-between select-none p-3 sm:p-6 pb-4 sm:pb-8">
@@ -178,7 +189,7 @@ export default function CalendarDayPage() {
         </p>
       </div>
 
-      {/* Bottom: Beat-Style Equalizer Floating Audio Player Pill */}
+      {/* Bottom: Floating Glassmorphic Audio Player Pill with Waveform Beat Track */}
       <div className="relative z-20 w-full flex flex-col items-center gap-2 pt-2">
         
         {/* Floating Audio Bar */}
@@ -198,31 +209,57 @@ export default function CalendarDayPage() {
             )}
           </div>
 
-          {/* Song Info & Equalizer Beat Header */}
-          <div className="flex-1 min-w-0 space-y-0.5 sm:space-y-1 text-left">
-            <div className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-accent flex items-center gap-1.5">
+          {/* Song Info & Interactive Waveform Beat Progress Track */}
+          <div className="flex-1 min-w-0 space-y-1 text-left">
+            <div className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-accent flex items-center justify-between">
               <span>Mahalaya Audio</span>
               {isPlaying && (
                 <span className="inline-flex items-center gap-1 text-[9px] text-amber-300 font-bold bg-accent/30 px-1.5 py-0.5 rounded-full border border-accent/40 animate-pulse">
                   <Activity className="w-2.5 h-2.5 animate-bounce text-amber-300" />
-                  <span>BEATS ACTIVE</span>
+                  <span>BEATS PLAYING</span>
                 </span>
               )}
             </div>
+
             <h4 className="text-xs sm:text-sm font-bold text-white truncate leading-tight">{songTitle}</h4>
             
-            {/* Progress Slider */}
-            <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] text-white/60">
-              <span>{formatTime(audioProgress)}</span>
-              <input
-                type="range"
-                min={0}
-                max={audioDuration || 100}
-                value={audioProgress}
-                onChange={handleSeek}
-                className="flex-1 h-1 bg-white/20 rounded-lg appearance-none cursor-pointer accent-accent"
-              />
-              <span>{formatTime(audioDuration)}</span>
+            {/* Waveform Soundwave Beat Slider Track */}
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] sm:text-[10px] text-white/70 font-mono flex-shrink-0">
+                {formatTime(audioProgress)}
+              </span>
+
+              {/* Interactive Waveform Bars */}
+              <div
+                ref={waveformRef}
+                onClick={handleWaveformClick}
+                className="flex-1 flex items-center justify-between gap-[2px] h-6 sm:h-7 cursor-pointer group py-1 px-1 rounded-md hover:bg-white/5 transition-colors"
+                title="Click anywhere to jump on beat track"
+              >
+                {waveformBeatHeights.map((barHeight, idx) => {
+                  const barPercent = (idx / waveformBeatHeights.length) * 100;
+                  const isPlayed = barPercent <= progressPercent;
+
+                  return (
+                    <div
+                      key={idx}
+                      className={`w-[2.5px] sm:w-[3px] rounded-full transition-all duration-200 ${
+                        isPlayed
+                          ? "bg-gradient-to-t from-accent to-amber-400 shadow-[0_0_6px_rgba(255,77,61,0.9)]"
+                          : "bg-white/20 group-hover:bg-white/35"
+                      } ${isPlaying && isPlayed ? "animate-pulse" : ""}`}
+                      style={{
+                        height: `${barHeight}%`,
+                        animationDuration: `${0.4 + (idx % 4) * 0.15}s`,
+                      }}
+                    />
+                  );
+                })}
+              </div>
+
+              <span className="text-[9px] sm:text-[10px] text-white/70 font-mono flex-shrink-0">
+                {formatTime(audioDuration)}
+              </span>
             </div>
           </div>
 
