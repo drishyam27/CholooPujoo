@@ -51,90 +51,116 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden px-4 py-8 sm:py-12 bg-[#1F0F0D]">
-      {/* Background ambient festival lighting blobs */}
+      
+      {/* Background Durga Puja Atmospheric Photo Layer */}
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <Image
+          src="/images/north-1.png"
+          alt="Durga Puja Pandal Background"
+          fill
+          priority
+          className="object-cover mix-blend-luminosity filter blur-sm"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1F0F0D]/90 via-[#1F0F0D]/80 to-[#1F0F0D]" />
+      </div>
+
+      {/* Ambient festival glowing light spots */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div
-          className="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-[140px] opacity-25"
+          className="absolute top-1/4 -left-32 w-96 h-96 rounded-full blur-[140px] opacity-30"
           style={{ background: "var(--accent)" }}
         />
         <div
-          className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full blur-[140px] opacity-20"
+          className="absolute bottom-1/4 -right-32 w-96 h-96 rounded-full blur-[140px] opacity-25"
           style={{ background: "#EAB308" }}
         />
-        <div className="absolute top-10 right-1/3 w-64 h-64 rounded-full blur-[120px] opacity-15 bg-accent" />
+        <div className="absolute top-10 right-1/3 w-64 h-64 rounded-full blur-[120px] opacity-20 bg-accent" />
       </div>
 
-      {/* Main Container */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      {/* Main Responsive Grid Container */}
+      <div className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
         
-        {/* Left Column: Festival Cultural Hero (Visible on lg screens) */}
-        <div className="hidden lg:block lg:col-span-6 space-y-6 text-left pr-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-accent text-xs font-semibold uppercase tracking-widest text-accent border border-accent/30 shadow-[0_0_20px_rgba(255,77,61,0.2)]">
-            <Flame className="w-3.5 h-3.5 text-accent animate-pulse" />
-            <span>Sharodutsav 2026 Edition</span>
+        {/* Left Column: Visual Durga Puja Hero Poster Card (Visible on lg screens) */}
+        <div className="hidden lg:flex lg:col-span-6 flex-col justify-between glass rounded-3xl p-8 border border-accent/30 bg-[#1F0F0D]/75 backdrop-blur-2xl shadow-[0_20px_60px_rgba(255,77,61,0.2)] relative overflow-hidden group min-h-[580px]">
+          
+          {/* Background Card Artwork (Bonedi Bari Heritage Pandal) */}
+          <div className="absolute inset-0 z-0 opacity-40 group-hover:scale-105 transition-transform duration-700 ease-out">
+            <Image
+              src="/images/bonedi-1.png"
+              alt="Durga Puja Artwork"
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1F0F0D] via-[#1F0F0D]/70 to-[#1F0F0D]/40" />
           </div>
 
-          <div className="space-y-3">
-            <h1
-              className="text-5xl font-bold tracking-tight text-white leading-tight"
-              style={{ fontFamily: "var(--font-playfair), serif" }}
-            >
-              Choloo<span style={{ color: "var(--accent)" }}>Pujoo</span>
-            </h1>
+          {/* Top Poster Content */}
+          <div className="relative z-10 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-accent text-xs font-semibold uppercase tracking-widest text-accent border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.25)]">
+                <Flame className="w-3.5 h-3.5 text-accent animate-pulse" />
+                <span>Sharodutsav 2026 Edition</span>
+              </div>
 
-            {/* Iconic Mahalaya Bengali Verse */}
-            <p
-              className="text-2xl font-bold leading-relaxed text-amber-200/95 tracking-wide"
-              style={{
-                fontFamily: "var(--font-playfair), serif",
-                textShadow: "0 0 25px rgba(255, 77, 61, 0.4)",
-              }}
-            >
-              আশ্বিনের শারদ প্রাতে বেজে উঠেছে আলোক মঞ্জীর, মা এসেছে ঘরে
+              {/* Glowing Trinayana Emblem */}
+              <div className="w-12 h-12 rounded-2xl glass-accent flex items-center justify-center p-1.5 border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.3)]">
+                <Image
+                  src="/durga-eyes.jpg"
+                  alt="Durga Eyes Emblem"
+                  width={36}
+                  height={36}
+                  className="w-full h-full object-contain rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div className="pt-4 space-y-3">
+              <h1
+                className="text-5xl font-bold tracking-tight text-white leading-tight"
+                style={{ fontFamily: "var(--font-playfair), serif" }}
+              >
+                Choloo<span style={{ color: "var(--accent)" }}>Pujoo</span>
+              </h1>
+
+              {/* Iconic Mahalaya Bengali Verse */}
+              <p
+                className="text-2xl sm:text-3xl font-bold leading-relaxed text-amber-200 tracking-wide drop-shadow-[0_4px_20px_rgba(255,77,61,0.6)]"
+                style={{ fontFamily: "var(--font-playfair), serif" }}
+              >
+                &ldquo;আশ্বিনের শারদ প্রাতে বেজে উঠেছে আলোক মঞ্জীর, মা এসেছে ঘরে&rdquo;
+              </p>
+            </div>
+
+            <p className="text-xs sm:text-sm text-white/80 leading-relaxed max-w-md pt-2">
+              Explore 93 celebrated pandals across South Kolkata, North Kolkata & heritage Bonedi Bari with real-time crowd alerts and DDI Thakuma AI navigation.
             </p>
           </div>
 
-          <p className="text-sm text-white/70 leading-relaxed max-w-md">
-            Step into Kolkata&apos;s ultimate Durga Puja companion. Explore 93 iconic pandals, receive real-time crowd alerts, and navigate safely with our DDI Thakuma AI guide.
-          </p>
-
-          {/* 3 Quick Cultural Feature Cards */}
-          <div className="grid grid-cols-1 gap-3 pt-2">
-            <div className="glass rounded-2xl p-3.5 border-white/10 bg-white/5 flex items-center gap-3.5 shadow-lg">
-              <div className="w-10 h-10 rounded-xl glass-accent flex items-center justify-center text-accent flex-shrink-0 border-accent/30">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-semibold text-white">93 Grand Pandals Map</h4>
-                <p className="text-[11px] text-white/50">South Kolkata, North Kolkata & Heritage Bonedi Bari</p>
-              </div>
+          {/* Bottom Feature Badges Grid */}
+          <div className="relative z-10 grid grid-cols-3 gap-2.5 pt-6 border-t border-white/10 mt-6">
+            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/30 transition-colors">
+              <MapPin className="w-4 h-4 text-accent mx-auto mb-1" />
+              <div className="text-[11px] font-bold text-white">93 Pandals</div>
+              <div className="text-[9px] text-white/50">Full Map</div>
             </div>
 
-            <div className="glass rounded-2xl p-3.5 border-white/10 bg-white/5 flex items-center gap-3.5 shadow-lg">
-              <div className="w-10 h-10 rounded-xl glass-accent flex items-center justify-center text-accent flex-shrink-0 border-accent/30">
-                <Bot className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-semibold text-white">DDI Thakuma AI Companion</h4>
-                <p className="text-[11px] text-white/50">Live spatial routing, traffic multipliers & curfew safety</p>
-              </div>
+            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/30 transition-colors">
+              <Bot className="w-4 h-4 text-accent mx-auto mb-1" />
+              <div className="text-[11px] font-bold text-white">Thakuma AI</div>
+              <div className="text-[9px] text-white/50">Live Companion</div>
             </div>
 
-            <div className="glass rounded-2xl p-3.5 border-white/10 bg-white/5 flex items-center gap-3.5 shadow-lg">
-              <div className="w-10 h-10 rounded-xl glass-accent flex items-center justify-center text-accent flex-shrink-0 border-accent/30">
-                <Trophy className="w-5 h-5" />
-              </div>
-              <div>
-                <h4 className="text-xs font-semibold text-white">Kolkata Visitor Leaderboard</h4>
-                <p className="text-[11px] text-white/50">Check-in at pandals, earn points & rank among pandal hoppers</p>
-              </div>
+            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/30 transition-colors">
+              <Trophy className="w-4 h-4 text-accent mx-auto mb-1" />
+              <div className="text-[11px] font-bold text-white">Leaderboard</div>
+              <div className="text-[9px] text-white/50">Rankings</div>
             </div>
           </div>
         </div>
 
         {/* Right Column: Glass Login Card */}
-        <div className="lg:col-span-6 w-full max-w-md mx-auto">
-          <div className="glass rounded-3xl p-6 sm:p-8 md:p-10 border border-accent/20 bg-[#1F0F0D]/80 backdrop-blur-2xl shadow-[0_15px_50px_rgba(0,0,0,0.7)] text-left relative overflow-hidden">
+        <div className="lg:col-span-6 w-full max-w-md mx-auto flex items-center">
+          <div className="glass rounded-3xl p-6 sm:p-8 md:p-10 border border-accent/20 bg-[#1F0F0D]/85 backdrop-blur-2xl shadow-[0_15px_50px_rgba(0,0,0,0.7)] text-left relative overflow-hidden w-full">
             
             {/* Top Glowing Ornament Accent */}
             <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-accent/20 blur-2xl pointer-events-none" />
@@ -160,7 +186,7 @@ export default function LoginPage() {
               </h2>
 
               {/* Bengali Slogan badge for Mobile & Tablet viewports */}
-              <p className="lg:hidden text-xs font-medium text-amber-200/90 mt-1 mb-2 italic">
+              <p className="lg:hidden text-xs font-semibold text-amber-200/90 mt-1 mb-2 italic">
                 &ldquo;আশ্বিনের শারদ প্রাতে বেজে উঠেছে আলোক মঞ্জীর, মা এসেছে ঘরে&rdquo;
               </p>
 
