@@ -129,22 +129,37 @@ export default function CalendarDayPage() {
         onError={() => setAudioError(true)}
       />
 
-      {/* 100% Full-Bleed Background Image */}
-      <div className="absolute inset-0 z-0">
+      {/* 100% Full-Bleed Background Image (Layer 1: Ambient Blur) */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
           src={day.imageUrl}
           alt={day.englishTitle}
           fill
           priority
           unoptimized
-          className={`object-cover ${day.imagePosition || "object-center"} animate-fade-in duration-700`}
+          className="object-cover blur-3xl opacity-35 scale-110 pointer-events-none"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = day.fallbackImage;
           }}
         />
-        {/* Dark Vignette Mask for high readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/75" />
+
+        {/* Layer 2: Main Image Uncropped (Top to Bottom 100% Visible) */}
+        <Image
+          src={day.imageUrl}
+          alt={day.englishTitle}
+          fill
+          priority
+          unoptimized
+          className="object-contain object-center animate-fade-in duration-700 pointer-events-none"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = day.fallbackImage;
+          }}
+        />
+
+        {/* Dark Vignette Overlay for Readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 pointer-events-none" />
       </div>
 
       {/* Top Bar: Floating Glass Back Button & Date Badge */}
@@ -152,23 +167,23 @@ export default function CalendarDayPage() {
         {/* Floating Back Button */}
         <Link
           href="/calendar"
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full glass bg-black/50 hover:bg-black/70 text-white/90 hover:text-white border border-white/20 backdrop-blur-md transition-all duration-200 text-xs font-semibold shadow-lg group cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full glass bg-black/60 hover:bg-black/80 text-white/90 hover:text-white border border-white/20 backdrop-blur-md transition-all duration-200 text-xs font-semibold shadow-lg group cursor-pointer"
         >
           <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:-translate-x-1 transition-transform" />
           <span>Back to Ponjika</span>
         </Link>
 
         {/* Top Right Date & Day Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full glass bg-black/50 text-white/80 border border-white/15 backdrop-blur-md text-[11px] sm:text-xs font-medium">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full glass bg-black/60 text-white/80 border border-white/15 backdrop-blur-md text-[11px] sm:text-xs font-medium">
           <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent animate-pulse" />
           <span>{day.date}</span>
         </div>
       </div>
 
       {/* Center: Giant Aesthetic Calligraphy Title */}
-      <div className="relative z-20 text-center px-3 space-y-2 sm:space-y-4 max-w-4xl mx-auto my-auto py-2">
+      <div className="relative z-20 text-center px-3 space-y-1.5 sm:space-y-3 max-w-4xl mx-auto my-auto py-2">
         <h1
-          className="text-5xl sm:text-7xl md:text-9xl font-extrabold text-amber-200 tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)]"
+          className="text-4xl sm:text-7xl md:text-8xl font-extrabold text-amber-200 tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)]"
           style={{
             fontFamily: "var(--font-playfair), serif",
             textShadow: "0 0 40px rgba(255, 77, 61, 0.45), 0 10px 40px rgba(0, 0, 0, 0.95)",
@@ -178,7 +193,7 @@ export default function CalendarDayPage() {
         </h1>
 
         <p
-          className="text-lg sm:text-2xl md:text-3xl text-white/95 font-medium tracking-wide drop-shadow-lg"
+          className="text-base sm:text-2xl md:text-3xl text-white/95 font-medium tracking-wide drop-shadow-lg"
           style={{ fontFamily: "var(--font-playfair), serif" }}
         >
           {day.englishTitle}
@@ -189,7 +204,7 @@ export default function CalendarDayPage() {
         </p>
       </div>
 
-      {/* Bottom: Floating Glassmorphic Audio Player Pill with Waveform Beat Track */}
+      {/* Bottom: Beat-Style Equalizer Floating Audio Player Pill */}
       <div className="relative z-20 w-full flex flex-col items-center gap-2 pt-2">
         
         {/* Floating Audio Bar */}
