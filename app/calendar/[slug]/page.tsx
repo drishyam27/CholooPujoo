@@ -13,9 +13,7 @@ import {
   Volume2,
   VolumeX,
   Music,
-  Sparkles,
-  ChevronLeft,
-  ChevronRight
+  Sparkles
 } from "lucide-react";
 
 export default function CalendarDayPage() {
@@ -26,9 +24,6 @@ export default function CalendarDayPage() {
   // Find the day data based on slug
   const dayIndex = calendarDays.findIndex((d) => d.slug === slug);
   const day: CalendarDay | undefined = calendarDays[dayIndex];
-
-  const prevDay = dayIndex > 0 ? calendarDays[dayIndex - 1] : null;
-  const nextDay = dayIndex < calendarDays.length - 1 ? calendarDays[dayIndex + 1] : null;
 
   // Audio state
   const [isPlaying, setIsPlaying] = useState(false);
@@ -111,7 +106,7 @@ export default function CalendarDayPage() {
     : `${day.englishTitle} — Pujo Beats`;
 
   return (
-    <div className="fixed inset-0 z-[100] w-screen h-screen bg-[#1F0F0D] overflow-hidden flex flex-col justify-between select-none">
+    <div className="fixed inset-0 z-[100] w-screen h-[100dvh] min-h-[100dvh] bg-[#1F0F0D] overflow-hidden flex flex-col justify-between select-none p-3 sm:p-6 pb-4 sm:pb-8">
       
       {/* Hidden HTML5 Audio Element */}
       <audio
@@ -122,7 +117,7 @@ export default function CalendarDayPage() {
         onError={() => setAudioError(true)}
       />
 
-      {/* 100% Full-Bleed Background Image (No margins, no navbar) */}
+      {/* 100% Full-Bleed Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
           src={day.imageUrl}
@@ -136,72 +131,72 @@ export default function CalendarDayPage() {
             target.src = day.fallbackImage;
           }}
         />
-        {/* Dark Vignette Mask */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/70" />
+        {/* Dark Vignette Mask for high readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/75" />
       </div>
 
-      {/* Top Bar: Discreet Floating Glass Navigation */}
-      <div className="relative z-20 p-4 sm:p-8 flex items-center justify-between">
+      {/* Top Bar: Floating Glass Back Button & Date Badge */}
+      <div className="relative z-20 pt-2 sm:pt-4 flex items-center justify-between gap-2">
         {/* Floating Back Button */}
         <Link
           href="/calendar"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass bg-black/40 hover:bg-black/60 text-white/90 hover:text-white border border-white/20 backdrop-blur-md transition-all duration-200 text-xs font-semibold shadow-lg group cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full glass bg-black/50 hover:bg-black/70 text-white/90 hover:text-white border border-white/20 backdrop-blur-md transition-all duration-200 text-xs font-semibold shadow-lg group cursor-pointer"
         >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:-translate-x-1 transition-transform" />
           <span>Back to Ponjika</span>
         </Link>
 
         {/* Top Right Date & Day Badge */}
-        <div className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full glass bg-black/40 text-white/80 border border-white/15 backdrop-blur-md text-xs font-medium">
-          <Sparkles className="w-3.5 h-3.5 text-accent animate-pulse" />
-          <span>{day.date} • {day.dayOfWeek}</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full glass bg-black/50 text-white/80 border border-white/15 backdrop-blur-md text-[11px] sm:text-xs font-medium">
+          <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-accent animate-pulse" />
+          <span>{day.date}</span>
         </div>
       </div>
 
-      {/* Center: Giant Aesthetic Calligraphy Title (Saloon.wtf style) */}
-      <div className="relative z-20 text-center px-4 space-y-3 sm:space-y-4 max-w-4xl mx-auto -mt-10 sm:-mt-16">
+      {/* Center: Giant Aesthetic Calligraphy Title */}
+      <div className="relative z-20 text-center px-3 space-y-2 sm:space-y-4 max-w-4xl mx-auto my-auto py-2">
         <h1
-          className="text-6xl sm:text-8xl md:text-9xl font-extrabold text-amber-200 tracking-tight leading-none drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)]"
+          className="text-5xl sm:text-7xl md:text-9xl font-extrabold text-amber-200 tracking-tight leading-tight drop-shadow-[0_10px_35px_rgba(0,0,0,0.95)]"
           style={{
             fontFamily: "var(--font-playfair), serif",
-            textShadow: "0 0 40px rgba(255, 77, 61, 0.4), 0 10px 40px rgba(0, 0, 0, 0.9)",
+            textShadow: "0 0 40px rgba(255, 77, 61, 0.45), 0 10px 40px rgba(0, 0, 0, 0.95)",
           }}
         >
           {day.bengaliTitle}
         </h1>
 
         <p
-          className="text-xl sm:text-3xl text-white/90 font-medium tracking-wide drop-shadow-lg"
+          className="text-lg sm:text-2xl md:text-3xl text-white/95 font-medium tracking-wide drop-shadow-lg"
           style={{ fontFamily: "var(--font-playfair), serif" }}
         >
           {day.englishTitle}
         </p>
 
-        <p className="text-xs sm:text-sm text-white/70 max-w-xl mx-auto leading-relaxed drop-shadow">
+        <p className="text-xs sm:text-sm text-white/75 max-w-lg mx-auto leading-relaxed drop-shadow px-2">
           {day.subtitle}
         </p>
       </div>
 
-      {/* Bottom: Floating Glassmorphic Audio Player Pill (Saloon.wtf style) */}
-      <div className="relative z-20 p-4 sm:p-8 flex flex-col items-center gap-3">
+      {/* Bottom: Floating Glassmorphic Audio Player Pill */}
+      <div className="relative z-20 w-full flex flex-col items-center gap-2 pt-2">
         
         {/* Floating Audio Bar */}
-        <div className="w-full max-w-xl glass-accent rounded-full border border-white/20 bg-[#1F0F0D]/80 backdrop-blur-2xl p-3 px-5 sm:px-6 shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex items-center justify-between gap-4">
+        <div className="w-full max-w-xl glass-accent rounded-2xl sm:rounded-full border border-white/20 bg-[#1F0F0D]/90 backdrop-blur-2xl p-2.5 sm:p-3 px-3.5 sm:px-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] flex items-center justify-between gap-2.5 sm:gap-4">
           
           {/* Vinyl Disc Icon */}
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-accent/20 border border-accent/40 text-accent ${isPlaying ? "animate-spin" : ""}`}>
-            <Music className="w-5 h-5" />
+          <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-accent/20 border border-accent/40 text-accent ${isPlaying ? "animate-spin" : ""}`}>
+            <Music className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
 
           {/* Song Info & Progress Slider */}
-          <div className="flex-1 min-w-0 space-y-1 text-left">
-            <div className="text-[10px] uppercase font-bold tracking-widest text-accent flex items-center gap-1.5">
+          <div className="flex-1 min-w-0 space-y-0.5 sm:space-y-1 text-left">
+            <div className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-accent flex items-center gap-1">
               <span>Mahalaya Audio</span>
             </div>
-            <h4 className="text-xs sm:text-sm font-bold text-white truncate">{songTitle}</h4>
+            <h4 className="text-xs sm:text-sm font-bold text-white truncate leading-tight">{songTitle}</h4>
             
             {/* Progress Slider */}
-            <div className="flex items-center gap-2 text-[10px] text-white/60">
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] text-white/60">
               <span>{formatTime(audioProgress)}</span>
               <input
                 type="range"
@@ -215,30 +210,30 @@ export default function CalendarDayPage() {
             </div>
           </div>
 
-          {/* Play/Pause Button */}
-          <div className="flex items-center gap-2 flex-shrink-0">
+          {/* Play/Pause & Mute Button */}
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
             <button
               onClick={togglePlay}
-              className="w-11 h-11 rounded-full bg-accent text-white hover:bg-accent-hover active:scale-95 transition-all duration-200 flex items-center justify-center shadow-lg cursor-pointer border border-accent/40"
+              className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-accent text-white hover:bg-accent-hover active:scale-95 transition-all duration-200 flex items-center justify-center shadow-lg cursor-pointer border border-accent/40"
               title={isPlaying ? "Pause" : "Play"}
             >
-              {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-current ml-0.5" />}
+              {isPlaying ? <Pause className="w-4 h-4 sm:w-5 sm:h-5" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5" />}
             </button>
 
             <button
               onClick={toggleMute}
-              className="p-2.5 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
+              className="p-2 sm:p-2.5 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
               title={isMuted ? "Unmute" : "Mute"}
             >
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
             </button>
           </div>
         </div>
 
-        {/* Sub-label Audio Hint */}
+        {/* Sub-label Audio Error Notice if audio blocked */}
         {audioError && (
-          <p className="text-[10px] text-amber-300/80 italic bg-black/60 px-3 py-1 rounded-full border border-amber-500/20 backdrop-blur-md">
-            🎵 MP3 file notice: upload <code className="text-accent font-bold">/public/audio/mahalaya.mp3</code> to enable playback!
+          <p className="text-[9px] sm:text-[10px] text-amber-300/90 italic bg-black/70 px-3 py-1 rounded-full border border-amber-500/20 backdrop-blur-md max-w-xs text-center truncate">
+            🎵 MP3 file ready: place <code className="text-accent font-bold">/public/audio/mahalaya.mp3</code> to play!
           </p>
         )}
       </div>
