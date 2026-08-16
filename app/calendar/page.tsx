@@ -73,7 +73,7 @@ export default function CalendarPage() {
                       alt={day.englishTitle}
                       fill
                       unoptimized
-                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className={`object-cover ${day.imagePosition || "object-center"} group-hover:scale-105 transition-transform duration-700 ease-out`}
                       onError={(e) => {
                         // Fallback if custom image isn't uploaded yet
                         const target = e.target as HTMLImageElement;

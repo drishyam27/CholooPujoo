@@ -7,6 +7,7 @@ export interface CalendarDay {
   subtitle: string;
   imageUrl: string;
   fallbackImage: string;
+  imagePosition?: string;
   crowdLevel: "Low" | "Moderate" | "High" | "Extreme";
   crowdColor: string;
   rituals: string[];
@@ -25,6 +26,7 @@ export const calendarDays: CalendarDay[] = [
     subtitle: "The Invocation of Maa Durga & Dawn of Sharodutsav",
     imageUrl: "/images/calendar/mahalaya.jpg",
     fallbackImage: "/images/hero-bg.png",
+    imagePosition: "object-center",
     crowdLevel: "Low",
     crowdColor: "#4ade80",
     rituals: [
@@ -45,6 +47,7 @@ export const calendarDays: CalendarDay[] = [
     subtitle: "Devi Paksha Begins & First Illumination",
     imageUrl: "/images/calendar/prothoma.jpg",
     fallbackImage: "/images/north-1.png",
+    imagePosition: "object-bottom",
     crowdLevel: "Low",
     crowdColor: "#4ade80",
     rituals: [

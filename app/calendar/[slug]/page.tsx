@@ -137,7 +137,7 @@ export default function CalendarDayPage() {
           fill
           priority
           unoptimized
-          className="object-cover animate-fade-in duration-700"
+          className={`object-cover ${day.imagePosition || "object-center"} animate-fade-in duration-700`}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = day.fallbackImage;
