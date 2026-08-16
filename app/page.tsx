@@ -227,7 +227,7 @@ export default function HomePage() {
           </div>
 
           <button
-            onClick={() => router.push("/chatbot")}
+            onClick={() => router.push("/ddi")}
             className="px-6 py-3.5 rounded-xl text-sm font-bold transition-all duration-300 hover:brightness-110 active:scale-95 cursor-pointer relative z-10 whitespace-nowrap shadow-[0_0_15px_rgba(255,77,61,0.2)] flex items-center gap-2"
             style={{ background: "linear-gradient(135deg, var(--accent), var(--accent-hover))", color: "#fff" }}
           >
