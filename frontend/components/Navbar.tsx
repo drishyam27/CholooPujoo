@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useAppContext } from "@/frontend/context/AppContext";
-import { Flame, Map, LogOut, Menu, X, Trophy, User, MessageSquare } from "lucide-react";
+import { Flame, Map, LogOut, Menu, X, Trophy, User, MessageSquare, Calendar } from "lucide-react";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -14,6 +14,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/", label: "Explore", icon: Flame },
+    { href: "/calendar", label: "Ponjika", icon: Calendar },
     { href: "/itinerary", label: "My Itinerary", icon: Map },
     { href: "/ddi", label: "DDI Chat", icon: MessageSquare },
     { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
