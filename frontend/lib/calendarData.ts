@@ -68,6 +68,7 @@ export const calendarDays: CalendarDay[] = [
     subtitle: "Chandra Puja & Street Light Testing",
     imageUrl: "/images/calendar/dwitiya.jpg",
     fallbackImage: "/images/south-1.png",
+    imagePosition: "object-center",
     crowdLevel: "Low",
     crowdColor: "#4ade80",
     rituals: [
@@ -88,6 +89,7 @@ export const calendarDays: CalendarDay[] = [
     subtitle: "VIP Pandal Inaugurations & Early Hopping",
     imageUrl: "/images/calendar/tritiya.jpg",
     fallbackImage: "/images/north-2.png",
+    imagePosition: "object-center",
     crowdLevel: "Moderate",
     crowdColor: "#facc15",
     rituals: [
@@ -108,6 +110,7 @@ export const calendarDays: CalendarDay[] = [
     subtitle: "Kushmanda Puja & The Great Night Walk Begins",
     imageUrl: "/images/calendar/chaturthi.jpg",
     fallbackImage: "/images/south-2.png",
+    imagePosition: "object-center",
     crowdLevel: "Moderate",
     crowdColor: "#facc15",
     rituals: [
