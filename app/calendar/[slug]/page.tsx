@@ -116,7 +116,7 @@ export default function CalendarDayPage() {
       {/* Hidden HTML5 Audio Element */}
       <audio
         ref={audioRef}
-        src={`/public/audio/${day.slug}.mp3`}
+        src={`/audio/${day.slug}.mp3`}
         onTimeUpdate={handleTimeUpdate}
         onEnded={() => setIsPlaying(false)}
         onError={() => setAudioError(true)}
