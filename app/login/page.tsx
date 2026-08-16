@@ -27,6 +27,28 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
+  // Interactive Cursor Tracking Glow States
+  const [leftMouse, setLeftMouse] = useState({ x: -100, y: -100, opacity: 0 });
+  const [rightMouse, setRightMouse] = useState({ x: -100, y: -100, opacity: 0 });
+
+  const handleLeftMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setLeftMouse({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      opacity: 1,
+    });
+  };
+
+  const handleRightMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setRightMouse({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      opacity: 1,
+    });
+  };
+
   // Redirect if already logged in
   useEffect(() => {
     if (isLoggedIn) {
@@ -81,29 +103,42 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
         
         {/* Left Column: Visual Durga Puja Hero Poster Card (Visible on lg screens) */}
-        <div className="hidden lg:flex lg:col-span-6 flex-col justify-between glass rounded-3xl p-8 border border-accent/30 bg-[#1F0F0D]/75 backdrop-blur-2xl shadow-[0_20px_60px_rgba(255,77,61,0.2)] relative overflow-hidden group min-h-[580px]">
-          
-          {/* Background Card Artwork (Bonedi Bari Heritage Pandal) */}
-          <div className="absolute inset-0 z-0 opacity-40 group-hover:scale-105 transition-transform duration-700 ease-out">
+        <div
+          onMouseMove={handleLeftMouseMove}
+          onMouseLeave={() => setLeftMouse((prev) => ({ ...prev, opacity: 0 }))}
+          className="hidden lg:flex lg:col-span-6 flex-col justify-between glass rounded-3xl p-8 border border-accent/30 bg-[#1F0F0D]/80 backdrop-blur-2xl shadow-[0_20px_60px_rgba(255,77,61,0.25)] relative overflow-hidden group min-h-[580px] transition-all duration-300"
+        >
+          {/* Interactive Mouse Tracking Glow */}
+          <div
+            className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300"
+            style={{
+              opacity: leftMouse.opacity,
+              background: `radial-gradient(600px circle at ${leftMouse.x}px ${leftMouse.y}px, rgba(255, 77, 61, 0.35), rgba(234, 179, 8, 0.2), transparent 70%)`,
+            }}
+          />
+
+          {/* Background Custom AI Generated Durga Puja Poster (Mahalaya to Dashami) */}
+          <div className="absolute inset-0 z-0 opacity-55 group-hover:scale-105 transition-transform duration-700 ease-out">
             <Image
-              src="/images/bonedi-1.png"
-              alt="Durga Puja Artwork"
+              src="/images/durga-hero-poster.png"
+              alt="Durga Puja Festival Journey Artwork"
               fill
+              priority
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1F0F0D] via-[#1F0F0D]/70 to-[#1F0F0D]/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1F0F0D] via-[#1F0F0D]/75 to-[#1F0F0D]/30" />
           </div>
 
           {/* Top Poster Content */}
-          <div className="relative z-10 space-y-4">
+          <div className="relative z-20 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-accent text-xs font-semibold uppercase tracking-widest text-accent border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.25)]">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-accent text-xs font-semibold uppercase tracking-widest text-accent border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.3)]">
                 <Flame className="w-3.5 h-3.5 text-accent animate-pulse" />
                 <span>Sharodutsav 2026 Edition</span>
               </div>
 
               {/* Glowing Trinayana Emblem */}
-              <div className="w-12 h-12 rounded-2xl glass-accent flex items-center justify-center p-1.5 border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.3)]">
+              <div className="w-12 h-12 rounded-2xl glass-accent flex items-center justify-center p-1.5 border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.35)]">
                 <Image
                   src="/durga-eyes.jpg"
                   alt="Durga Eyes Emblem"
@@ -124,49 +159,61 @@ export default function LoginPage() {
 
               {/* Iconic Mahalaya Bengali Verse */}
               <p
-                className="text-2xl sm:text-3xl font-bold leading-relaxed text-amber-200 tracking-wide drop-shadow-[0_4px_20px_rgba(255,77,61,0.6)]"
+                className="text-2xl sm:text-3xl font-bold leading-relaxed text-amber-200 tracking-wide drop-shadow-[0_4px_20px_rgba(255,77,61,0.7)]"
                 style={{ fontFamily: "var(--font-playfair), serif" }}
               >
                 &ldquo;আশ্বিনের শারদ প্রাতে বেজে উঠেছে আলোক মঞ্জীর, মা এসেছে ঘরে&rdquo;
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-white/80 leading-relaxed max-w-md pt-2">
-              Explore 93 celebrated pandals across South Kolkata, North Kolkata & heritage Bonedi Bari with real-time crowd alerts and DDI Thakuma AI navigation.
+            <p className="text-xs sm:text-sm text-white/85 leading-relaxed max-w-md pt-2">
+              From Mahalaya morning to Bijoya Dashami, experience the complete soul of Kolkata Durga Puja across 93 pandals with real-time crowd alerts & DDI Thakuma AI guide.
             </p>
           </div>
 
           {/* Bottom Feature Badges Grid */}
-          <div className="relative z-10 grid grid-cols-3 gap-2.5 pt-6 border-t border-white/10 mt-6">
-            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/30 transition-colors">
+          <div className="relative z-20 grid grid-cols-3 gap-2.5 pt-6 border-t border-white/15 mt-6">
+            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/40 transition-colors">
               <MapPin className="w-4 h-4 text-accent mx-auto mb-1" />
               <div className="text-[11px] font-bold text-white">93 Pandals</div>
-              <div className="text-[9px] text-white/50">Full Map</div>
+              <div className="text-[9px] text-white/60">Full Map</div>
             </div>
 
-            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/30 transition-colors">
+            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/40 transition-colors">
               <Bot className="w-4 h-4 text-accent mx-auto mb-1" />
               <div className="text-[11px] font-bold text-white">Thakuma AI</div>
-              <div className="text-[9px] text-white/50">Live Companion</div>
+              <div className="text-[9px] text-white/60">Live Companion</div>
             </div>
 
-            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/30 transition-colors">
+            <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/40 transition-colors">
               <Trophy className="w-4 h-4 text-accent mx-auto mb-1" />
               <div className="text-[11px] font-bold text-white">Leaderboard</div>
-              <div className="text-[9px] text-white/50">Rankings</div>
+              <div className="text-[9px] text-white/60">Rankings</div>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Glass Login Card */}
+        {/* Right Column: Glass Login Card with Interactive Glow */}
         <div className="lg:col-span-6 w-full max-w-md mx-auto flex items-center">
-          <div className="glass rounded-3xl p-6 sm:p-8 md:p-10 border border-accent/20 bg-[#1F0F0D]/85 backdrop-blur-2xl shadow-[0_15px_50px_rgba(0,0,0,0.7)] text-left relative overflow-hidden w-full">
-            
+          <div
+            onMouseMove={handleRightMouseMove}
+            onMouseLeave={() => setRightMouse((prev) => ({ ...prev, opacity: 0 }))}
+            className="glass rounded-3xl p-6 sm:p-8 md:p-10 border border-accent/20 bg-[#1F0F0D]/85 backdrop-blur-2xl shadow-[0_15px_50px_rgba(0,0,0,0.7)] text-left relative overflow-hidden w-full group transition-all duration-300"
+          >
+            {/* Interactive Mouse Tracking Glow */}
+            <div
+              className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300"
+              style={{
+                opacity: rightMouse.opacity,
+                background: `radial-gradient(500px circle at ${rightMouse.x}px ${rightMouse.y}px, rgba(255, 77, 61, 0.3), rgba(234, 179, 8, 0.15), transparent 70%)`,
+              }}
+            />
+
             {/* Top Glowing Ornament Accent */}
             <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-accent/20 blur-2xl pointer-events-none" />
 
             {/* Card Header */}
-            <div className="text-center mb-6 sm:mb-8">
+            <div className="text-center mb-6 sm:mb-8 relative z-20">
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3 glass-accent overflow-hidden p-2 shadow-[0_0_20px_rgba(255,77,61,0.25)] border-accent/40">
                 <Image
                   src="/durga-eyes.jpg"
@@ -198,7 +245,7 @@ export default function LoginPage() {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 relative z-20">
               {isSignUp && (
                 <div>
                   <label
@@ -285,7 +332,7 @@ export default function LoginPage() {
             </form>
 
             {/* Divider */}
-            <div className="relative my-5">
+            <div className="relative my-5 z-20">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-white/10" />
               </div>
@@ -299,7 +346,7 @@ export default function LoginPage() {
               type="button"
               onClick={handleGoogleLogin}
               disabled={isGoogleLoading}
-              className="w-full py-3 px-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-white font-medium text-sm hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-3 cursor-pointer shadow-sm"
+              className="w-full py-3 px-4 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-white font-medium text-sm hover:bg-white/10 transition-all duration-200 flex items-center justify-center gap-3 cursor-pointer shadow-sm relative z-20"
               id="google-login-btn"
             >
               {isGoogleLoading ? (
@@ -313,7 +360,7 @@ export default function LoginPage() {
             </button>
 
             {/* Toggle Sign Up / Sign In */}
-            <div className="mt-6 text-center text-xs text-white/50">
+            <div className="mt-6 text-center text-xs text-white/50 relative z-20">
               {isSignUp ? "Already have an account? " : "Don't have an account? "}
               <button
                 type="button"
@@ -324,7 +371,7 @@ export default function LoginPage() {
               </button>
             </div>
 
-            <p className="text-[10px] text-center text-white/35 mt-4">
+            <p className="text-[10px] text-center text-white/35 mt-4 relative z-20">
               Any credentials will work — this is a live demo <Sparkles className="inline w-3 h-3 text-accent" />
             </p>
           </div>
