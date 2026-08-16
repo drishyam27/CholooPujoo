@@ -47,7 +47,7 @@ export const calendarDays: CalendarDay[] = [
     subtitle: "Devi Paksha Begins & First Illumination",
     imageUrl: "/images/calendar/prothoma.jpg",
     fallbackImage: "/images/north-1.png",
-    imagePosition: "object-bottom",
+    imagePosition: "object-[center_28%]",
     crowdLevel: "Low",
     crowdColor: "#4ade80",
     rituals: [

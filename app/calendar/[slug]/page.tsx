@@ -129,7 +129,7 @@ export default function CalendarDayPage() {
         onError={() => setAudioError(true)}
       />
 
-      {/* 100% Full-Bleed Background Image (Layer 1: Ambient Blur) */}
+      {/* 100% Full-Bleed Background Image Edge-to-Edge */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
           src={day.imageUrl}
@@ -137,21 +137,7 @@ export default function CalendarDayPage() {
           fill
           priority
           unoptimized
-          className="object-cover blur-3xl opacity-35 scale-110 pointer-events-none"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = day.fallbackImage;
-          }}
-        />
-
-        {/* Layer 2: Main Image Uncropped (Top to Bottom 100% Visible) */}
-        <Image
-          src={day.imageUrl}
-          alt={day.englishTitle}
-          fill
-          priority
-          unoptimized
-          className="object-contain object-center animate-fade-in duration-700 pointer-events-none"
+          className={`object-cover ${day.imagePosition || "object-center"} animate-fade-in duration-700 pointer-events-none`}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = day.fallbackImage;
@@ -159,7 +145,7 @@ export default function CalendarDayPage() {
         />
 
         {/* Dark Vignette Overlay for Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/65 pointer-events-none" />
       </div>
 
       {/* Top Bar: Floating Glass Back Button & Date Badge */}
