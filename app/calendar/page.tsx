@@ -82,18 +82,6 @@ export default function CalendarPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1F0F0D] via-[#1F0F0D]/40 to-transparent" />
 
-                    {/* Top Right Crowd Badge */}
-                    <div
-                      className="absolute top-3 right-3 px-3 py-1 rounded-full text-[11px] font-bold shadow-lg border border-white/20 backdrop-blur-md"
-                      style={{
-                        backgroundColor: `${day.crowdColor}25`,
-                        color: day.crowdColor,
-                        borderColor: `${day.crowdColor}50`,
-                      }}
-                    >
-                      {day.crowdLevel} Crowd
-                    </div>
-
                     {/* Bottom Floating Bengali Tithi */}
                     <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between">
                       <div>

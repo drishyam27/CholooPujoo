@@ -180,18 +180,6 @@ export default function CalendarDayPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1F0F0D] via-[#1F0F0D]/60 to-transparent" />
 
-              {/* Top Crowd Badge */}
-              <div
-                className="absolute top-4 right-4 px-3.5 py-1.5 rounded-full text-xs font-bold shadow-lg border backdrop-blur-md"
-                style={{
-                  backgroundColor: `${day.crowdColor}25`,
-                  color: day.crowdColor,
-                  borderColor: `${day.crowdColor}50`,
-                }}
-              >
-                {day.crowdLevel} Crowd Forecast
-              </div>
-
               {/* Hero Title & Bengali Verse Overlay */}
               <div className="absolute bottom-6 left-6 right-6 space-y-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[11px] font-semibold text-white/90 border border-white/15 backdrop-blur-md">
