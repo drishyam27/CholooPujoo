@@ -34,9 +34,18 @@ export default function PandalCard({
 
   const [isMapOpen, setIsMapOpen] = useState(false);
 
+  const [imgSrc, setImgSrc] = useState(imageUrl);
+
   const isBookmarked = bookmarkedIds.includes(id);
   const isCompleted = completedIds.includes(id);
   const crowd = crowdConfig[crowdLevel];
+
+  // Determine fallback image based on category ID prefix
+  const fallbackImg = id.startsWith("bonedi") 
+    ? "/images/bonedi-1.png" 
+    : id.startsWith("south") 
+    ? "/images/south-1.png" 
+    : "/images/north-1.png";
 
   return (
     <>
@@ -48,11 +57,12 @@ export default function PandalCard({
           {/* Image */}
           <div className="relative w-full sm:w-40 h-48 sm:h-auto flex-shrink-0">
             <Image
-              src={imageUrl}
+              src={imgSrc}
               alt={name}
               fill
               sizes="(max-width: 640px) 100vw, 160px"
               className="object-cover"
+              onError={() => setImgSrc(fallbackImg)}
             />
             {isCompleted && (
               <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
