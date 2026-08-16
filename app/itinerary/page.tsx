@@ -42,7 +42,7 @@ export default function ItineraryPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-20 pb-12 px-4 sm:px-6 max-w-4xl mx-auto">
+      <main className="pt-24 sm:pt-28 md:pt-32 pb-12 px-4 sm:px-6 max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-start justify-between mb-8 flex-wrap gap-4">
           <div>

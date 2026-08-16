@@ -81,7 +81,7 @@ export default function LeaderboardPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-20 pb-12 px-4 sm:px-6 max-w-4xl mx-auto min-h-screen relative overflow-hidden">
+      <main className="pt-24 sm:pt-28 md:pt-32 pb-12 px-4 sm:px-6 max-w-4xl mx-auto min-h-screen relative overflow-hidden">
         {/* Background Ambient glows */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[500px] h-[200px] rounded-full blur-[128px] opacity-10 bg-accent" />

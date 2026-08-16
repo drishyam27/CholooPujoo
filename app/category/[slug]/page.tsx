@@ -100,7 +100,7 @@ export default function CategoryPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-20 pb-12 px-4 sm:px-6 max-w-4xl mx-auto min-h-screen relative overflow-hidden">
+      <main className="pt-24 sm:pt-28 md:pt-32 pb-12 px-4 sm:px-6 max-w-4xl mx-auto min-h-screen relative overflow-hidden">
         {/* Background glow effects */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full blur-[128px] opacity-10 bg-accent" />

@@ -84,25 +84,24 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <main className="pt-20 pb-12 px-4 sm:px-6 max-w-6xl mx-auto">
+      <main className="pt-24 sm:pt-28 md:pt-32 pb-12 px-4 sm:px-6 max-w-6xl mx-auto">
         {/* Hero Section */}
-        <section className="text-center mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-accent text-xs uppercase tracking-widest mb-6">
+        <section className="text-center mb-10 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-accent text-xs uppercase tracking-widest mb-4 sm:mb-6 shadow-[0_0_15px_rgba(255,77,61,0.15)]">
             <Flame className="w-3.5 h-3.5" style={{ color: "var(--accent)" }} />
             <span style={{ color: "var(--accent)" }}>Puja Season 2026</span>
           </div>
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl mb-4 leading-tight"
+            className="text-3xl sm:text-5xl md:text-6xl mb-3 font-bold tracking-tight leading-tight"
             style={{
               fontFamily: "var(--font-playfair), serif",
-              fontWeight: 700,
             }}
           >
             Discover the Spirit of{" "}
             <span
               style={{
                 color: "var(--accent)",
-                textShadow: "0 0 60px rgba(255,77,61,0.3)",
+                textShadow: "0 0 40px rgba(255,77,61,0.4)",
               }}
             >
               Durga Puja
@@ -111,9 +110,8 @@ export default function HomePage() {
           
           {/* Bengali Festive Slogan */}
           <p
-            className="text-2xl sm:text-3xl md:text-4xl mb-6 font-semibold tracking-wide"
+            className="text-xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 font-semibold tracking-wide"
             style={{
-              fontFamily: "var(--font-playfair), serif",
               color: "rgba(255, 255, 255, 0.95)",
               textShadow: "0 0 20px rgba(255, 77, 61, 0.4)",
             }}
@@ -121,7 +119,7 @@ export default function HomePage() {
             বলো দুগ্গা মাই কি জয়!
           </p>
 
-          <p className="text-base sm:text-lg opacity-50 max-w-xl mx-auto mb-8">
+          <p className="text-xs sm:text-base text-white/70 max-w-xl mx-auto mb-6 sm:mb-8 leading-relaxed">
             Navigate Kolkata&apos;s most celebrated pandals. From heritage households to
             modern marvels — your festival companion awaits.
           </p>
