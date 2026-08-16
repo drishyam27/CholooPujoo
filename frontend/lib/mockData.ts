@@ -18,7 +18,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Behala, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Barisha+Sarbojonin+Kolkata"
   },
   {
@@ -27,7 +27,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Behala, South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Behala+Friends+Club+Kolkata"
   },
   {
@@ -36,7 +36,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Behala, South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Jayrampur+sarbojonin+Durga+Puja+committee+Kolkata"
   },
   {
@@ -45,7 +45,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Behala, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Behala+chowrasta+players+corner+Kolkata"
   },
   {
@@ -54,7 +54,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Unnayani+Sangha+Durga+Puja+Kolkata"
   },
   {
@@ -63,7 +63,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Pally+unnayan+Samiti+Durga+Puja+Kolkata"
   },
   {
@@ -72,7 +72,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Keyatala, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Vivekananda+park+athletic+club+Kolkata"
   },
   {
@@ -81,7 +81,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Adarsha+Samiti+club+Durga+Puja+Kolkata"
   },
   {
@@ -90,7 +90,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Haridevpur, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=41+pally+club+Kolkata"
   },
   {
@@ -99,7 +99,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Kalighat, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Badamtala+ashar+sangha+Kolkata"
   },
   {
@@ -108,7 +108,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Kalighat, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=66+pally+Kolkata"
   },
   {
@@ -117,7 +117,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Chetla, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Chetla+agrani+Kolkata"
   },
   {
@@ -126,7 +126,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Alipore, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Alipore+sarbojonin+Durga+Puja+Kolkata"
   },
   {
@@ -135,7 +135,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "New Alipore, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Suruchi+Sangha+Kolkata"
   },
   {
@@ -144,7 +144,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Tollygunge, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Mudiali+club+Kolkata"
   },
   {
@@ -153,7 +153,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Tollygunge, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Shib+mandir+sarbojonin+Kolkata"
   },
   {
@@ -162,7 +162,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Kalighat, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Deshapriyo+park+Kolkata"
   },
   {
@@ -171,7 +171,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Ballygunge, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Tridhara+sammilani+Kolkata"
   },
   {
@@ -180,7 +180,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Ballygunge, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Ballygunge+cultural+association+Kolkata"
   },
   {
@@ -189,7 +189,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Ballygunge, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Samaj+sebi+sangha+Kolkata"
   },
   {
@@ -198,7 +198,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Gariahat, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Hindustan+Club+Durga+Puja+Kolkata"
   },
   {
@@ -207,7 +207,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Gariahat, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Hindustan+park+Durga+Puja+Kolkata"
   },
   {
@@ -216,7 +216,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Gariahat, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Singhi+park+Durga+Puja+Kolkata"
   },
   {
@@ -225,7 +225,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Gariahat, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Ekdalia+evergreen+club+Kolkata"
   },
   {
@@ -234,7 +234,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Alipore, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Alipore+78+pally+Kolkata"
   },
   {
@@ -243,7 +243,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Kalighat, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Kalighat+Milan+sangha+Kolkata"
   },
   {
@@ -252,7 +252,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Bhawanipur, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Abasar+sarbojonin+Kolkata"
   },
   {
@@ -261,7 +261,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Ballygunge, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Maddox+square+Kolkata"
   },
   {
@@ -270,7 +270,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Baghajatin, South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Baghajatin+Tarun+sangha+Kolkata"
   },
   {
@@ -279,7 +279,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Baghajatin, South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Vivekananda+Milan+sangha+Baghajatin+Kolkata"
   },
   {
@@ -288,7 +288,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Baghajatin, South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Baghajatin+B+and+C+block+Durga+Puja+Kolkata"
   },
   {
@@ -297,7 +297,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Santoshpur, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Santoshpur+lakepally+Kolkata"
   },
   {
@@ -306,7 +306,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Santoshpur, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Santoshpur+Trikon+park+Kolkata"
   },
   {
@@ -315,7 +315,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Santoshpur, South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Shyama+pally+Shyama+sangha+Kolkata"
   },
   {
@@ -324,7 +324,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Pallymangal+Samiti+sarbojonin+Kolkata"
   },
   {
@@ -333,7 +333,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Jodhpur Park, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Jodhpur+park+Durga+Puja+Kolkata"
   },
   {
@@ -342,7 +342,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Selimpur, South Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Selimpur+pally+Kolkata"
   },
   {
@@ -351,7 +351,7 @@ export const pandals: Pandal[] = [
     category: "south-kolkata",
     location: "Dhakuria, South Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/south-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Babubagan+durgotsav+Kolkata"
   },
 
@@ -362,7 +362,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Lake Town, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Sreebhumi+Sporting+Club+Kolkata"
   },
   {
@@ -371,7 +371,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Lake Town, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Lake+town+adhibasi+brinda+Kolkata"
   },
   {
@@ -380,7 +380,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Lake Town, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Netaji+sporting+club+Lake+Town+Kolkata"
   },
   {
@@ -389,7 +389,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Dum Dum Park, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Dumdum+Park+jubak+brinda+Kolkata"
   },
   {
@@ -398,7 +398,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Dum Dum Park, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Dumdum+Park+Tarun+Sangha+Kolkata"
   },
   {
@@ -407,7 +407,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Dum Dum Park, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Dumdum+Park+sarbojonin+Kolkata"
   },
   {
@@ -416,7 +416,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Dum Dum Park, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Dumdum+Park+bharat+Chakra+Kolkata"
   },
   {
@@ -425,7 +425,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Dum Dum Park, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Masterda+Smriti+Sangha+Dum+Dum+Park+Kolkata"
   },
   {
@@ -434,7 +434,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Kestopur, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Kestopur+prafulla+kano+poschim+adivasi+brinda+Kolkata"
   },
   {
@@ -443,7 +443,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Lake Town, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Dakshinpara+durgotsav+committee+Kolkata"
   },
   {
@@ -452,7 +452,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Dakshindari, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Dakshindari+youth+Durga+Puja+Kolkata"
   },
   {
@@ -461,7 +461,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Ultadanga, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Telengabagan+Sarbojonin+Kolkata"
   },
   {
@@ -470,7 +470,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Ultadanga, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Ultadanga+Bidhansangha+Kolkata"
   },
   {
@@ -479,7 +479,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Ultadanga, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Kabiraj+bagan+sarbojonin+Kolkata"
   },
   {
@@ -488,7 +488,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Maniktala, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Lalabagan+nabankur+Kolkata"
   },
   {
@@ -497,7 +497,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Maniktala, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Chaltabagan+Durga+Puja+Kolkata"
   },
   {
@@ -506,7 +506,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Central Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Azad+hind+bag+sarbojonin+Kolkata"
   },
   {
@@ -515,7 +515,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Hatibagan, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Kashi+bose+lane+Kolkata"
   },
   {
@@ -524,7 +524,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Hatibagan, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Hatibagan+sarbojonin+Kolkata"
   },
   {
@@ -533,7 +533,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Hatibagan, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Nalin+Sarkar+street+Kolkata"
   },
   {
@@ -542,7 +542,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Hatibagan, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Hatibagan+nabinpally+Kolkata"
   },
   {
@@ -551,7 +551,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Hatibagan, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Sikdar+bagan+Kolkata"
   },
   {
@@ -560,7 +560,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Kumartuli, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Jagat+Mukherjee+park+Kolkata"
   },
   {
@@ -569,7 +569,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Kumartuli, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Kumartuli+park+Kolkata"
   },
   {
@@ -578,7 +578,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Ahiritola, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Ahiritola+jubak+brinda+Kolkata"
   },
   {
@@ -587,7 +587,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Ahiritola, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Ahiritola+sarbojonin+Kolkata"
   },
   {
@@ -596,7 +596,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Simla+byayam+Samiti+Kolkata"
   },
   {
@@ -605,7 +605,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Central Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Chorbagan+sarbojonin+Kolkata"
   },
   {
@@ -614,7 +614,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Jorasanko, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Jorasanko+7+pally+sarbojonin+Kolkata"
   },
   {
@@ -623,7 +623,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Jorasanko, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Jorasanko+sadharan+durgotsav+Kolkata"
   },
   {
@@ -632,7 +632,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Bagbazar, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Bagbazar+sarbojonin+Kolkata"
   },
   {
@@ -641,7 +641,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Bagbazar, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Bagbazar+Durga+Puja+Kolkata"
   },
   {
@@ -650,7 +650,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Belgachia, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Belgachia+sarbojonin+Kolkata"
   },
   {
@@ -659,7 +659,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Tala, North Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Tala+prattay+Kolkata"
   },
   {
@@ -668,7 +668,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Tala, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Tala+barowari+Kolkata"
   },
   {
@@ -677,7 +677,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Central Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Muhammad+ali+park+Durga+Puja+Kolkata"
   },
   {
@@ -686,7 +686,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Central Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=College+square+sarbojonin+Kolkata"
   },
   {
@@ -695,7 +695,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Central Kolkata",
     crowdLevel: "Extreme",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Santosh+mitra+square+Kolkata"
   },
   {
@@ -704,7 +704,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Beliaghata, East Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Beliaghata+33+pally+Kolkata"
   },
   {
@@ -713,7 +713,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Beliaghata, East Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Sandhani+club+Beliaghata+Kolkata"
   },
   {
@@ -722,7 +722,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Salt Lake, East Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Salt+Lake+Ak+block+Durga+Puja+Kolkata"
   },
   {
@@ -731,7 +731,7 @@ export const pandals: Pandal[] = [
     category: "north-kolkata",
     location: "Kankurgachi, East Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/north-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Kankurgachi+mitali+sangha+Kolkata"
   },
 
@@ -742,7 +742,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Bhowanipore, South Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Mallick+bari+Durga+Puja+Bhowanipore+Kolkata"
   },
   {
@@ -751,7 +751,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Central Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Saha+bari+Durga+Puja+Kolkata"
   },
   {
@@ -760,7 +760,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Thanthania, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Laha+bari+Durga+Puja+Kolkata"
   },
   {
@@ -769,7 +769,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Sovabazar, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1632731804157-b08e75f10b78?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Sovabazar+Rajbari+Durga+Puja+Kolkata"
   },
   {
@@ -778,7 +778,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Beadon Street, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Chhatu+babu+latu+babu+thakurbari+Kolkata"
   },
   {
@@ -787,7 +787,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Chorbagan, Central Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Chorbagan+mitra+bari+Durga+Puja+Kolkata"
   },
   {
@@ -796,7 +796,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Thanthania, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Thanthania+dutta+bari+Durga+Puja+Kolkata"
   },
   {
@@ -805,7 +805,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Chorbagan, Central Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804116-24e52ec778e8?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Chorbagan+sils+thakurbari+Durga+Puja+Kolkata"
   },
   {
@@ -814,7 +814,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Jorasanko, North Kolkata",
     crowdLevel: "High",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Jorasanko+shib+Krishna+daw+bari+Durga+Puja+Kolkata"
   },
   {
@@ -823,7 +823,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Central Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Harakutir+roy+banerjee+bari+Durga+Puja+Kolkata"
   },
   {
@@ -832,7 +832,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Pathuriaghata, North Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1632731804297-c75c8a417539?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Pathuriaghata+rajbari+Durga+Puja+Kolkata"
   },
   {
@@ -841,7 +841,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Central Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1596402184320-417e7178b2cd?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-2.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Badan+Chandra+roy+bari+Durga+Puja+Kolkata"
   },
   {
@@ -850,7 +850,7 @@ export const pandals: Pandal[] = [
     category: "bonedi-bari",
     location: "Colootola, Central Kolkata",
     crowdLevel: "Medium",
-    imageUrl: "https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=800&auto=format&fit=crop",
+    imageUrl: "/images/bonedi-1.png",
     mapUrl: "https://www.google.com/maps/search/?api=1&query=Motilal+seals+bari+Durga+Puja+Kolkata"
   }
 ];
