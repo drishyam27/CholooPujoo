@@ -102,11 +102,11 @@ export default function LoginPage() {
       {/* Main Responsive Grid Container */}
       <div className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
         
-        {/* Left Column: Visual Durga Puja Hero Poster Card (Visible on lg screens) */}
+        {/* Left Column: Visual Durga Puja Hero Poster Card (Visible on mobile & desktop) */}
         <div
           onMouseMove={handleLeftMouseMove}
           onMouseLeave={() => setLeftMouse((prev) => ({ ...prev, opacity: 0 }))}
-          className="hidden lg:flex lg:col-span-6 flex-col justify-between glass rounded-3xl p-8 border border-accent/30 bg-[#1F0F0D]/80 backdrop-blur-2xl shadow-[0_20px_60px_rgba(255,77,61,0.25)] relative overflow-hidden group min-h-[580px] transition-all duration-300"
+          className="flex lg:col-span-6 flex-col justify-between glass rounded-3xl p-6 sm:p-8 border border-accent/30 bg-[#1F0F0D]/80 backdrop-blur-2xl shadow-[0_20px_60px_rgba(255,77,61,0.25)] relative overflow-hidden group min-h-[340px] sm:min-h-[420px] lg:min-h-[580px] transition-all duration-300"
         >
           {/* Interactive Mouse Tracking Glow */}
           <div
@@ -130,15 +130,15 @@ export default function LoginPage() {
           </div>
 
           {/* Top Poster Content */}
-          <div className="relative z-20 space-y-4">
+          <div className="relative z-20 space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-accent text-xs font-semibold uppercase tracking-widest text-accent border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.3)]">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full glass-accent text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-accent border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.3)]">
                 <Flame className="w-3.5 h-3.5 text-accent animate-pulse" />
                 <span>Sharodutsav 2026 Edition</span>
               </div>
 
               {/* Glowing Trinayana Emblem */}
-              <div className="w-12 h-12 rounded-2xl glass-accent flex items-center justify-center p-1.5 border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.35)]">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl glass-accent flex items-center justify-center p-1.5 border border-accent/40 shadow-[0_0_20px_rgba(255,77,61,0.35)]">
                 <Image
                   src="/durga-eyes.jpg"
                   alt="Durga Eyes Emblem"
@@ -149,9 +149,9 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="pt-4 space-y-3">
+            <div className="pt-2 sm:pt-4 space-y-2 sm:space-y-3">
               <h1
-                className="text-5xl font-bold tracking-tight text-white leading-tight"
+                className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight"
                 style={{ fontFamily: "var(--font-playfair), serif" }}
               >
                 Choloo<span style={{ color: "var(--accent)" }}>Pujoo</span>
@@ -159,14 +159,14 @@ export default function LoginPage() {
 
               {/* Iconic Mahalaya Bengali Verse */}
               <p
-                className="text-2xl sm:text-3xl font-bold leading-relaxed text-amber-200 tracking-wide drop-shadow-[0_4px_20px_rgba(255,77,61,0.7)]"
+                className="text-lg sm:text-2xl lg:text-3xl font-bold leading-relaxed text-amber-200 tracking-wide drop-shadow-[0_4px_20px_rgba(255,77,61,0.7)]"
                 style={{ fontFamily: "var(--font-playfair), serif" }}
               >
                 &ldquo;আশ্বিনের শারদ প্রাতে বেজে উঠেছে আলোক মঞ্জীর, মা এসেছে ঘরে&rdquo;
               </p>
             </div>
 
-            <p className="text-xs sm:text-sm text-white/85 leading-relaxed max-w-md pt-2">
+            <p className="text-xs sm:text-sm text-white/85 leading-relaxed max-w-md pt-1 sm:pt-2">
               From Mahalaya morning to Bijoya Dashami, experience the complete soul of Kolkata Durga Puja across 93 pandals with real-time crowd alerts & DDI Thakuma AI guide.
             </p>
           </div>
