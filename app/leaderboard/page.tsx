@@ -107,10 +107,10 @@ export default function LeaderboardPage() {
               Meet the real pandal-hoppers of Durga Puja 2026. Ranks update live in real-time as users visit pandals!
             </p>
 
-            {/* Realtime WebSocket Active Badge */}
+            {/* Realtime Stream Active Badge */}
             <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-white/5 border border-white/10 opacity-70">
               <Radio className={`w-3 h-3 ${isLive ? "text-green-400 animate-pulse" : "text-amber-400"}`} />
-              <span>{isLive ? "Live WebSocket Feed Connected" : "Connecting Realtime Stream..."}</span>
+              <span>{isLive ? "Live Stream Connected" : "Updating Live Scores..."}</span>
             </div>
           </div>
 

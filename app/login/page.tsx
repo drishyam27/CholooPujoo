@@ -167,7 +167,7 @@ export default function LoginPage() {
             </div>
 
             <p className="text-xs sm:text-sm text-white/85 leading-relaxed max-w-md pt-1 sm:pt-2">
-              From Mahalaya morning to Bijoya Dashami, experience the complete soul of Kolkata Durga Puja across 93 pandals with real-time crowd alerts & DDI Thakuma AI guide.
+              From Mahalaya morning to Bijoya Dashami, experience the complete soul of Kolkata Durga Puja across 93 pandals with real-time crowd alerts & DDI AI guide.
             </p>
           </div>
 
@@ -181,8 +181,8 @@ export default function LoginPage() {
 
             <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/40 transition-colors">
               <Bot className="w-4 h-4 text-accent mx-auto mb-1" />
-              <div className="text-[11px] font-bold text-white">Thakuma AI</div>
-              <div className="text-[9px] text-white/60">Live Companion</div>
+              <div className="text-[11px] font-bold text-white">DDI AI</div>
+              <div className="text-[9px] text-white/60">Live Spatial Guide</div>
             </div>
 
             <div className="glass rounded-xl p-2.5 bg-white/5 border border-white/10 text-center hover:border-accent/40 transition-colors">

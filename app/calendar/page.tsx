@@ -53,7 +53,7 @@ export default function CalendarPage() {
             </h1>
 
             <p className="text-sm sm:text-base text-white/70 max-w-2xl leading-relaxed">
-              Explore the complete 12-day festival chronicle of Kolkata Durga Puja from Mahalaya to Vijaya Dashami. Select any date to view day-specific rituals, crowd predictions, Thakuma AI tips, and play authentic Pujo songs!
+              Explore the complete 12-day festival chronicle of Kolkata Durga Puja from Mahalaya to Vijaya Dashami. Select any date to view day-specific rituals, crowd predictions, DDI AI tips, and play authentic Pujo songs!
             </p>
           </div>
 

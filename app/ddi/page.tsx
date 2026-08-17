@@ -59,7 +59,7 @@ export default function DDIPage() {
               </span>
             </h1>
             <p className="text-sm opacity-60 max-w-2xl">
-              Your real-time AI spatial companion powered by DDI Thakuma. Ask for optimal pandal routes, crowd forecasts, local street food recommendations, and neighborhood transit tips!
+              Your real-time spatial companion powered by Dugga Dugga Intelligence (DDI). Ask for optimal pandal routes, crowd forecasts, local street food recommendations, and neighborhood transit tips!
             </p>
           </div>
 
