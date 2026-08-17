@@ -117,16 +117,16 @@ export default function LoginPage() {
             }}
           />
 
-          {/* Background Custom AI Generated Durga Puja Poster (Mahalaya to Dashami) */}
-          <div className="absolute inset-0 z-0 opacity-55 group-hover:scale-105 transition-transform duration-700 ease-out">
+          {/* Background Custom Durga Puja Idol Poster */}
+          <div className="absolute inset-0 z-0 opacity-85 group-hover:scale-105 transition-transform duration-700 ease-out">
             <Image
               src="/images/durga-hero-poster.png"
-              alt="Durga Puja Festival Journey Artwork"
+              alt="Durga Puja Idol Artwork"
               fill
               priority
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1F0F0D] via-[#1F0F0D]/75 to-[#1F0F0D]/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1F0F0D] via-[#1F0F0D]/60 to-[#1F0F0D]/20" />
           </div>
 
           {/* Top Poster Content */}
