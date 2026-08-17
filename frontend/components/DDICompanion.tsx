@@ -204,11 +204,11 @@ export default function DDICompanion({ visitedIds }: DDICompanionProps) {
           {/* Sleek DDI Logo Emblem */}
           <div className="w-10 h-10 rounded-xl glass-accent flex items-center justify-center p-1 border border-accent/40 shadow-[0_0_15px_rgba(255,77,61,0.3)]">
             <Image
-              src="/durga-eyes.jpg"
-              alt="DDI Logo"
+              src="/images/ddi-logo.png"
+              alt="Dugga Dugga Intelligence (DDI) Logo"
               width={32}
               height={32}
-              className="w-full h-full object-contain rounded-md"
+              className="w-full h-full object-cover rounded-md"
             />
           </div>
           <div className="text-left">

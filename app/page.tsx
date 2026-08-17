@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useAppContext } from "@/frontend/context/AppContext";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
@@ -213,8 +214,14 @@ export default function HomePage() {
           <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full blur-[64px] opacity-10 bg-accent pointer-events-none" />
 
           <div className="flex items-center gap-4 relative z-10 flex-col sm:flex-row text-center sm:text-left">
-            <div className="w-16 h-16 rounded-2xl bg-accent/15 border border-accent/30 flex items-center justify-center flex-shrink-0 text-accent text-3xl shadow-[0_0_20px_rgba(255,77,61,0.15)] animate-pulse">
-              👵
+            <div className="w-16 h-16 rounded-2xl glass-accent border border-accent/40 p-1.5 flex items-center justify-center flex-shrink-0 shadow-[0_0_25px_rgba(255,77,61,0.3)]">
+              <Image
+                src="/images/ddi-logo.png"
+                alt="Dugga Dugga Intelligence (DDI) Logo"
+                width={56}
+                height={56}
+                className="w-full h-full object-cover rounded-xl"
+              />
             </div>
             <div>
               <h3 className="text-xl sm:text-2xl font-bold flex items-center gap-2 justify-center sm:justify-start" style={{ fontFamily: "var(--font-theme-serif), var(--font-serif), serif" }}>
