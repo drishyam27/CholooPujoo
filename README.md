@@ -1,144 +1,154 @@
 <p align="center">
-  <img src="public/images/title.svg" alt="🔱 CholooPujoo 🔱" width="400" />
+  <img src="public/images/title.svg" alt="🔱 CholooPujoo 🔱" width="450" />
 </p>
 
 <p align="center">
-  <img src="public/images/project-icon-3d.png" alt="CholooPujoo 3D Icon" width="200" />
+  <img src="public/images/ddi-logo.png" alt="Dugga Dugga Intelligence DDI Logo" width="120" style="border-radius: 20px; box-shadow: 0 0 30px rgba(255, 77, 61, 0.4);" />
 </p>
 
 <p align="center">
   <a href="https://choloopujoo.vercel.app/" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/Live%20Demo-choloopujoo.vercel.app-FF4D3D?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
   </a>
+  <img src="https://img.shields.io/badge/Next.js-16.2.4-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/MongoDB%20Atlas-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+  <img src="https://img.shields.io/badge/Supabase-Realtime-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
 </p>
 
 <p align="center">
-  <strong>A High-Fidelity, Mobile-First Discovery &amp; Itinerary Platform for Kolkata’s Grand Durga Puja Festival</strong>
+  <strong>Kolkata’s Ultimate Festival Companion: 93 Mega Pandals, Sharadiya Ponjika 2026, Dugga Dugga Intelligence (DDI) AI, Realtime Leaderboard & Custom Itineraries</strong>
 </p>
 
 <p align="center">
+  <a href="#-project-overview">Overview</a> •
   <a href="#-core-feature-showcase">Features</a> •
+  <a href="#-sharadiya-ponjika-2026--pujo-beats">Ponjika Calendar</a> •
+  <a href="#-dugga-dugga-intelligence-ddi-ai">DDI AI Engine</a> •
   <a href="#-technical-architecture-marvels">Architecture</a> •
-  <a href="#-setup--local-installation">Installation</a> •
-  <a href="#-project-directory-structure">Structure</a>
+  <a href="#-setup--local-installation">Installation</a>
 </p>
 
 ---
 
 ## 📖 Project Overview
 
-**CholooPujoo** is an immersive, high-fidelity web application designed to help cultural explorers, urban adventurers, and festive hoppers navigate the largest autumn carnival on Earth: the **Durga Puja festival in Kolkata**. 
+**CholooPujoo** (চলো পুজো) is an immersive, high-fidelity web application designed to guide cultural explorers, festive hoppers, and tourists through the largest autumn carnival on Earth: **Kolkata Durga Puja**.
 
-Designed under a luxurious **"Espresso & Ember"** aesthetic system, CholooPujoo allows users to discover a massive catalog of 93 celebrated Pujos—ranging from the centuries-old *“Bonedi Bari”* (heritage family households) to the modern, grand, and monumental *“Sarbojanin”* (community) pandals. It offers real-time crowd tracking, interactive route maps, personalized itinerary planners, a dynamic global leaderboard, and traditional avatar personalization!
+Engineered under a luxurious nocturnal **"Espresso & Ember"** design system, CholooPujoo connects users with **93 celebrated Pujos** across Kolkata — from centuries-old *Bonedi Bari* heritage households to monumental *Sarbojanin* theme pandals. The platform delivers real-time crowd insights, dark-themed interactive maps, a 12-day **Sharadiya Ponjika 2026** festival chronicle with built-in Pujo beats, a Supabase-powered realtime **Maha Leaderboard**, and **Dugga Dugga Intelligence (DDI)** — a custom spatial navigation AI.
 
 ---
 
 ## 🎨 Visual Identity & Design System
 
-The application's aesthetics are governed by a premium, custom nocturnal token:
+The application's aesthetics adhere strictly to modern web design standards, creating a premium nocturnal experience:
 
-*   **Nocturnal Espresso (`#1F0F0D`):** A deep, rich chocolate-brown background evoking warm midnight festival atmospheres.
-*   **Burning Ember (`#FF4D3D`):** Vibrant red-coral accents that mirror traditional clay lamps (*diyas*) and neon lighting.
-*   **Frosted Glass overlays (`glass`):** Glassmorphic panels featuring `backdrop-filter: blur(12px)` and subtle borders, evoking glowing paper lanterns.
-*   **Heritage Typography:** Pairing **Outfit** (for sleek, high-readability UI items) and **Playfair Display** (for traditional, elegant headings).
-*   **Bengali Festive Slogan:** The home screen features the glowing traditional slogan **"বলো দুগ্গা মাই কি জয়!"** (*Bolo Dugga Mai Ki Joy!*) styled in a glowing red-amber text shadow.
+* ☕ **Nocturnal Espresso (`#1F0F0D`):** A deep, velvet chocolate background evoking midnight festival pandal walks.
+* 🔥 **Burning Ember (`#FF4D3D`):** Vibrant red-coral glow effects mirroring traditional clay lamps (*diyas*) and neon illumination gates.
+* ✨ **Frosted Glassmorphism (`glass`):** Multi-layered backdrop blurs (`backdrop-filter: blur(12px)`) with subtle glowing borders mimicking paper lanterns.
+* 🏛️ **Heritage Typography:** Pairing **Outfit** (sleek, high-readability UI tokens) with **Playfair Display** (graceful serif headings).
+* 🌺 **Traditional Calligraphy & Slogans:** Features glowing Bengali typography including *"বলো দুগ্গা মাই কি জয়!"* and *"আশ্বিনের শারদ প্রাতে বেজে উঠেছে আলোক মঞ্জীর, মা এসেছে ঘরে"*.
 
 ---
 
 ## 🌟 Core Feature Showcase
 
-### 🧭 1. Master Pandal Catalog (93 Pujos Loaded!)
-We have curated and loaded an exhaustive database of **93 Durga Puja Pandals** categorized into three core exploration zones:
-*   ⛩️ **South Kolkata** (38 Pandals): Iconic crowd-pullers including *Suruchi Sangha*, *Chetla Agrani*, *Ekdalia Evergreen*, and *Maddox Square*.
-*   🏰 **North & Central Kolkata** (42 Pandals): Grand installations including *Sreebhumi*, *Bagbazar Sarbojonin*, *College Square*, and *Santosh Mitra Square*.
-*   🏡 **Bonedi Baris** (13 Heritage Homes): Historical household pujos including *Sovabazar Rajbari*, *Mallick Bari*, *Laha Bari*, and *Chhatu Babu Latu Babu Thakurbari*.
+### ⛩️ 1. Master Catalog of 93 Kolkata Pujos
+Curated database of 93 Durga Puja Pandals categorized into three distinct exploration zones:
+* 🛕 **South Kolkata** (38 Pandals): World-renowned crowd pullers like *Suruchi Sangha*, *Chetla Agrani*, *Ekdalia Evergreen*, *Tridhara Akorjon*, and *Maddox Square*.
+* 🏰 **North & Central Kolkata** (42 Pandals): Iconic architectural marvels including *Sreebhumi*, *Bagbazar Sarbojonin*, *College Square*, *Santosh Mitra Square*, and *Ahiritola*.
+* 🏡 **Bonedi Baris** (13 Heritage Homes): Centuries-old ancestral household pujos including *Sovabazar Rajbari*, *Mallick Bari*, *Laha Bari*, and *Chhatu Babu Latu Babu Thakurbari*.
 
-### 🗺️ 2. Dark-Themed Interactive Google Maps
-Each pandal card is equipped with an interactive **Route Map modal**:
-*   **Embedded Live Maps**: Renders a fully functional, scrollable, and zoomable Google Map iframe centered on the specific pandal coordinates.
-*   **Nocturnal Map Styling**: Custom CSS filter rules `invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)` turn the map into a glowing, dark-themed visual masterpiece that blends seamlessly with the app.
-*   **One-Click Navigation**: A direct "Open in Google Maps" shortcut launches precise coordinates/search links in a new tab.
+### 📱 2. Unified Responsive Glass Menu Bar
+Consolidated top navigation bar featuring a glowing **"Menu ☰"** button:
+* **Clean Single Header**: Replaces cluttered link bars with a unified, high-contrast action button.
+* **Slide-Out Frosted Glass Drawer**: Clicking **Menu** opens a full-screen blurred navigation modal across **Desktop, Tablet, and Mobile phones**, providing instant access to:
+  1. 🔥 **Explore Pandals** (`/`)
+  2. 📅 **Sharadiya Ponjika 2026** (`/calendar`)
+  3. 🗺️ **My Itinerary** (`/itinerary`)
+  4. 💬 **DDI Chatbot** (`/ddi`)
+  5. 🏆 **Maha Leaderboard** (`/leaderboard`)
+  6. 👤 **User Profile** (`/profile`)
+  7. 🚪 **Logout**
 
-### 👤 3. Dynamic Profile Dashboard
-A personalized user command center querying MongoDB on-the-fly:
-*   **Global Explorer Ranking**: Calculates your real-time ranking based on how many users have more visits than you (e.g. `Global Rank #1`).
-*   ** categorical progress bars**: Visual progress meters charting your hopping statistics across Bonedi Bari, North Kolkata, and South Kolkata zones.
-*   **Hopped Timeline**: Displays beautiful card grids of every specific pandal you have checked off, complete with location data and map links.
+### 🗺️ 3. Dark-Themed Interactive Google Maps
+Every pandal card includes an inline interactive **Route Map Modal**:
+* **Embedded Satellite Maps**: Renders zoomable Google Maps iframe centered on exact pandal coordinates.
+* **Custom Dark Filter**: Uses CSS inverted hue rules to style standard maps into dark nocturnal visuals that blend naturally with the Espresso & Ember theme.
+* **Direct Navigation**: One-click link opens live turn-by-turn navigation in Google Maps.
 
-### 🏆 4. Maha Leaderboard (Podium Ranking)
-A dynamic ranking board displaying the top 10 pujo hoppers in the system:
-*   **3D Trophy Podium**: A visual 3-column glass podium highlighting the Top 3 explorers with glowing Gold, Silver, and Bronze trophies.
-*   **Rankings 4-10**: A detailed list of runner-ups showing rank badges, custom avatars, names, and total visited pandal counts.
-*   **Self-Seeding competitive database**: In local environments, the database auto-populates with mock competitors on first load, so the leaderboard looks ready and alive immediately!
+### 🏆 4. Realtime Maha Leaderboard & 3D Podium
+Tracks and displays top Pandal Hoppers live using **Supabase Realtime**:
+* **3D Glass Podium**: Highlights the Top 3 hoppers with Gold, Silver, and Bronze trophies.
+* **Live Stream Feed**: Updates rank positions dynamically as users check off visited pandals.
+* **User Profile Rankings**: Displays real-time global explorer ranks (`Global Rank #1`) on personal dashboards.
 
-### 🎭 5. Traditional Durga Pujo Avatar Selector
-Instead of generic icons, users can dress their profiles in 10 stunning, hand-crafted Pujo-themed illustrations:
-*   👩‍🦰 **Girls Avatars (5 options)**: Dressed in traditional sarees, including *Shreya (Laal Paar Saree)*, *Pooja (Mustard Anjali)*, *Riya (Sandhi Pujo Royal)*, *Tiyasha (Diyas of Ekadashi)*, and *Debolina (Sindoor Khela Crimson)*.
-*   🧔 **Boys Avatars (5 options)**: Dressed in traditional dhuti panjabi, featuring 3 stylishly bearded options (*Aniket*, *Raj*, *Drishyam*) and 2 clean-shaved options (*Joy*, *Sayan*) to match the elegant age and aesthetic criteria of the girls' avatars.
-*   **Interactive Modal Selector**: Click your profile picture to open a scrollable modal, pick your look, and click "Save Selection" to sync it instantly to MongoDB.
+### 🎭 5. Traditional Pujo Avatar Customizer
+Users personalize their accounts with 10 hand-crafted Pujo avatars:
+* 👩 **5 Female Avatars**: *Shreya (Laal Paar Saree)*, *Pooja (Mustard Anjali)*, *Riya (Sandhi Pujo Royal)*, *Tiyasha (Diyas of Ekadashi)*, and *Debolina (Sindoor Khela Crimson)*.
+* 🧔 **5 Male Avatars**: *Aniket*, *Raj*, *Drishyam*, *Joy*, and *Sayan* dressed in traditional Dhuti-Punjabi.
 
-### 📋 6. Personalized Itinerary & WhatsApp Sharing
-*   **Want-to-Go list**: Bookmark any pandal to automatically compile your customized checklist.
-*   **One-Click WhatsApp Share**: Compile your entire itinerary list ("Want to Go" and "Visited" spots) into a beautiful formatted text message and share it directly with your friends and family with a single click.
+### 📋 6. Customized Itinerary & WhatsApp Share
+* **Wishlist Checklist**: Add any of the 93 pandals to a personalized hopping list.
+* **One-Click WhatsApp Export**: Compiles saved pandals into a clean, formatted text message to share instantly with friends and family.
 
-### 🔍 7. Unified & Spelling-Tolerant Search Engine
-An advanced global and category-specific search box designed to handle misspelling variations effortlessly:
-*   **Homepage Global Bar**: A centered search bar in the Hero section allowing users to query all 93 pandals immediately.
-*   **Smart Suggestions**: Typings dynamically trigger a dropdown listing the 5 closest matches across all zones, displaying their names, precise locations, and active zone category tags.
-*   **Smart Navigation**: Selecting a match inside the active category filters the list on-screen. Selecting a match from a different category automatically routes the explorer to that zone page and pre-fills the query filter!
-*   **Spelling-Tolerance (Fuzzy Search)**: Forgives spelling errors and phonetic typos in real-time (e.g. typing "Sribhumi" still matches "Sreebhumi"!).
+---
 
-### 🧠 8. Dugga Dugga Intelligence (DDI) AI Path Companion
-A premium, highly interactive glassmorphic routing assistant situated directly inside the User Dashboard:
-*   **Why is it named "Dugga Dugga"?** 🪔  
-    In traditional Bengali households, when someone steps out of the house to begin a journey, elders lovingly say *"Dugga Dugga!"* as a prayer to Maa Durga for absolute safety, guidance, and protection on the path. **Dugga Dugga Intelligence (DDI)** merges this beautiful, centuries-old Bengali tradition of wishing safe travel with state-of-the-art navigation algorithms—guiding puja explorers on their physical journey from one pandal to the next with motherly love and wisdom.
-*   **Autocomplete Search Box**: Replaced standard tedious dropdowns with an autocomplete, spelling-tolerant location search to quickly establish your current starting point.
-*   **Dynamic Route Recommendation**: Employs Haversine formulas to find and recommend the optimal next unvisited pandal, computing walking/driving travel times on the fly.
-*   **Familiar Grandmotherly AI Blessings**: Integrates a highly unique, traditional Bengali grandmother ("Thakuma") persona. She delivers navigations as warm maternal blessings, urging safety, warning about crowds, and sharing details about the recommended pandal's artistic themes.
-*   **Interactive Next-Pandal Card & Map**: Renders inline dark-themed route maps, instant check-off checkmarks, and distance metadata.
-*   **Instant Loading Transitions**: Employs rotating traditional glowing **Alpana / Mandala Motifs** in the center of loading states. This native loader operates globally across the application, transforming raw database queries and route transitions into stunning, lag-free micro-interactions!
+## 📅 Sharadiya Ponjika 2026 & Pujo Beats
+
+CholooPujoo features a complete 12-day interactive festival calendar (`/calendar`):
+
+```text
+Mahalaya (Oct 11) ➔ Prothoma (Oct 12) ➔ Dwitiya (Oct 13) ➔ Tritiya (Oct 14) ➔ 
+Chaturthi (Oct 15) ➔ Panchami (Oct 16) ➔ Shashthi (Oct 17) ➔ Saptami (Oct 18) ➔ 
+Ashtami (Oct 19) ➔ Navami (Oct 20) ➔ Dashami (Oct 21) ➔ Ekadashi (Oct 22)
+```
+
+### 🎨 Features of Ponjika Days (`/calendar/[slug]`):
+* **16:9 Uncropped Full-Bleed Imagery**: Custom high-resolution 16:9 widescreen artwork framing Maa Durga, street illuminations, and traditional rituals without top or bottom cropping.
+* **Beat-Style Soundwave Equalizer**: Integrated HTML5 audio player featuring an interactive, 36-bar frequency soundwave beat track. Users can click anywhere on the soundwave to jump on beat!
+* **Authentic Audio Playback**: Plays iconic festival audio tracks (including *Birendra Krishna Bhadra's Mahishasuramardini* on Mahalaya).
+* **Rituals & DDI AI Strategy**: Provides day-specific rituals, crowd predictions, and DDI spatial tips.
+
+---
+
+## 🧠 Dugga Dugga Intelligence (DDI) AI
+
+**Dugga Dugga Intelligence (DDI)** is the custom AI spatial companion powered by LLMs (Google Gemini / Groq):
+
+<p align="center">
+  <img src="public/images/ddi-logo.png" alt="DDI AI Logo Emblem" width="80" style="border-radius: 16px;" />
+</p>
+
+### 🪔 Origin of "Dugga Dugga":
+In traditional Bengali culture, when loved ones depart for a journey, elders say *"Dugga Dugga!"* as a sacred prayer to Goddess Durga for safe travel. **DDI** combines this centuries-old tradition of wishing safe travel with modern spatial algorithms.
+
+### ⚡ DDI AI Capabilities:
+* **Custom Senior-Designed Logo Emblem**: Sacred golden Durga Trinayana (third eye) intertwined with glowing neural AI lines and ember sparks (`/images/ddi-logo.png`).
+* **Realtime Navigation & Transit**: Calculates Haversine distances, nearest Kolkata Metro stations (e.g. *Shobhabazar Sutanuti Metro* for Sovabazar Rajbari), local train routes, and auto-rickshaw tips.
+* **Crowd & Curfew Analyzer**: Evaluates IST time windows to recommend low-crowd visiting times.
+* **Local Food & Culture**: Suggests iconic food stops (e.g. *Kathi rolls, Phuchka, Mishti*) along hopping routes.
 
 ---
 
 ## 🛠️ Technical Architecture Marvels
 
-To run flawlessly in both production clusters and local Windows environments, CholooPujoo uses advanced Next.js 14 features and database caching mechanisms:
-
-### ⚡ 1. Programmatic Node.js DNS Resolution Override
-Local development machines (especially Windows) frequently run into `querySrv ECONNREFUSED` crashes when querying MongoDB Atlas's advanced `mongodb+srv://` URIs. We integrated a programmatic override that forces the Node.js process to query Google's public DNS servers (`8.8.8.8`) directly:
+### ⚡ 1. Programmatic DNS Resolution Override
+To prevent `querySrv ECONNREFUSED` issues when querying MongoDB Atlas SRV URIs on local development environments, both database clients include a programmatic DNS fallback:
 ```typescript
 import dns from "dns";
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 ```
 
-### 🔋 2. Global Mongoose Connection Caching
-Next.js fast-refresh loops trigger frequent hot-reloads on file saves, which repeatedly open database connections and exhaust MongoDB connection pools. We resolved this by implementing a global caching promise that reuse connections:
-```typescript
-let cached = global.mongoose || { conn: null, promise: null };
-```
+### 🔋 2. Hot-Reload Connection Caching
+Next.js serverless runtimes and fast-refresh loops preserve a global connection promise cache (`global.mongoose`) to prevent connection pool exhaustion.
 
-### 🔌 3. NextAuth.js & MongoDB Adapter integration
-Authentication is powered by NextAuth.js Google OAuth using `@next-auth/mongodb-adapter`. 
-*   **Named authOptions**: Refactored NextAuth handler to export `authOptions` as a named export. This enables fast, secure `getServerSession(authOptions)` lookups directly inside Next.js Server Components.
-*   **Local Preview Bypass**: We temporarily bypassed the login restriction in local preview (`isLoggedIn = true` by default) so developers can test the application.
-*   **Development Mock Fallback**: If no active Google session is detected, the API routes and database queries automatically map to a mock user `mock-tester@choloopujoo.com`. **This allows all interactive features (checklist check-offs, DB updates, leaderboard ranking, and profile avatar selection) to work perfectly in your local preview!**
+### 🔌 3. NextAuth.js & Supabase Hybrid Backend
+* **NextAuth Google OAuth**: Handles secure user authentication with session persistence.
+* **Supabase Realtime Engine**: Manages instant live updates for pandal visit counts and leaderboard ranks.
 
-### 🧠 4. Real-Time Spelling Tolerance (Sørensen-Dice Coefficient)
-To support seamless search exploration, we implemented a custom client-side fuzzy search engine in `frontend/lib/searchHelper.ts`:
-*   **Bigram Overlap Calculations**: Splits user inputs and pandal names/locations into overlapping 2-letter bigram sets, calculating their similarity score in under `0.1ms`. This allows the engine to instantly resolve typos (e.g., matching "Sribhumi" ➔ "Sreebhumi" or "Suruci" ➔ "Suruchi") with zero server latency or AI rate-limit dependencies.
-*   **Relevance-Boost Sorting**: Exact substring matches receive a `+0.5` relevance boost to stay anchored at the top of recommendations, while spelling-corrected suggestions follow dynamically sorted by their similarity score.
-
-### 🚦 5. TomTom Live Traffic Congestion Analyzer
-To solve the massive challenge of crowd estimations at temporary festival sites, we built a real-time traffic-proxy analyzer in `app/api/recommend/route.ts`:
-*   **Segment Speed Queries**: The endpoint fetches live road speeds around the recommended coordinates using TomTom's flow Segment REST API.
-*   **Congestion Mapping**: Calculates the ratio of current road speed to ideal free-flow speed. A ratio under `0.4` represents crawl speeds (gridlock) indicating heavy crowds (🔴 **High Crowd**), while a ratio above `0.75` indicates clear streets (🟢 **Low Crowd**).
-*   **Robust Off-Grid Fallback**: Includes a native fallback to Indian Standard Time (IST) time-of-day crowd algorithms, ensuring a seamless user experience even if third-party APIs timeout or hit limits.
-
-### 🔮 6. Secure Gemini API Key Integration
-The AI routing engine securely leverages Google's free-tier **Gemini API** (`gemini-1.5-flash`) for real-time natural language generation:
-*   **LLM Context-Aware Prompting**: Feeds live calculated distances, travel times, themes, and TomTom crowd levels into the LLM context.
-*   **Traditional Persona Delivery**: Instructs the model to generate responses strictly in the voice of "Dugga-Dugga," wishing safe travels and adjusting advice depending on the live congestion levels!
-*   **Private Environment Keys**: Completely hidden behind server-side process environment variables (`GEMINI_API_KEY`, `TOMTOM_API_KEY`) to follow zero-trust security.
+### 🧠 4. Sørensen-Dice Fuzzy Search Engine
+Implemented in `frontend/lib/searchHelper.ts`, calculating bigram overlap scores in under `0.1ms` for spelling-tolerant searches (e.g. "Sribhumi" ➔ "Sreebhumi").
 
 ---
 
@@ -146,53 +156,41 @@ The AI routing engine securely leverages Google's free-tier **Gemini API** (`gem
 
 ```text
 choloopujoo/
-├── app/                           # Next.js App Router (Pure routing and server pages)
-│   ├── api/                       # API routes and NextAuth setup
-│   │   ├── auth/
-│   │   │   └── [...nextauth]/
-│   │   │       └── route.ts       # NextAuth Route Handler (Exports authOptions)
-│   │   ├── leaderboard/
-│   │   │   └── route.ts           # GET top 10 users ranked by visitCount
-│   │   └── user/
-│   │       ├── avatar/
-│   │       │   └── route.ts       # POST update profile image in MongoDB
-│   │       └── visit/
-│   │           └── route.ts       # POST mark a Pandal as visited and increment count
-│   ├── category/
-│   │   └── [slug]/
-│   │       └── page.tsx           # Categorized Pandal discovery lists
-│   ├── itinerary/
-│   │   └── page.tsx               # Itinerary Dashboard (WhatsApp share)
-│   ├── leaderboard/
-│   │   └── page.tsx               # Server Component displaying visual podium
-│   ├── login/
-│   │   └── page.tsx               # Sign-in page
-│   ├── profile/
-│   │   └── page.tsx               # Server Component Profile Dashboard
-│   ├── globals.css                # Core design styles, fonts, and Espress & Ember variables
-│   ├── layout.tsx                 # Root layout wrapping context wrappers
-│   └── page.tsx                   # Exploration home screen (Traditional Slogan)
-├── backend/                       # ⚙️ Server-side utilities, DB models, and schemas
-│   ├── models/                    # Mongoose database schemas
-│   │   ├── User.ts                # User schema (visitedPandals, visitCount, indexed)
-│   │   └── Pandal.ts              # Pandal schema
-│   ├── mongodb.ts                 # Mongoose cached connection layer
-│   └── mongodb-client.ts          # Raw MongoClient promise cache for Adapter
-├── frontend/                      # 🎨 Client-side components, contexts, and assets
-│   ├── components/                # Reusable client components
-│   │   ├── Navbar.tsx             # Fixed navigation bar (Profile/Leaderboard links)
-│   │   ├── PandalCard.tsx         # Discovery card with dark Google Map embeds
-│   │   └── AvatarSelector.tsx     # Client-Side 10-Avatar selector and modal
-│   ├── context/                   # Context wrappers
-│   │   ├── AppContext.tsx         # State sync toggleCompleted and MongoDB background POST
-│   │   └── NextAuthProvider.tsx   # NextAuth session wrapper
-│   └── lib/                       # Frontend local mock data
-│       └── mockData.ts            # Extensive list of 93 Pandals with specific coordinates
-├── public/                        # Static assets (images, icons, styles)
-│   ├── images/                    # Local Pandal graphics and 10 custom Pujo avatars
-│   └── durga-eyes.jpg             # Traditional three-eyed brand logo
-├── next.config.ts                 # Configures remotePatterns (lh3.googleusercontent, api.dicebear)
-└── package.json                   # Project packages & NPM script dependencies
+├── app/                           # Next.js App Router
+│   ├── api/                       # API routes (Auth, Chat, Leaderboard, Visit, Recommend)
+│   ├── calendar/                  # Sharadiya Ponjika 2026 calendar pages
+│   │   ├── [slug]/                # Day detail page with audio beat equalizer
+│   │   └── page.tsx               # 12-day Ponjika grid view
+│   ├── category/[slug]/           # Dynamic category filtering (South, North, Bonedi Bari)
+│   ├── ddi/                       # Dugga Dugga Intelligence AI Chatbot interface
+│   ├── itinerary/                 # User Itinerary Dashboard & WhatsApp export
+│   ├── leaderboard/               # Realtime Maha Leaderboard & 3D Podium
+│   ├── login/                     # Sign-in page with responsive mobile poster
+│   ├── profile/                   # User Profile & Avatar Selector modal
+│   ├── globals.css                # Core design system & Espresso & Ember tokens
+│   ├── layout.tsx                 # Root layout & providers
+│   └── page.tsx                   # Main exploration homepage
+├── backend/                       # ⚙️ Server-side utilities & MongoDB models
+│   ├── models/                    # Mongoose schemas (User, Pandal)
+│   ├── mongodb.ts                 # Cached Mongoose connection layer
+│   └── mongodb-client.ts          # MongoClient adapter cache
+├── frontend/                      # 🎨 Client-side components & helpers
+│   ├── components/                # Reusable UI components
+│   │   ├── Navbar.tsx             # Unified responsive Menu Bar drawer
+│   │   ├── DDICompanion.tsx       # DDI AI chatbot component
+│   │   ├── AvatarSelector.tsx     # 10-Avatar selection modal
+│   │   └── PandalCard.tsx         # Pandal card with dark map embed
+│   ├── context/                   # AppContext & NextAuth providers
+│   └── lib/                       # Catalog mock data (93 Pandals & Coordinates)
+├── public/                        # Static assets & audio
+│   ├── audio/                     # Pujo audio files (mahalaya.mp3)
+│   ├── images/                    # Calendar day artwork & logo graphics
+│   │   ├── calendar/              # 16:9 day artwork (dwitiya, tritiya, chaturthi)
+│   │   ├── ddi-logo.png           # Custom DDI AI Logo Emblem
+│   │   └── durga-hero-poster.png  # Login page hero artwork
+│   └── durga-eyes.jpg             # Durga Trinayana brand logo
+├── next.config.ts                 # Next.js configuration
+└── package.json                   # Project dependencies
 ```
 
 ---
@@ -200,36 +198,38 @@ choloopujoo/
 ## 🚀 Setup & Local Installation
 
 ### 1. Clone & Install Dependencies
-Navigate to your workspace directory and install all core packages, ensuring to bypass conflict flags using legacy resolution:
 ```bash
+git clone https://github.com/drishyam27/CholooPujoo.git
+cd choloopujoo
 npm install --legacy-peer-deps
 ```
 
 ### 2. Configure Environment Variables (`.env.local`)
-Create a **`.env.local`** file in the root of the project. Next.js automatically loads these variables securely on the server-side:
+Create a **`.env.local`** file in the root directory:
 
 ```env
-# 1. MongoDB Atlas Connection String (Remove < > brackets around your username & password)
-MONGODB_URI=mongodb+srv://your_db_user:your_db_password@your-db-instance.mongodb.net/CholooPujoo?appName=CholooPujooDB
+# MongoDB Atlas Connection String
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/CholooPujoo?retryWrites=true&w=majority
 
-# 2. NextAuth Configuration (A secret 32-character string)
-NEXTAUTH_SECRET=your_nextauth_secret_key_here
+# NextAuth Configuration
+NEXTAUTH_SECRET=your_nextauth_secret_key
 NEXTAUTH_URL=http://localhost:3000
 
-# 3. Google OAuth Credentials (From Google Cloud Console)
+# Google OAuth Credentials
 GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+# AI Engine API Keys
+GROQ_API_KEY=your_groq_api_key
+GEMINI_API_KEY=your_gemini_api_key
+
+# Supabase Realtime Credentials
+NEXT_PUBLIC_SUPABASE_URL=https://your-supabase-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
 
-### 3. Whitelist your Network in MongoDB Atlas
-*   Log in to **[MongoDB Atlas](https://cloud.mongodb.com)**.
-*   Go to **"Network Access"** under the Security tab.
-*   Click **"Add IP Address"** and choose **"Allow Access from Anywhere"** (`0.0.0.0/0`).
-*   Confirm and wait 1 minute for activation.
-
-### 4. Start the Application
-Boot up the Next.js local development server:
+### 3. Start Local Development Server
 ```bash
 npm run dev
 ```
-Open **`http://localhost:3000`** in your browser. Welcome to CholooPujoo! 🏮
+Open **`http://localhost:3000`** in your browser. Welcome to CholooPujoo! 🏮🌸
