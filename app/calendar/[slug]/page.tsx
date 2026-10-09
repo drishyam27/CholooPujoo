@@ -48,6 +48,53 @@ export default function CalendarDayPage() {
     }
   }, [isLoggedIn, router]);
 
+  // Automatic Audio Playback on page entry
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    let hasStarted = false;
+
+    const startPlayback = () => {
+      if (hasStarted || !audio) return;
+      audio
+        .play()
+        .then(() => {
+          hasStarted = true;
+          setIsPlaying(true);
+          setAudioError(false);
+          window.removeEventListener("click", startPlayback);
+          window.removeEventListener("touchstart", startPlayback);
+          window.removeEventListener("keydown", startPlayback);
+        })
+        .catch((err) => {
+          // If browser restricts cold autoplay without user gesture, listener handles first click/tap
+          console.log("[Ponjika Audio] Autoplay awaiting interaction:", err?.name);
+        });
+    };
+
+    // 1. Attempt immediate playback (works seamlessly when user navigates in via link click)
+    startPlayback();
+
+    // 2. If audio is still buffering, try once ready
+    const handleCanPlay = () => {
+      if (!hasStarted) startPlayback();
+    };
+    audio.addEventListener("canplay", handleCanPlay, { once: true });
+
+    // 3. Fallback: If cold reloaded, first user touch or click anywhere starts playback immediately
+    window.addEventListener("click", startPlayback, { once: true });
+    window.addEventListener("touchstart", startPlayback, { once: true });
+    window.addEventListener("keydown", startPlayback, { once: true });
+
+    return () => {
+      audio.removeEventListener("canplay", handleCanPlay);
+      window.removeEventListener("click", startPlayback);
+      window.removeEventListener("touchstart", startPlayback);
+      window.removeEventListener("keydown", startPlayback);
+    };
+  }, [day?.slug]);
+
   const togglePlay = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
@@ -120,13 +167,20 @@ export default function CalendarDayPage() {
   return (
     <div className="fixed inset-0 z-[100] w-screen h-[100dvh] min-h-[100dvh] bg-[#1F0F0D] overflow-hidden flex flex-col justify-between select-none p-3 sm:p-6 pb-4 sm:pb-8">
       
-      {/* Hidden HTML5 Audio Element */}
+      {/* Hidden HTML5 Audio Element with Autoplay & Lightweight Metadata Preload */}
       <audio
         ref={audioRef}
         src={`/audio/${day.slug}.mp3`}
+        autoPlay
+        preload="metadata"
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         onTimeUpdate={handleTimeUpdate}
         onEnded={() => setIsPlaying(false)}
-        onError={() => setAudioError(true)}
+        onError={() => {
+          setAudioError(true);
+          setIsPlaying(false);
+        }}
       />
 
       {/* 100% Full-Bleed Background Image Edge-to-Edge */}

@@ -41,7 +41,7 @@ export default function PandalCard({
   return (
     <>
       <div
-        className="glass rounded-2xl overflow-hidden group transition-all duration-300 hover:border-accent/30"
+        className="glass rounded-2xl overflow-hidden group transition-all duration-300 hover:border-accent/30 pandal-card-container"
         id={`pandal-${id}`}
       >
         <div className="flex flex-col sm:flex-row">
