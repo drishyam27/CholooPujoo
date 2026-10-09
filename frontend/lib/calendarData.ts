@@ -3,7 +3,7 @@ export interface SongTrack {
   title: string;
   artist: string;
   duration: string;
-  audioUrl: string;
+  youtubeId: string;
   theme: string;
 }
 
@@ -69,54 +69,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Kumartuli Sarbojonin", "College Square", "Beniatola"],
     description: "The first day of Devi Paksha brings quiet excitement across Kolkata as pandal artisans finish intricate clay details.",
     playlist: [
-      {
-        id: "prothoma-1",
-        title: "বাজলো তোমার আলোর বেণু",
-        artist: "Supriti Ghosh — Agomoni Classic",
-        duration: "3:45",
-        audioUrl: "/audio/.wav",
-        theme: "Agomoni Dawn & Devi Paksha Awakening"
-      },
-      {
-        id: "prothoma-2",
-        title: "জাগো তুমি জাগো",
-        artist: "Dwijen Mukherjee",
-        duration: "4:12",
-        audioUrl: "/audio/.wav",
-        theme: "Devi Vandana & Morning Prayer"
-      },
-      {
-        id: "prothoma-3",
-        title: "শিউলি ফুলের গন্ধ নিয়ে",
-        artist: "Indrani Sen",
-        duration: "3:30",
-        audioUrl: "/audio/.wav",
-        theme: "Autumn Shiuli & Kash Phool Vibe"
-      },
-      {
-        id: "prothoma-4",
-        title: "আনন্দময়ী মহামায়া",
-        artist: "Traditional Agomoni Chorus",
-        duration: "4:05",
-        audioUrl: "/audio/.wav",
-        theme: "Ghat Sthapana Devotional"
-      },
-      {
-        id: "prothoma-5",
-        title: "কুমোরটুলির মাটির ঘ্রাণ",
-        artist: "Kolkata Shehnai & Classical Flute",
-        duration: "3:15",
-        audioUrl: "/audio/.wav",
-        theme: "Artisan Quarters Chokkhudan Vibe"
-      },
-      {
-        id: "prothoma-6",
-        title: "ওগো আমার আগমনী গান",
-        artist: "Pratima Banerjee",
-        duration: "3:50",
-        audioUrl: "/audio/.wav",
-        theme: "Devi Agomoni Melodies"
-      }
+          {
+                id: "prothoma-1",
+                title: "বাজলো তোমার আলোর বেণু",
+                artist: "Supriti Ghosh — Agomoni Classic",
+                duration: "3:45",
+                youtubeId: "kYJ_tJ-Jb6o",
+                theme: "Agomoni Dawn & Devi Paksha Awakening"
+          },
+          {
+                id: "prothoma-2",
+                title: "জাগো তুমি জাগো",
+                artist: "Dwijen Mukherjee — Devi Vandana",
+                duration: "4:12",
+                youtubeId: "sO7n7J4o6y4",
+                theme: "Morning Aahwahan & Devi Vandana"
+          },
+          {
+                id: "prothoma-3",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "prothoma-4",
+                title: "মা গো আনন্দময়ী",
+                artist: "Pannalal Bhattacharya — Immortal Classic",
+                duration: "3:40",
+                youtubeId: "q6g4hT4o6k4",
+                theme: "Traditional Devotional Shyama Sangeet"
+          },
+          {
+                id: "prothoma-5",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "prothoma-6",
+                title: "ফিরে আয়",
+                artist: "Babul Supriyo & Jeet Gannguli",
+                duration: "4:02",
+                youtubeId: "zig8mNzJihY",
+                theme: "Heartfelt Homecoming & Sharod Melodies"
+          }
     ]
   },
   {
@@ -140,54 +140,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Ekdalia Evergreen", "Singhi Park", "Maddox Square"],
     description: "Street illumination gates turn on across Kolkata, turning night into day with millions of sparkling fairy lights.",
     playlist: [
-      {
-        id: "dwitiya-1",
-        title: "চলো চলো পুজোর শহরে",
-        artist: "Anupam Roy",
-        duration: "3:40",
-        audioUrl: "/audio/.wav",
-        theme: "Kolkata Streets Awakening"
-      },
-      {
-        id: "dwitiya-2",
-        title: "আলোর ছটা চন্দননগর",
-        artist: "Chandannagar Illumination Beats",
-        duration: "3:20",
-        audioUrl: "/audio/.wav",
-        theme: "Street Arches & Neon Glow"
-      },
-      {
-        id: "dwitiya-3",
-        title: "দুগ্গা এলো ঘরে",
-        artist: "Shreya Ghoshal",
-        duration: "4:02",
-        audioUrl: "/audio/.wav",
-        theme: "Welcoming Maa Durga"
-      },
-      {
-        id: "dwitiya-4",
-        title: "আলোর বেণু বাজে রে",
-        artist: "Lopamudra Mitra",
-        duration: "3:35",
-        audioUrl: "/audio/.wav",
-        theme: "Festive Joy & Shiuli"
-      },
-      {
-        id: "dwitiya-5",
-        title: "শরৎ সন্ধ্যায় চন্দ্র দর্শন",
-        artist: "Classical Sitar & Bansuri",
-        duration: "4:10",
-        audioUrl: "/audio/.wav",
-        theme: "Chandra Puja Twilight Raga"
-      },
-      {
-        id: "dwitiya-6",
-        title: "পুজো এলো রে আবার",
-        artist: "Shaan",
-        duration: "3:55",
-        audioUrl: "/audio/.wav",
-        theme: "Citywide Celebration Beat"
-      }
+          {
+                id: "dwitiya-1",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "dwitiya-2",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "dwitiya-3",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "dwitiya-4",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "dwitiya-5",
+                title: "বাজলো তোমার আলোর বেণু",
+                artist: "Supriti Ghosh — Agomoni Classic",
+                duration: "3:45",
+                youtubeId: "kYJ_tJ-Jb6o",
+                theme: "Agomoni Dawn & Devi Paksha Awakening"
+          },
+          {
+                id: "dwitiya-6",
+                title: "ফিরে আয়",
+                artist: "Babul Supriyo & Jeet Gannguli",
+                duration: "4:02",
+                youtubeId: "zig8mNzJihY",
+                theme: "Heartfelt Homecoming & Sharod Melodies"
+          }
     ]
   },
   {
@@ -211,54 +211,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Chetla Agrani", "Suruchi Sangha", "Tridhara Akorjon"],
     description: "City leaders and dignitaries inaugurate major theme pandals. Early birds enjoy breathtaking art installations with zero lines.",
     playlist: [
-      {
-        id: "tritiya-1",
-        title: "দুগ্গা এলো",
-        artist: "Monali Thakur",
-        duration: "3:48",
-        audioUrl: "/audio/.wav",
-        theme: "Joyful Early Pandal Hopping"
-      },
-      {
-        id: "tritiya-2",
-        title: "বলো দুগ্গা মাইকি",
-        artist: "Arijit Singh & Nikhita Gandhi",
-        duration: "4:15",
-        audioUrl: "/audio/.wav",
-        theme: "Festival Anthem"
-      },
-      {
-        id: "tritiya-3",
-        title: "চেতলা থেকে সুরুচি আড্ডা",
-        artist: "South Kolkata Theme Groove",
-        duration: "3:10",
-        audioUrl: "/audio/.wav",
-        theme: "VIP Theme Inauguration Beats"
-      },
-      {
-        id: "tritiya-4",
-        title: "এলো রে এলো পুজো",
-        artist: "Jeet Gannguli",
-        duration: "3:52",
-        audioUrl: "/audio/.wav",
-        theme: "Celebration Dance Beats"
-      },
-      {
-        id: "tritiya-5",
-        title: "ম্যাডক্স স্কয়ার পুজোর আড্ডা",
-        artist: "Kolkata Acoustic Ensemble",
-        duration: "3:30",
-        audioUrl: "/audio/.wav",
-        theme: "Friends Adda & Autumn Breeze"
-      },
-      {
-        id: "tritiya-6",
-        title: "মায়ের আগমনে বাজে রে ঢাক",
-        artist: "Traditional Dhak & Chorus",
-        duration: "3:42",
-        audioUrl: "/audio/.wav",
-        theme: "First Dhaak Beats in the Para"
-      }
+          {
+                id: "tritiya-1",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "tritiya-2",
+                title: "ঢাকের তালে কোমর দোলে",
+                artist: "Abhijeet Bhattacharya — Poran Jaye Jolia Re",
+                duration: "4:32",
+                youtubeId: "Xy5S9j4lTaE",
+                theme: "Durga Puja Dance & Festive Dhaak Groove"
+          },
+          {
+                id: "tritiya-3",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "tritiya-4",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "tritiya-5",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "tritiya-6",
+                title: "জাগো তুমি জাগো",
+                artist: "Dwijen Mukherjee — Devi Vandana",
+                duration: "4:12",
+                youtubeId: "sO7n7J4o6y4",
+                theme: "Morning Aahwahan & Devi Vandana"
+          }
     ]
   },
   {
@@ -282,54 +282,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Sreebhumi Sporting", "FD Block Salt Lake", "Tala Prattoy"],
     description: "The city buzzes with anticipation as thousands step out into the autumn night breeze for early pandal visits.",
     playlist: [
-      {
-        id: "chaturthi-1",
-        title: "পুজো পুজো গন্ধ বাতাসে",
-        artist: "Rupankar Bagchi",
-        duration: "4:05",
-        audioUrl: "/audio/.wav",
-        theme: "Autumn Aroma & Night Breeze"
-      },
-      {
-        id: "chaturthi-2",
-        title: "রাতের কলকাতা পুজো ওয়াক",
-        artist: "Lo-Fi Pujo Beats Collective",
-        duration: "3:15",
-        audioUrl: "/audio/.wav",
-        theme: "Midnight Pandal Stroll"
-      },
-      {
-        id: "chaturthi-3",
-        title: "ঢাকের তালে কোমর দোলে",
-        artist: "Abhijeet Bhattacharya",
-        duration: "4:22",
-        audioUrl: "/audio/.wav",
-        theme: "Club Dhak Rehearsal Energy"
-      },
-      {
-        id: "chaturthi-4",
-        title: "কুষ্মাণ্ডা মায়ের বরণ",
-        artist: "Vedic Sanskrit Chants Ensemble",
-        duration: "3:50",
-        audioUrl: "/audio/.wav",
-        theme: "Sacred Chaturthi Chants"
-      },
-      {
-        id: "chaturthi-5",
-        title: "শ্রীভূমি থেকে টালা প্রত্যয়",
-        artist: "North Kolkata Royal Strings",
-        duration: "3:35",
-        audioUrl: "/audio/.wav",
-        theme: "Architectural Theme Visualizer"
-      },
-      {
-        id: "chaturthi-6",
-        title: "ওই আসছে রে মা",
-        artist: "Antara Mitra",
-        duration: "3:40",
-        audioUrl: "/audio/.wav",
-        theme: "Excitement in the City"
-      }
+          {
+                id: "chaturthi-1",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "chaturthi-2",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "chaturthi-3",
+                title: "ঢাকের তালে কোমর দোলে",
+                artist: "Abhijeet Bhattacharya — Poran Jaye Jolia Re",
+                duration: "4:32",
+                youtubeId: "Xy5S9j4lTaE",
+                theme: "Durga Puja Dance & Festive Dhaak Groove"
+          },
+          {
+                id: "chaturthi-4",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "chaturthi-5",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "chaturthi-6",
+                title: "বাজলো তোমার আলোর বেণু",
+                artist: "Supriti Ghosh — Agomoni Classic",
+                duration: "3:45",
+                youtubeId: "kYJ_tJ-Jb6o",
+                theme: "Agomoni Dawn & Devi Paksha Awakening"
+          }
     ]
   },
   {
@@ -352,54 +352,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Kashi Bose Lane", "Hatibagan Nabin Pally", "Santosh Mitra Square"],
     description: "All pandals are officially open to the public. Kolkata transforms into the world's largest open-air art gallery.",
     playlist: [
-      {
-        id: "panchami-1",
-        title: "পঞ্চমীর এই রাতে",
-        artist: "Somlata Acharyya",
-        duration: "3:45",
-        audioUrl: "/audio/.wav",
-        theme: "First Grand Night of Hopping"
-      },
-      {
-        id: "panchami-2",
-        title: "কলকাতা সবাই রাস্তায়",
-        artist: "Bangla Rock & Dhaak Fusion",
-        duration: "4:10",
-        audioUrl: "/audio/.wav",
-        theme: "Midnight Crowd Excitement"
-      },
-      {
-        id: "panchami-3",
-        title: "ঢাক বাজে কাশ ফুল দোলে",
-        artist: "Kumar Sanu",
-        duration: "3:58",
-        audioUrl: "/audio/.wav",
-        theme: "Nostalgic Festival Melodies"
-      },
-      {
-        id: "panchami-4",
-        title: "প্যান্ডেল হপিং অ্যান্থেম ২০২৬",
-        artist: "High Energy Pujo Collective",
-        duration: "3:30",
-        audioUrl: "/audio/.wav",
-        theme: "93 Pandals Open Celebration"
-      },
-      {
-        id: "panchami-5",
-        title: "আমার পুজোর গান",
-        artist: "Srikanto Acharya",
-        duration: "4:12",
-        audioUrl: "/audio/.wav",
-        theme: "Melodic Evening Nostalgia"
-      },
-      {
-        id: "panchami-6",
-        title: "জয় জয় দুর্গা মা",
-        artist: "Traditional Festival Chorus",
-        duration: "3:35",
-        audioUrl: "/audio/.wav",
-        theme: "Sacred Devotional Chants"
-      }
+          {
+                id: "panchami-1",
+                title: "ঢাকের তালে কোমর দোলে",
+                artist: "Abhijeet Bhattacharya — Poran Jaye Jolia Re",
+                duration: "4:32",
+                youtubeId: "Xy5S9j4lTaE",
+                theme: "Durga Puja Dance & Festive Dhaak Groove"
+          },
+          {
+                id: "panchami-2",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "panchami-3",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "panchami-4",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "panchami-5",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "panchami-6",
+                title: "গোলেমালে পীরিত করো না",
+                artist: "Folk Studio Bangla — Baul Dhak Celebration",
+                duration: "4:45",
+                youtubeId: "R9V4a-4nN88",
+                theme: "Bengali Folk & Pandal Celebration"
+          }
     ]
   },
   {
@@ -422,54 +422,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Sovabazar Rajbari", "Laha Bari", "Pathuriaghata Ghosh Bari"],
     description: "Maha Shashthi marks the formal spiritual awakening of Maa Durga. The sound of Dhak drums echoes across every para.",
     playlist: [
-      {
-        id: "shashthi-1",
-        title: "আজি শঙ্খে শঙ্খে মঙ্গল গাও",
-        artist: "Dwijen Mukherjee",
-        duration: "4:20",
-        audioUrl: "/audio/.wav",
-        theme: "Sacred Conches & Bodhon Hymn"
-      },
-      {
-        id: "shashthi-2",
-        title: "দেবী বোধন স্তোত্র ও শঙ্খধ্বনি",
-        artist: "Bel Tree Twilight Ritual",
-        duration: "4:45",
-        audioUrl: "/audio/.wav",
-        theme: "Spiritual Awakening of Devi"
-      },
-      {
-        id: "shashthi-3",
-        title: "বনেদি বাড়ির ষষ্ঠী পুজো",
-        artist: "Classical Esraj & Pakhawaj",
-        duration: "3:55",
-        audioUrl: "/audio/.wav",
-        theme: "Sovabazar & Laha Bari Nostalgia"
-      },
-      {
-        id: "shashthi-4",
-        title: "মুখের পরদা খোলো গো মা",
-        artist: "Traditional Agomoni",
-        duration: "4:02",
-        audioUrl: "/audio/.wav",
-        theme: "Unveiling Maa's Divine Face"
-      },
-      {
-        id: "shashthi-5",
-        title: "মহাষষ্ঠীর সন্ধ্যারতি",
-        artist: "Temple Bells & Gong Chorus",
-        duration: "4:15",
-        audioUrl: "/audio/.wav",
-        theme: "Evening Incense & Camphor Dhoop"
-      },
-      {
-        id: "shashthi-6",
-        title: "মায়ের আগমন গান",
-        artist: "Arati Mukherjee",
-        duration: "3:50",
-        audioUrl: "/audio/.wav",
-        theme: "Tender Welcome of Devi"
-      }
+          {
+                id: "shashthi-1",
+                title: "জাগো তুমি জাগো",
+                artist: "Dwijen Mukherjee — Devi Vandana",
+                duration: "4:12",
+                youtubeId: "sO7n7J4o6y4",
+                theme: "Morning Aahwahan & Devi Vandana"
+          },
+          {
+                id: "shashthi-2",
+                title: "বাজলো তোমার আলোর বেণু",
+                artist: "Supriti Ghosh — Agomoni Classic",
+                duration: "3:45",
+                youtubeId: "kYJ_tJ-Jb6o",
+                theme: "Agomoni Dawn & Devi Paksha Awakening"
+          },
+          {
+                id: "shashthi-3",
+                title: "মা গো আনন্দময়ী",
+                artist: "Pannalal Bhattacharya — Immortal Classic",
+                duration: "3:40",
+                youtubeId: "q6g4hT4o6k4",
+                theme: "Traditional Devotional Shyama Sangeet"
+          },
+          {
+                id: "shashthi-4",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "shashthi-5",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "shashthi-6",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          }
     ]
   },
   {
@@ -492,54 +492,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Bagbazar Sarbojonin", "College Square", "Mohammad Ali Park"],
     description: "The sacred Nabapatrika is bathed in the holy Ganges at sunrise, wrapped in a red-bordered saree, and installed beside Lord Ganesha.",
     playlist: [
-      {
-        id: "saptami1-1",
-        title: "কলাবউ স্নান আগমনী গীতি",
-        artist: "Ganga Ghat Sunrise Procession",
-        duration: "4:10",
-        audioUrl: "/audio/.wav",
-        theme: "Sacred Hooghly Dawn Rituals"
-      },
-      {
-        id: "saptami1-2",
-        title: "নবপত্রিকা বরণ গান",
-        artist: "Traditional Vedic Chorus",
-        duration: "3:55",
-        audioUrl: "/audio/.wav",
-        theme: "Nine Plants of Mother Nature"
-      },
-      {
-        id: "saptami1-3",
-        title: "বাবুঘাট সূর্যোদয়ের সানাই",
-        artist: "Raga Bhairav Shehnai & Dhaak",
-        duration: "4:30",
-        audioUrl: "/audio/.wav",
-        theme: "Kolkata Ghats Morning Awakening"
-      },
-      {
-        id: "saptami1-4",
-        title: "সপ্তমীর সকাল বেলা",
-        artist: "Indranil Sen",
-        duration: "3:40",
-        audioUrl: "/audio/.wav",
-        theme: "First Morning Puja Anjali"
-      },
-      {
-        id: "saptami1-5",
-        title: "পূজার ঢোল বাজে রে",
-        artist: "Folk Dhol & Khol Ensemble",
-        duration: "3:35",
-        audioUrl: "/audio/.wav",
-        theme: "Festive Joy Across Bengal"
-      },
-      {
-        id: "saptami1-6",
-        title: "প্রাণ প্রতিষ্ঠা মহামন্ত্র",
-        artist: "Sanskrit Vedic Stotram",
-        duration: "4:00",
-        audioUrl: "/audio/.wav",
-        theme: "Sanctifying the Idol"
-      }
+          {
+                id: "saptami-1-1",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "saptami-1-2",
+                title: "জাগো তুমি জাগো",
+                artist: "Dwijen Mukherjee — Devi Vandana",
+                duration: "4:12",
+                youtubeId: "sO7n7J4o6y4",
+                theme: "Morning Aahwahan & Devi Vandana"
+          },
+          {
+                id: "saptami-1-3",
+                title: "বাজলো তোমার আলোর বেণু",
+                artist: "Supriti Ghosh — Agomoni Classic",
+                duration: "3:45",
+                youtubeId: "kYJ_tJ-Jb6o",
+                theme: "Agomoni Dawn & Devi Paksha Awakening"
+          },
+          {
+                id: "saptami-1-4",
+                title: "মা গো আনন্দময়ী",
+                artist: "Pannalal Bhattacharya — Immortal Classic",
+                duration: "3:40",
+                youtubeId: "q6g4hT4o6k4",
+                theme: "Traditional Devotional Shyama Sangeet"
+          },
+          {
+                id: "saptami-1-5",
+                title: "ফিরে আয়",
+                artist: "Babul Supriyo & Jeet Gannguli",
+                duration: "4:02",
+                youtubeId: "zig8mNzJihY",
+                theme: "Heartfelt Homecoming & Sharod Melodies"
+          },
+          {
+                id: "saptami-1-6",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          }
     ]
   },
   {
@@ -562,54 +562,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Badamtala Ashar Sangha", "66 Pally", "Mudiali Club"],
     description: "Millions take to the streets in their finest new festive clothes for an all-night celebration under glittering light towers.",
     playlist: [
-      {
-        id: "saptami2-1",
-        title: "উইকএন্ড পুজো ফ্রেঞ্জি",
-        artist: "Electronic Dhaak & Brass Fusion",
-        duration: "3:45",
-        audioUrl: "/audio/.wav",
-        theme: "All-Night Hopping Energy"
-      },
-      {
-        id: "saptami2-2",
-        title: "৬৬ পল্লী থেকে বাদামতলা",
-        artist: "South Kolkata Streets Atmosphere",
-        duration: "3:20",
-        audioUrl: "/audio/.wav",
-        theme: "Nocturnal Walking Rhythm"
-      },
-      {
-        id: "saptami2-3",
-        title: "কলকাতা মেট্রো নাইট রাইড",
-        artist: "Urban Festival Metro Beat",
-        duration: "3:15",
-        audioUrl: "/audio/.wav",
-        theme: "Past 2:00 AM Transit Pulse"
-      },
-      {
-        id: "saptami2-4",
-        title: "ভোগ আরতি ও ধুনা ধুন",
-        artist: "Traditional Dhunuchi Flute",
-        duration: "4:10",
-        audioUrl: "/audio/.wav",
-        theme: "Para Bhog & Coconut Smoke"
-      },
-      {
-        id: "saptami2-5",
-        title: "মহাসপ্তমী অঞ্জলি বন্দনা",
-        artist: "Devotional Stotram Chorus",
-        duration: "4:05",
-        audioUrl: "/audio/.wav",
-        theme: "Sacred Offering Songs"
-      },
-      {
-        id: "saptami2-6",
-        title: "আবার পুজোর দিন এসেছে",
-        artist: "Babul Supriyo",
-        duration: "3:50",
-        audioUrl: "/audio/.wav",
-        theme: "Heartfelt City Song"
-      }
+          {
+                id: "saptami-2-1",
+                title: "ঢাকের তালে কোমর দোলে",
+                artist: "Abhijeet Bhattacharya — Poran Jaye Jolia Re",
+                duration: "4:32",
+                youtubeId: "Xy5S9j4lTaE",
+                theme: "Durga Puja Dance & Festive Dhaak Groove"
+          },
+          {
+                id: "saptami-2-2",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "saptami-2-3",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "saptami-2-4",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "saptami-2-5",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "saptami-2-6",
+                title: "গোলেমালে পীরিত করো না",
+                artist: "Folk Studio Bangla — Baul Dhak Celebration",
+                duration: "4:45",
+                youtubeId: "R9V4a-4nN88",
+                theme: "Bengali Folk & Pandal Celebration"
+          }
     ]
   },
   {
@@ -632,62 +632,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Belur Math", "Sabarna Roy Choudhury Bari", "Maddox Square"],
     description: "The most sacred day of Durga Puja. Devotees fast for morning Pushpanjali, followed by Kumari Puja and the intense 48-minute Sandhi Puja at dusk.",
     playlist: [
-      {
-        id: "ashtami-1",
-        title: "মহাঅষ্টমী পুষ্পাঞ্জলি মন্ত্র",
-        artist: "Sacred Flower Offering Chants",
-        duration: "4:30",
-        audioUrl: "/audio/.wav",
-        theme: "Om Jayanti Mangala Kali Hymn"
-      },
-      {
-        id: "ashtami-2",
-        title: "সন্ধিপুজোর ১০৮ ঢাকের বোল",
-        artist: "Intense 48-Minute Sandhi Dhaak",
-        duration: "5:10",
-        audioUrl: "/audio/.wav",
-        theme: "Mahishasura Mardini Battle Beats"
-      },
-      {
-        id: "ashtami-3",
-        title: "কুমারী পূজা বন্দনা",
-        artist: "Belur Math Vedic Chants",
-        duration: "4:20",
-        audioUrl: "/audio/.wav",
-        theme: "Worship of the Young Goddess"
-      },
-      {
-        id: "ashtami-4",
-        title: "লাল পাড় শাড়ি অঞ্জলি গীতি",
-        artist: "Traditional Female Chorus",
-        duration: "3:45",
-        audioUrl: "/audio/.wav",
-        theme: "Morning Fast & Saree Elegance"
-      },
-      {
-        id: "ashtami-5",
-        title: "জয় জয় দেবী চামুণ্ডে",
-        artist: "Chamunda Stotram",
-        duration: "4:00",
-        audioUrl: "/audio/.wav",
-        theme: "Sandhi Puja Apex Climax"
-      },
-      {
-        id: "ashtami-6",
-        title: "১০৮ প্রদীপ আরতি থিম",
-        artist: "Temple Bell & Gong Symphony",
-        duration: "4:15",
-        audioUrl: "/audio/.wav",
-        theme: "108 Lotus Lamps Glow"
-      },
-      {
-        id: "ashtami-7",
-        title: "অষ্টমীর সন্ধ্যায় ম্যাডক্স",
-        artist: "Saptarshi Mukherjee",
-        duration: "3:40",
-        audioUrl: "/audio/.wav",
-        theme: "Lawn Gathering & Evening Adda"
-      }
+          {
+                id: "ashtami-1",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "ashtami-2",
+                title: "জাগো তুমি জাগো",
+                artist: "Dwijen Mukherjee — Devi Vandana",
+                duration: "4:12",
+                youtubeId: "sO7n7J4o6y4",
+                theme: "Morning Aahwahan & Devi Vandana"
+          },
+          {
+                id: "ashtami-3",
+                title: "বাজলো তোমার আলোর বেণু",
+                artist: "Supriti Ghosh — Agomoni Classic",
+                duration: "3:45",
+                youtubeId: "kYJ_tJ-Jb6o",
+                theme: "Agomoni Dawn & Devi Paksha Awakening"
+          },
+          {
+                id: "ashtami-4",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "ashtami-5",
+                title: "ঢাকের তালে কোমর দোলে",
+                artist: "Abhijeet Bhattacharya — Poran Jaye Jolia Re",
+                duration: "4:32",
+                youtubeId: "Xy5S9j4lTaE",
+                theme: "Durga Puja Dance & Festive Dhaak Groove"
+          },
+          {
+                id: "ashtami-6",
+                title: "মা গো আনন্দময়ী",
+                artist: "Pannalal Bhattacharya — Immortal Classic",
+                duration: "3:40",
+                youtubeId: "q6g4hT4o6k4",
+                theme: "Traditional Devotional Shyama Sangeet"
+          }
     ]
   },
   {
@@ -710,54 +702,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Maniktala Chaltabagan", "Naktala Udayan Sangha", "Bosepukur Sitala Mandir"],
     description: "Rhythmic Dhak beats, swirling aromatic coconut husk smoke, and intense Dhunuchi dancing mark the epic last night of Sharodutsav.",
     playlist: [
-      {
-        id: "navami-1",
-        title: "ধুনুচি নাচ ধামাকা (আল্টিমেট ঢাক)",
-        artist: "Electrifying Fast-paced Dhak",
-        duration: "5:30",
-        audioUrl: "/audio/.wav",
-        theme: "Swirling Coconut Husk Smoke & Fire"
-      },
-      {
-        id: "navami-2",
-        title: "নবমীর রাতি পোহালে (বেদনার সুর)",
-        artist: "Hemanta Mukherjee",
-        duration: "4:15",
-        audioUrl: "/audio/.wav",
-        theme: "The Sweet Sorrow of Navami Night"
-      },
-      {
-        id: "navami-3",
-        title: "চালতাবাগান ধুনুচি স্টর্ম",
-        artist: "Maniktala Live Dhaak & Kashi",
-        duration: "4:45",
-        audioUrl: "/audio/.wav",
-        theme: "North Kolkata Street Frenzy"
-      },
-      {
-        id: "navami-4",
-        title: "নবমী হোম যজ্ঞ মন্ত্র",
-        artist: "Vedic Agni Suktam Chants",
-        duration: "4:20",
-        audioUrl: "/audio/.wav",
-        theme: "Sacred Fire & Ghee Offerings"
-      },
-      {
-        id: "navami-5",
-        title: "শেষ রাতের কলকাতা",
-        artist: "Anindya Chatterjee (Chandrabindoo)",
-        duration: "3:55",
-        audioUrl: "/audio/.wav",
-        theme: "Dawn Approaching on Navami"
-      },
-      {
-        id: "navami-6",
-        title: "মায়ের বিদায় আসছে কালে",
-        artist: "Manna Dey",
-        duration: "4:10",
-        audioUrl: "/audio/.wav",
-        theme: "Impending Farewell Song"
-      }
+          {
+                id: "navami-1",
+                title: "ঢাকের তালে কোমর দোলে",
+                artist: "Abhijeet Bhattacharya — Poran Jaye Jolia Re",
+                duration: "4:32",
+                youtubeId: "Xy5S9j4lTaE",
+                theme: "Durga Puja Dance & Festive Dhaak Groove"
+          },
+          {
+                id: "navami-2",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "navami-3",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "navami-4",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "navami-5",
+                title: "গোলেমালে পীরিত করো না",
+                artist: "Folk Studio Bangla — Baul Dhak Celebration",
+                duration: "4:45",
+                youtubeId: "R9V4a-4nN88",
+                theme: "Bengali Folk & Pandal Celebration"
+          },
+          {
+                id: "navami-6",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          }
     ]
   },
   {
@@ -780,54 +772,54 @@ export const calendarDays: CalendarDay[] = [
     recommendedPandals: ["Babu Ghat Immersion", "Baje Kadamtala Ghat", "Sovabazar Rajbari Ghat"],
     description: "With tearful eyes and vermilion-smearing, Kolkata bids farewell to Maa Durga until next year with cries of 'Aasche Bochor Aabar Hobe!'",
     playlist: [
-      {
-        id: "dashami-1",
-        title: "আসছে বছর আবার হবে অ্যান্থেম",
-        artist: "Kolkata Farewell Chorus",
-        duration: "4:20",
-        audioUrl: "/audio/.wav",
-        theme: "Triumphant Farewell Cry"
-      },
-      {
-        id: "dashami-2",
-        title: "সিঁদুর খেলা উৎসব গীতি",
-        artist: "Traditional Boron & Vermilion Song",
-        duration: "3:50",
-        audioUrl: "/audio/.wav",
-        theme: "Red Vermilion & Sweet Sweets"
-      },
-      {
-        id: "dashami-3",
-        title: "বিসর্জনের ঢাক ও অশ্রু",
-        artist: "Babu Ghat Immersion Dhaak",
-        duration: "4:45",
-        audioUrl: "/audio/.wav",
-        theme: "Immersion Waters of the Hooghly"
-      },
-      {
-        id: "dashami-4",
-        title: "মা গো তুমি বিদায় নিও না",
-        artist: "Arati Mukherjee",
-        duration: "4:12",
-        audioUrl: "/audio/.wav",
-        theme: "Heartbreak of Mother's Departure"
-      },
-      {
-        id: "dashami-5",
-        title: "শুভ বিজয়া কোলাকুলি সঙ্গীত",
-        artist: "Rabindra Sangeet / Bijoya Gaan",
-        duration: "3:40",
-        audioUrl: "/audio/.wav",
-        theme: "Embraces & Rosogolla Pronam"
-      },
-      {
-        id: "dashami-6",
-        title: "আবার এসো মা হৃদয় মাঝে",
-        artist: "Devotional Farewell Ensemble",
-        duration: "4:30",
-        audioUrl: "/audio/.wav",
-        theme: "Prayers for the Coming Year"
-      }
+          {
+                id: "dashami-1",
+                title: "ঢাকের তালে কোমর দোলে",
+                artist: "Abhijeet Bhattacharya — Poran Jaye Jolia Re",
+                duration: "4:32",
+                youtubeId: "Xy5S9j4lTaE",
+                theme: "Durga Puja Dance & Festive Dhaak Groove"
+          },
+          {
+                id: "dashami-2",
+                title: "দুগ্গা এলো",
+                artist: "Monali Thakur — Zee Music Bangla",
+                duration: "3:50",
+                youtubeId: "xlElO06nQy8",
+                theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "dashami-3",
+                title: "জয় জয় দুর্গা মা",
+                artist: "Jeet Gannguli & Sourav Ganguly",
+                duration: "4:15",
+                youtubeId: "Xh0Y9Z10o70",
+                theme: "Sharod Utsav All-Star Anthem"
+          },
+          {
+                id: "dashami-4",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "dashami-5",
+                title: "ফিরে আয়",
+                artist: "Babul Supriyo & Jeet Gannguli",
+                duration: "4:02",
+                youtubeId: "zig8mNzJihY",
+                theme: "Heartfelt Homecoming & Sharod Melodies"
+          },
+          {
+                id: "dashami-6",
+                title: "বাজলো তোমার আলোর বেণু",
+                artist: "Supriti Ghosh — Agomoni Classic",
+                duration: "3:45",
+                youtubeId: "kYJ_tJ-Jb6o",
+                theme: "Agomoni Dawn & Devi Paksha Awakening"
+          }
     ]
   }
 ];

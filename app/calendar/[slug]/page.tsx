@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -18,8 +18,16 @@ import {
   SkipBack,
   SkipForward,
   ListMusic,
+  Video,
   X
 } from "lucide-react";
+
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
 
 // Pre-calculated aesthetic audio waveform beat heights (36 frequency bars)
 const waveformBeatHeights = [
@@ -39,6 +47,7 @@ export default function CalendarDayPage() {
   // Track & Playlist state
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
+  const [showVideo, setShowVideo] = useState(false);
 
   // Audio state
   const [isPlaying, setIsPlaying] = useState(false);
@@ -48,6 +57,7 @@ export default function CalendarDayPage() {
   const [audioError, setAudioError] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const ytPlayerRef = useRef<any>(null);
   const waveformRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -61,11 +71,7 @@ export default function CalendarDayPage() {
   const playlist = day?.playlist || [];
   const currentTrack = !isMahalaya && playlist.length > 0 ? playlist[currentTrackIndex] : null;
 
-  const currentAudioSrc = isMahalaya
-    ? `/audio/mahalaya.mp3`
-    : currentTrack
-    ? currentTrack.audioUrl
-    : `/audio/${day?.slug}.wav`;
+  const currentAudioSrc = isMahalaya ? `/audio/mahalaya.mp3` : "";
 
   const songTitle = isMahalaya
     ? "Birendra Krishna Bhadra — Mahishasuramardini"
@@ -79,8 +85,33 @@ export default function CalendarDayPage() {
     ? currentTrack.artist
     : "Traditional Dhak & Festival Ensemble";
 
-  // Automatic Audio Playback on page entry or track switch
+  // Track switching handlers
+  const handleNextTrack = useCallback(() => {
+    if (playlist.length > 1) {
+      setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+      setAudioProgress(0);
+      setIsPlaying(false);
+    }
+  }, [playlist.length]);
+
+  const handlePrevTrack = useCallback(() => {
+    if (playlist.length > 1) {
+      setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+      setAudioProgress(0);
+      setIsPlaying(false);
+    }
+  }, [playlist.length]);
+
+  const selectTrack = (index: number) => {
+    setCurrentTrackIndex(index);
+    setAudioProgress(0);
+    setIsPlaying(false);
+    setIsPlaylistOpen(false);
+  };
+
+  // --- MAHALAYA HTML5 AUDIO PLAYBACK ---
   useEffect(() => {
+    if (!isMahalaya) return;
     const audio = audioRef.current;
     if (!audio) return;
 
@@ -99,21 +130,17 @@ export default function CalendarDayPage() {
           window.removeEventListener("keydown", startPlayback);
         })
         .catch((err) => {
-          // If browser restricts cold autoplay without user gesture, listener handles first click/tap
-          console.log("[Ponjika Audio] Autoplay awaiting interaction:", err?.name);
+          console.log("[Mahalaya Audio] Awaiting interaction:", err?.name);
         });
     };
 
-    // 1. Attempt immediate playback
     startPlayback();
 
-    // 2. If audio is still buffering, try once ready
     const handleCanPlay = () => {
       if (!hasStarted) startPlayback();
     };
     audio.addEventListener("canplay", handleCanPlay, { once: true });
 
-    // 3. Fallback: If cold reloaded, first user touch or click anywhere starts playback immediately
     window.addEventListener("click", startPlayback, { once: true });
     window.addEventListener("touchstart", startPlayback, { once: true });
     window.addEventListener("keydown", startPlayback, { once: true });
@@ -124,76 +151,192 @@ export default function CalendarDayPage() {
       window.removeEventListener("touchstart", startPlayback);
       window.removeEventListener("keydown", startPlayback);
     };
-  }, [day?.slug, currentTrackIndex, currentAudioSrc, isLoggedIn]);
+  }, [isMahalaya, isLoggedIn]);
 
-  const togglePlay = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current
-        .play()
-        .then(() => {
+  // --- YOUTUBE PLAYER FOR PROTHOMA THROUGH DASHAMI ---
+  useEffect(() => {
+    if (isMahalaya) return;
+
+    // Load YouTube IFrame API script once if not present
+    if (typeof window !== "undefined" && !window.YT) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
+    }
+
+    let isSubscribed = true;
+
+    const createPlayer = () => {
+      if (!isSubscribed || !window.YT || !window.YT.Player) return;
+      const targetElement = document.getElementById("yt-festival-player");
+      if (!targetElement) return;
+
+      // If player already created, load the current track
+      if (ytPlayerRef.current && typeof ytPlayerRef.current.loadVideoById === "function") {
+        if (currentTrack?.youtubeId) {
+          ytPlayerRef.current.loadVideoById(currentTrack.youtubeId);
           setIsPlaying(true);
-          setAudioError(false);
-        })
-        .catch((err) => {
-          console.warn("[Ponjika Audio] Audio file playback:", err);
-          setAudioError(true);
-          setIsPlaying(false);
-        });
+        }
+        return;
+      }
+
+      ytPlayerRef.current = new window.YT.Player("yt-festival-player", {
+        height: "100%",
+        width: "100%",
+        videoId: currentTrack?.youtubeId || "kYJ_tJ-Jb6o",
+        playerVars: {
+          autoplay: 1,
+          controls: 1,
+          modestbranding: 1,
+          rel: 0,
+          playsinline: 1,
+        },
+        events: {
+          onReady: (event: any) => {
+            if (!isSubscribed) return;
+            event.target.playVideo();
+            setIsPlaying(true);
+            setAudioError(false);
+          },
+          onStateChange: (event: any) => {
+            if (!isSubscribed) return;
+            if (event.data === window.YT.PlayerState.PLAYING) {
+              setIsPlaying(true);
+              setAudioError(false);
+            } else if (event.data === window.YT.PlayerState.PAUSED) {
+              setIsPlaying(false);
+            } else if (event.data === window.YT.PlayerState.ENDED) {
+              handleNextTrack();
+            }
+          },
+          onError: () => {
+            if (!isSubscribed) return;
+            setAudioError(true);
+          }
+        }
+      });
+    };
+
+    if (window.YT && window.YT.Player) {
+      createPlayer();
+    } else {
+      window.onYouTubeIframeAPIReady = () => {
+        if (isSubscribed) createPlayer();
+      };
+    }
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [day?.slug, isMahalaya, currentTrack?.youtubeId, handleNextTrack]);
+
+  // Switch YouTube song when currentTrackIndex changes
+  useEffect(() => {
+    if (isMahalaya) return;
+    if (ytPlayerRef.current && typeof ytPlayerRef.current.loadVideoById === "function" && currentTrack?.youtubeId) {
+      ytPlayerRef.current.loadVideoById(currentTrack.youtubeId);
+      setIsPlaying(true);
+      setAudioProgress(0);
+    }
+  }, [currentTrackIndex, currentTrack?.youtubeId, isMahalaya]);
+
+  // Synchronize playback time & waveform progress for YouTube
+  useEffect(() => {
+    if (isMahalaya || !isPlaying) return;
+
+    const interval = setInterval(() => {
+      if (ytPlayerRef.current && typeof ytPlayerRef.current.getCurrentTime === "function") {
+        const curr = ytPlayerRef.current.getCurrentTime() || 0;
+        const dur = ytPlayerRef.current.getDuration() || 0;
+        setAudioProgress(curr);
+        if (dur > 0) setAudioDuration(dur);
+      }
+    }, 400);
+
+    return () => clearInterval(interval);
+  }, [isPlaying, isMahalaya]);
+
+  // User playback controls
+  const togglePlay = () => {
+    if (isMahalaya) {
+      if (!audioRef.current) return;
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+            setAudioError(false);
+          })
+          .catch(() => {
+            setAudioError(true);
+            setIsPlaying(false);
+          });
+      }
+    } else {
+      if (!ytPlayerRef.current) return;
+      if (isPlaying) {
+        if (typeof ytPlayerRef.current.pauseVideo === "function") {
+          ytPlayerRef.current.pauseVideo();
+        }
+        setIsPlaying(false);
+      } else {
+        if (typeof ytPlayerRef.current.playVideo === "function") {
+          ytPlayerRef.current.playVideo();
+        }
+        setIsPlaying(true);
+      }
     }
   };
 
   const toggleMute = () => {
-    if (!audioRef.current) return;
-    audioRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
-  };
-
-  const handleNextTrack = () => {
-    if (playlist.length > 1) {
-      setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
-      setAudioProgress(0);
-      setIsPlaying(false);
+    if (isMahalaya) {
+      if (!audioRef.current) return;
+      audioRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    } else {
+      if (!ytPlayerRef.current) return;
+      if (isMuted) {
+        if (typeof ytPlayerRef.current.unMute === "function") {
+          ytPlayerRef.current.unMute();
+        }
+        setIsMuted(false);
+      } else {
+        if (typeof ytPlayerRef.current.mute === "function") {
+          ytPlayerRef.current.mute();
+        }
+        setIsMuted(true);
+      }
     }
-  };
-
-  const handlePrevTrack = () => {
-    if (playlist.length > 1) {
-      setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
-      setAudioProgress(0);
-      setIsPlaying(false);
-    }
-  };
-
-  const selectTrack = (index: number) => {
-    setCurrentTrackIndex(index);
-    setAudioProgress(0);
-    setIsPlaying(false);
-    setIsPlaylistOpen(false);
   };
 
   const handleTimeUpdate = () => {
-    if (audioRef.current) {
+    if (isMahalaya && audioRef.current) {
       setAudioProgress(audioRef.current.currentTime);
       setAudioDuration(audioRef.current.duration || 0);
     }
   };
 
   const handleWaveformClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!audioRef.current || !waveformRef.current || !audioDuration) return;
+    if (!waveformRef.current || !audioDuration) return;
     const rect = waveformRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const clickRatio = Math.max(0, Math.min(1, clickX / rect.width));
     const newTime = clickRatio * audioDuration;
-    audioRef.current.currentTime = newTime;
+
+    if (isMahalaya && audioRef.current) {
+      audioRef.current.currentTime = newTime;
+    } else if (!isMahalaya && ytPlayerRef.current && typeof ytPlayerRef.current.seekTo === "function") {
+      ytPlayerRef.current.seekTo(newTime, true);
+    }
     setAudioProgress(newTime);
   };
 
   const formatTime = (secs: number) => {
-    if (isNaN(secs)) return "0:00";
+    if (isNaN(secs) || secs < 0) return "0:00";
     const m = Math.floor(secs / 60);
     const s = Math.floor(secs % 60);
     return `${m}:${s < 10 ? "0" : ""}${s}`;
@@ -217,28 +360,47 @@ export default function CalendarDayPage() {
   return (
     <div className="fixed inset-0 z-[100] w-screen h-[100dvh] min-h-[100dvh] bg-[#1F0F0D] overflow-hidden flex flex-col justify-between select-none p-3 sm:p-6 pb-4 sm:pb-8">
       
-      {/* Hidden HTML5 Audio Element with Autoplay & Lightweight Metadata Preload */}
-      <audio
-        ref={audioRef}
-        key={currentAudioSrc}
-        src={currentAudioSrc}
-        autoPlay
-        preload="metadata"
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={() => {
-          if (playlist.length > 1) {
-            handleNextTrack();
-          } else {
+      {/* MAHALAYA: Untouched Original HTML5 Audio Element */}
+      {isMahalaya && (
+        <audio
+          ref={audioRef}
+          src={currentAudioSrc}
+          autoPlay
+          preload="metadata"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onTimeUpdate={handleTimeUpdate}
+          onEnded={() => setIsPlaying(false)}
+          onError={() => {
+            setAudioError(true);
             setIsPlaying(false);
-          }
-        }}
-        onError={() => {
-          setAudioError(true);
-          setIsPlaying(false);
-        }}
-      />
+          }}
+        />
+      )}
+
+      {/* PROTHOMA TO DASHAMI: Authentic Bengali YouTube Audio/Video Player */}
+      {!isMahalaya && (
+        <div
+          className={`${
+            showVideo
+              ? "fixed bottom-24 right-4 sm:right-8 z-40 w-72 sm:w-96 aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-accent/40 bg-black/95 backdrop-blur-xl transition-all"
+              : "fixed -left-[9999px] -top-[9999px] w-1 h-1 opacity-0 pointer-events-none"
+          }`}
+        >
+          {showVideo && (
+            <div className="absolute top-2 right-2 z-10">
+              <button
+                onClick={() => setShowVideo(false)}
+                className="p-1 rounded-full bg-black/80 text-white/80 hover:text-white hover:bg-black transition-colors cursor-pointer"
+                title="Hide Video"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+          <div id="yt-festival-player" className="w-full h-full" />
+        </div>
+      )}
 
       {/* 100% Full-Bleed Background Image Edge-to-Edge */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -301,7 +463,7 @@ export default function CalendarDayPage() {
         </p>
       </div>
 
-      {/* Bottom: Beat-Style Equalizer Floating Audio Player Pill */}
+      {/* Bottom: Equalizer Floating Audio Player Pill */}
       <div className="relative z-20 w-full flex flex-col items-center gap-2 pt-2">
         
         {/* Floating Audio Bar */}
@@ -325,12 +487,12 @@ export default function CalendarDayPage() {
           <div className="flex-1 min-w-0 space-y-1 text-left">
             <div className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-accent flex items-center justify-between gap-2">
               <span className="truncate">
-                {isMahalaya ? "Mahalaya Audio" : `${day.englishTitle} Playlist (${currentTrackIndex + 1}/${playlist.length || 1})`}
+                {isMahalaya ? "Mahalaya Broadcast" : `${day.englishTitle} Bengali Songs (${currentTrackIndex + 1}/${playlist.length || 1})`}
               </span>
               {isPlaying && (
                 <span className="inline-flex items-center gap-1 text-[9px] text-amber-300 font-bold bg-accent/30 px-1.5 py-0.5 rounded-full border border-accent/40 animate-pulse flex-shrink-0">
                   <Activity className="w-2.5 h-2.5 animate-bounce text-amber-300" />
-                  <span>BEATS PLAYING</span>
+                  <span>PLAYING</span>
                 </span>
               )}
             </div>
@@ -351,7 +513,7 @@ export default function CalendarDayPage() {
                 ref={waveformRef}
                 onClick={handleWaveformClick}
                 className="flex-1 flex items-center justify-between gap-[2px] h-6 sm:h-7 cursor-pointer group py-1 px-1 rounded-md hover:bg-white/5 transition-colors"
-                title="Click anywhere to jump on beat track"
+                title="Click anywhere to jump in song"
               >
                 {waveformBeatHeights.map((barHeight, idx) => {
                   const barPercent = (idx / waveformBeatHeights.length) * 100;
@@ -380,8 +542,23 @@ export default function CalendarDayPage() {
             </div>
           </div>
 
-          {/* Controls: Prev/Next (if playlist), Play/Pause & Mute */}
+          {/* Controls: Video Toggle, Playlist, Prev, Play/Pause, Next & Mute */}
           <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+            {/* Watch Video Toggle for Bengali Tracks */}
+            {!isMahalaya && currentTrack?.youtubeId && (
+              <button
+                onClick={() => setShowVideo(!showVideo)}
+                className={`p-1.5 sm:p-2 rounded-full border transition-all cursor-pointer ${
+                  showVideo
+                    ? "bg-amber-400 text-black border-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.6)]"
+                    : "bg-white/5 hover:bg-white/15 text-white/80 border-white/10"
+                }`}
+                title={showVideo ? "Hide Video Window" : "Watch Official Video"}
+              >
+                <Video className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </button>
+            )}
+
             {/* Playlist Drawer Toggle Button */}
             {!isMahalaya && playlist.length > 0 && (
               <button
@@ -441,10 +618,10 @@ export default function CalendarDayPage() {
           </div>
         </div>
 
-        {/* Sub-label Audio Error Notice if audio blocked */}
+        {/* Notice if audio blocked or error */}
         {audioError && isMahalaya && (
           <p className="text-[9px] sm:text-[10px] text-amber-300/90 italic bg-black/70 px-3 py-1 rounded-full border border-amber-500/20 backdrop-blur-md max-w-xs text-center truncate">
-            🎵 MP3 file ready: place <code className="text-accent font-bold">/public/audio/mahalaya.mp3</code> to play!
+            🎵 MP3 file ready: <code className="text-accent font-bold">/public/audio/mahalaya.mp3</code>
           </p>
         )}
       </div>
@@ -464,7 +641,7 @@ export default function CalendarDayPage() {
                   className="text-lg sm:text-xl font-bold text-white leading-snug"
                   style={{ fontFamily: "var(--font-playfair), serif" }}
                 >
-                  {day.bengaliTitle} — নির্বাচিত বাংলা গান
+                  {day.bengaliTitle} — সেরা বাংলা পুজো গান
                 </h3>
               </div>
               <button
@@ -541,7 +718,7 @@ export default function CalendarDayPage() {
 
             {/* Footer */}
             <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-white/50">
-              <span>{playlist.length} Festive Songs Curated for {day.englishTitle}</span>
+              <span>{playlist.length} টি খাঁটি বাংলা পুজো গান</span>
               <button
                 onClick={() => setIsPlaylistOpen(false)}
                 className="px-3 py-1 rounded-full bg-accent/20 text-accent font-semibold hover:bg-accent/30 transition-all cursor-pointer"
