@@ -14,7 +14,11 @@ import {
   VolumeX,
   Music,
   Sparkles,
-  Activity
+  Activity,
+  SkipBack,
+  SkipForward,
+  ListMusic,
+  X
 } from "lucide-react";
 
 // Pre-calculated aesthetic audio waveform beat heights (36 frequency bars)
@@ -32,6 +36,10 @@ export default function CalendarDayPage() {
   const dayIndex = calendarDays.findIndex((d) => d.slug === slug);
   const day: CalendarDay | undefined = calendarDays[dayIndex];
 
+  // Track & Playlist state
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [isPlaylistOpen, setIsPlaylistOpen] = useState(false);
+
   // Audio state
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -48,7 +56,30 @@ export default function CalendarDayPage() {
     }
   }, [isLoggedIn, router]);
 
-  // Automatic Audio Playback on page entry
+  // Determine active song source and info
+  const isMahalaya = day?.slug === "mahalaya";
+  const playlist = day?.playlist || [];
+  const currentTrack = !isMahalaya && playlist.length > 0 ? playlist[currentTrackIndex] : null;
+
+  const currentAudioSrc = isMahalaya
+    ? `/audio/mahalaya.mp3`
+    : currentTrack
+    ? currentTrack.audioUrl
+    : `/audio/${day?.slug}.mp3`;
+
+  const songTitle = isMahalaya
+    ? "Birendra Krishna Bhadra — Mahishasuramardini"
+    : currentTrack
+    ? currentTrack.title
+    : `${day?.englishTitle} — Pujo Beats`;
+
+  const songArtist = isMahalaya
+    ? "Akashvani Kolkata Broadcast"
+    : currentTrack
+    ? currentTrack.artist
+    : "Traditional Dhak & Festival Ensemble";
+
+  // Automatic Audio Playback on page entry or track switch
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -73,7 +104,7 @@ export default function CalendarDayPage() {
         });
     };
 
-    // 1. Attempt immediate playback (works seamlessly when user navigates in via link click)
+    // 1. Attempt immediate playback
     startPlayback();
 
     // 2. If audio is still buffering, try once ready
@@ -93,7 +124,7 @@ export default function CalendarDayPage() {
       window.removeEventListener("touchstart", startPlayback);
       window.removeEventListener("keydown", startPlayback);
     };
-  }, [day?.slug]);
+  }, [day?.slug, currentTrackIndex]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;
@@ -119,6 +150,29 @@ export default function CalendarDayPage() {
     if (!audioRef.current) return;
     audioRef.current.muted = !isMuted;
     setIsMuted(!isMuted);
+  };
+
+  const handleNextTrack = () => {
+    if (playlist.length > 1) {
+      setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+      setAudioProgress(0);
+      setIsPlaying(false);
+    }
+  };
+
+  const handlePrevTrack = () => {
+    if (playlist.length > 1) {
+      setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+      setAudioProgress(0);
+      setIsPlaying(false);
+    }
+  };
+
+  const selectTrack = (index: number) => {
+    setCurrentTrackIndex(index);
+    setAudioProgress(0);
+    setIsPlaying(false);
+    setIsPlaylistOpen(false);
   };
 
   const handleTimeUpdate = () => {
@@ -158,10 +212,6 @@ export default function CalendarDayPage() {
     );
   }
 
-  const songTitle = day.slug === "mahalaya" 
-    ? "Birendra Krishna Bhadra — Mahishasuramardini" 
-    : `${day.englishTitle} — Pujo Beats`;
-
   const progressPercent = audioDuration ? (audioProgress / audioDuration) * 100 : 0;
 
   return (
@@ -170,13 +220,20 @@ export default function CalendarDayPage() {
       {/* Hidden HTML5 Audio Element with Autoplay & Lightweight Metadata Preload */}
       <audio
         ref={audioRef}
-        src={`/audio/${day.slug}.mp3`}
+        key={currentAudioSrc}
+        src={currentAudioSrc}
         autoPlay
         preload="metadata"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onTimeUpdate={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)}
+        onEnded={() => {
+          if (playlist.length > 1) {
+            handleNextTrack();
+          } else {
+            setIsPlaying(false);
+          }
+        }}
         onError={() => {
           setAudioError(true);
           setIsPlaying(false);
@@ -266,20 +323,25 @@ export default function CalendarDayPage() {
 
           {/* Song Info & Interactive Waveform Beat Progress Track */}
           <div className="flex-1 min-w-0 space-y-1 text-left">
-            <div className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-accent flex items-center justify-between">
-              <span>Mahalaya Audio</span>
+            <div className="text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-accent flex items-center justify-between gap-2">
+              <span className="truncate">
+                {isMahalaya ? "Mahalaya Audio" : `${day.englishTitle} Playlist (${currentTrackIndex + 1}/${playlist.length || 1})`}
+              </span>
               {isPlaying && (
-                <span className="inline-flex items-center gap-1 text-[9px] text-amber-300 font-bold bg-accent/30 px-1.5 py-0.5 rounded-full border border-accent/40 animate-pulse">
+                <span className="inline-flex items-center gap-1 text-[9px] text-amber-300 font-bold bg-accent/30 px-1.5 py-0.5 rounded-full border border-accent/40 animate-pulse flex-shrink-0">
                   <Activity className="w-2.5 h-2.5 animate-bounce text-amber-300" />
                   <span>BEATS PLAYING</span>
                 </span>
               )}
             </div>
 
-            <h4 className="text-xs sm:text-sm font-bold text-white truncate leading-tight">{songTitle}</h4>
+            <div className="truncate">
+              <h4 className="text-xs sm:text-sm font-bold text-white truncate leading-tight">{songTitle}</h4>
+              <p className="text-[10px] sm:text-[11px] text-white/60 truncate leading-tight">{songArtist}</p>
+            </div>
             
             {/* Waveform Soundwave Beat Slider Track */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pt-0.5">
               <span className="text-[9px] sm:text-[10px] text-white/70 font-mono flex-shrink-0">
                 {formatTime(audioProgress)}
               </span>
@@ -318,8 +380,35 @@ export default function CalendarDayPage() {
             </div>
           </div>
 
-          {/* Play/Pause & Mute Button with Glowing Beat Pulse */}
-          <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+          {/* Controls: Prev/Next (if playlist), Play/Pause & Mute */}
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+            {/* Playlist Drawer Toggle Button */}
+            {!isMahalaya && playlist.length > 0 && (
+              <button
+                onClick={() => setIsPlaylistOpen(!isPlaylistOpen)}
+                className={`p-1.5 sm:p-2 rounded-full border transition-all cursor-pointer ${
+                  isPlaylistOpen
+                    ? "bg-accent text-white border-accent shadow-[0_0_15px_rgba(255,77,61,0.6)]"
+                    : "bg-white/5 hover:bg-white/15 text-white/80 border-white/10"
+                }`}
+                title="Open Festival Playlist"
+              >
+                <ListMusic className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </button>
+            )}
+
+            {/* Prev Song Button (for playlist days) */}
+            {!isMahalaya && playlist.length > 1 && (
+              <button
+                onClick={handlePrevTrack}
+                className="p-1 sm:p-1.5 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
+                title="Previous Song"
+              >
+                <SkipBack className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </button>
+            )}
+
+            {/* Main Play/Pause Button */}
             <button
               onClick={togglePlay}
               className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-accent text-white hover:bg-accent-hover active:scale-95 transition-all duration-300 flex items-center justify-center shadow-lg cursor-pointer border border-accent/50 ${
@@ -330,9 +419,21 @@ export default function CalendarDayPage() {
               {isPlaying ? <Pause className="w-4 h-4 sm:w-5 sm:h-5" /> : <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5" />}
             </button>
 
+            {/* Next Song Button (for playlist days) */}
+            {!isMahalaya && playlist.length > 1 && (
+              <button
+                onClick={handleNextTrack}
+                className="p-1 sm:p-1.5 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
+                title="Next Song"
+              >
+                <SkipForward className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              </button>
+            )}
+
+            {/* Mute Button */}
             <button
               onClick={toggleMute}
-              className="p-2 sm:p-2.5 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
               title={isMuted ? "Unmute" : "Mute"}
             >
               {isMuted ? <VolumeX className="w-3.5 h-3.5 sm:w-4 sm:h-4" /> : <Volume2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
@@ -341,12 +442,116 @@ export default function CalendarDayPage() {
         </div>
 
         {/* Sub-label Audio Error Notice if audio blocked */}
-        {audioError && (
+        {audioError && isMahalaya && (
           <p className="text-[9px] sm:text-[10px] text-amber-300/90 italic bg-black/70 px-3 py-1 rounded-full border border-amber-500/20 backdrop-blur-md max-w-xs text-center truncate">
             🎵 MP3 file ready: place <code className="text-accent font-bold">/public/audio/mahalaya.mp3</code> to play!
           </p>
         )}
       </div>
+
+      {/* Playlist Drawer Modal for Prothoma to Dashami */}
+      {!isMahalaya && playlist.length > 0 && isPlaylistOpen && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-end sm:items-center justify-center p-3 sm:p-4 animate-fade-in">
+          <div className="w-full max-w-lg glass rounded-3xl p-5 sm:p-6 border border-accent/30 bg-[#1F0F0D]/95 shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[80vh] flex flex-col justify-between">
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <div>
+                <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-accent">
+                  <Sparkles className="w-3 h-3 text-accent" />
+                  <span>{day.englishTitle} Jukebox</span>
+                </div>
+                <h3
+                  className="text-lg sm:text-xl font-bold text-white leading-snug"
+                  style={{ fontFamily: "var(--font-playfair), serif" }}
+                >
+                  {day.bengaliTitle} — নির্বাচিত বাংলা গান
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsPlaylistOpen(false)}
+                className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Song Items List */}
+            <div className="overflow-y-auto space-y-2 py-3 pr-1 custom-scrollbar flex-1 my-2">
+              {playlist.map((track, idx) => {
+                const isCurrent = idx === currentTrackIndex;
+                return (
+                  <div
+                    key={track.id}
+                    onClick={() => selectTrack(idx)}
+                    className={`flex items-center justify-between p-3 rounded-2xl cursor-pointer transition-all ${
+                      isCurrent
+                        ? "bg-accent/20 border border-accent/40 shadow-[0_0_15px_rgba(255,77,61,0.25)]"
+                        : "bg-white/5 hover:bg-white/10 border border-white/5"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      {/* Track number or Playing visualizer */}
+                      <div
+                        className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-xs font-bold border ${
+                          isCurrent
+                            ? "bg-accent text-white border-accent shadow-sm"
+                            : "bg-white/5 text-white/50 border-white/10"
+                        }`}
+                      >
+                        {isCurrent && isPlaying ? (
+                          <Activity className="w-3.5 h-3.5 animate-bounce" />
+                        ) : (
+                          idx + 1
+                        )}
+                      </div>
+
+                      <div className="min-w-0 flex-1 text-left">
+                        <h5 className={`text-xs sm:text-sm font-bold truncate ${isCurrent ? "text-amber-200" : "text-white"}`}>
+                          {track.title}
+                        </h5>
+                        <p className="text-[10px] sm:text-[11px] text-white/60 truncate">
+                          {track.artist}
+                        </p>
+                        <span className="text-[9px] text-accent/80 font-medium">
+                          {track.theme}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                      <span className="text-[10px] text-white/50 font-mono">{track.duration}</span>
+                      <button
+                        className={`w-7 h-7 rounded-full flex items-center justify-center transition-all ${
+                          isCurrent
+                            ? "bg-accent text-white"
+                            : "bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
+                        }`}
+                      >
+                        {isCurrent && isPlaying ? (
+                          <Pause className="w-3 h-3" />
+                        ) : (
+                          <Play className="w-3 h-3 fill-current ml-0.5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Footer */}
+            <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-white/50">
+              <span>{playlist.length} Festive Songs Curated for {day.englishTitle}</span>
+              <button
+                onClick={() => setIsPlaylistOpen(false)}
+                className="px-3 py-1 rounded-full bg-accent/20 text-accent font-semibold hover:bg-accent/30 transition-all cursor-pointer"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
