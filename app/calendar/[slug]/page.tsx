@@ -65,7 +65,7 @@ export default function CalendarDayPage() {
     ? `/audio/mahalaya.mp3`
     : currentTrack
     ? currentTrack.audioUrl
-    : `/audio/${day?.slug}.mp3`;
+    : `/audio/${day?.slug}.wav`;
 
   const songTitle = isMahalaya
     ? "Birendra Krishna Bhadra — Mahishasuramardini"
@@ -124,7 +124,7 @@ export default function CalendarDayPage() {
       window.removeEventListener("touchstart", startPlayback);
       window.removeEventListener("keydown", startPlayback);
     };
-  }, [day?.slug, currentTrackIndex]);
+  }, [day?.slug, currentTrackIndex, currentAudioSrc, isLoggedIn]);
 
   const togglePlay = () => {
     if (!audioRef.current) return;

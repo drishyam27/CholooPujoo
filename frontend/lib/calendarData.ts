@@ -74,7 +74,7 @@ export const calendarDays: CalendarDay[] = [
         title: "বাজলো তোমার আলোর বেণু",
         artist: "Supriti Ghosh — Agomoni Classic",
         duration: "3:45",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/BajloTomarAlorBenu.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Agomoni Dawn & Devi Paksha Awakening"
       },
       {
@@ -82,7 +82,7 @@ export const calendarDays: CalendarDay[] = [
         title: "জাগো তুমি জাগো",
         artist: "Dwijen Mukherjee",
         duration: "4:12",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/JagoTumiJago.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Devi Vandana & Morning Prayer"
       },
       {
@@ -90,7 +90,7 @@ export const calendarDays: CalendarDay[] = [
         title: "শিউলি ফুলের গন্ধ নিয়ে",
         artist: "Indrani Sen",
         duration: "3:30",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/ShiuliPhulerGondho.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Autumn Shiuli & Kash Phool Vibe"
       },
       {
@@ -98,7 +98,7 @@ export const calendarDays: CalendarDay[] = [
         title: "আনন্দময়ী মহামায়া",
         artist: "Traditional Agomoni Chorus",
         duration: "4:05",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AnandamoyeeMahamaya.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Ghat Sthapana Devotional"
       },
       {
@@ -106,7 +106,7 @@ export const calendarDays: CalendarDay[] = [
         title: "কুমোরটুলির মাটির ঘ্রাণ",
         artist: "Kolkata Shehnai & Classical Flute",
         duration: "3:15",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/KumartuliArtisanFlute.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Artisan Quarters Chokkhudan Vibe"
       },
       {
@@ -114,7 +114,7 @@ export const calendarDays: CalendarDay[] = [
         title: "ওগো আমার আগমনী গান",
         artist: "Pratima Banerjee",
         duration: "3:50",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/OgoAmarAgomoniGaan.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Devi Agomoni Melodies"
       }
     ]
@@ -145,7 +145,7 @@ export const calendarDays: CalendarDay[] = [
         title: "চলো চলো পুজোর শহরে",
         artist: "Anupam Roy",
         duration: "3:40",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/CholoPujorShohore.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Kolkata Streets Awakening"
       },
       {
@@ -153,7 +153,7 @@ export const calendarDays: CalendarDay[] = [
         title: "আলোর ছটা চন্দননগর",
         artist: "Chandannagar Illumination Beats",
         duration: "3:20",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/ChandannagarLightsTheme.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Street Arches & Neon Glow"
       },
       {
@@ -161,7 +161,7 @@ export const calendarDays: CalendarDay[] = [
         title: "দুগ্গা এলো ঘরে",
         artist: "Shreya Ghoshal",
         duration: "4:02",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/DuggaEloGhoreShreya.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Welcoming Maa Durga"
       },
       {
@@ -169,7 +169,7 @@ export const calendarDays: CalendarDay[] = [
         title: "আলোর বেণু বাজে রে",
         artist: "Lopamudra Mitra",
         duration: "3:35",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AlorBenuBajeReLopa.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Festive Joy & Shiuli"
       },
       {
@@ -177,7 +177,7 @@ export const calendarDays: CalendarDay[] = [
         title: "শরৎ সন্ধ্যায় চন্দ্র দর্শন",
         artist: "Classical Sitar & Bansuri",
         duration: "4:10",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/ChandraDarshanSitar.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Chandra Puja Twilight Raga"
       },
       {
@@ -185,7 +185,7 @@ export const calendarDays: CalendarDay[] = [
         title: "পুজো এলো রে আবার",
         artist: "Shaan",
         duration: "3:55",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/PujoEloReAbarShaan.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Citywide Celebration Beat"
       }
     ]
@@ -216,7 +216,7 @@ export const calendarDays: CalendarDay[] = [
         title: "দুগ্গা এলো",
         artist: "Monali Thakur",
         duration: "3:48",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/DuggaEloMonali.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Joyful Early Pandal Hopping"
       },
       {
@@ -224,7 +224,7 @@ export const calendarDays: CalendarDay[] = [
         title: "বলো দুগ্গা মাইকি",
         artist: "Arijit Singh & Nikhita Gandhi",
         duration: "4:15",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/BoloDuggaMaikiArijit.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Festival Anthem"
       },
       {
@@ -232,7 +232,7 @@ export const calendarDays: CalendarDay[] = [
         title: "চেতলা থেকে সুরুচি আড্ডা",
         artist: "South Kolkata Theme Groove",
         duration: "3:10",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/SouthKolkataGroove.mp3",
+        audioUrl: "/audio/.wav",
         theme: "VIP Theme Inauguration Beats"
       },
       {
@@ -240,7 +240,7 @@ export const calendarDays: CalendarDay[] = [
         title: "এলো রে এলো পুজো",
         artist: "Jeet Gannguli",
         duration: "3:52",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/EloReEloPujoJeet.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Celebration Dance Beats"
       },
       {
@@ -248,7 +248,7 @@ export const calendarDays: CalendarDay[] = [
         title: "ম্যাডক্স স্কয়ার পুজোর আড্ডা",
         artist: "Kolkata Acoustic Ensemble",
         duration: "3:30",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/MaddoxSquareAddaVibe.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Friends Adda & Autumn Breeze"
       },
       {
@@ -256,7 +256,7 @@ export const calendarDays: CalendarDay[] = [
         title: "মায়ের আগমনে বাজে রে ঢাক",
         artist: "Traditional Dhak & Chorus",
         duration: "3:42",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/MayerAgomoneDhak.mp3",
+        audioUrl: "/audio/.wav",
         theme: "First Dhaak Beats in the Para"
       }
     ]
@@ -287,7 +287,7 @@ export const calendarDays: CalendarDay[] = [
         title: "পুজো পুজো গন্ধ বাতাসে",
         artist: "Rupankar Bagchi",
         duration: "4:05",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/PujoPujoGondhoRupankar.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Autumn Aroma & Night Breeze"
       },
       {
@@ -295,7 +295,7 @@ export const calendarDays: CalendarDay[] = [
         title: "রাতের কলকাতা পুজো ওয়াক",
         artist: "Lo-Fi Pujo Beats Collective",
         duration: "3:15",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/KolkataNightWalkLoFi.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Midnight Pandal Stroll"
       },
       {
@@ -303,7 +303,7 @@ export const calendarDays: CalendarDay[] = [
         title: "ঢাকের তালে কোমর দোলে",
         artist: "Abhijeet Bhattacharya",
         duration: "4:22",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/DhaakerTaaleAbhijeet.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Club Dhak Rehearsal Energy"
       },
       {
@@ -311,7 +311,7 @@ export const calendarDays: CalendarDay[] = [
         title: "কুষ্মাণ্ডা মায়ের বরণ",
         artist: "Vedic Sanskrit Chants Ensemble",
         duration: "3:50",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/KushmandaDeviChants.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sacred Chaturthi Chants"
       },
       {
@@ -319,7 +319,7 @@ export const calendarDays: CalendarDay[] = [
         title: "শ্রীভূমি থেকে টালা প্রত্যয়",
         artist: "North Kolkata Royal Strings",
         duration: "3:35",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/NorthThemeStrings.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Architectural Theme Visualizer"
       },
       {
@@ -327,7 +327,7 @@ export const calendarDays: CalendarDay[] = [
         title: "ওই আসছে রে মা",
         artist: "Antara Mitra",
         duration: "3:40",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/OiAscheReMaAntara.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Excitement in the City"
       }
     ]
@@ -357,7 +357,7 @@ export const calendarDays: CalendarDay[] = [
         title: "পঞ্চমীর এই রাতে",
         artist: "Somlata Acharyya",
         duration: "3:45",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/PanchamirEiRaateSomlata.mp3",
+        audioUrl: "/audio/.wav",
         theme: "First Grand Night of Hopping"
       },
       {
@@ -365,7 +365,7 @@ export const calendarDays: CalendarDay[] = [
         title: "কলকাতা সবাই রাস্তায়",
         artist: "Bangla Rock & Dhaak Fusion",
         duration: "4:10",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/KolkataRastayeFusion.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Midnight Crowd Excitement"
       },
       {
@@ -373,7 +373,7 @@ export const calendarDays: CalendarDay[] = [
         title: "ঢাক বাজে কাশ ফুল দোলে",
         artist: "Kumar Sanu",
         duration: "3:58",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/DhaakBajeKumarSanu.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Nostalgic Festival Melodies"
       },
       {
@@ -381,7 +381,7 @@ export const calendarDays: CalendarDay[] = [
         title: "প্যান্ডেল হপিং অ্যান্থেম ২০২৬",
         artist: "High Energy Pujo Collective",
         duration: "3:30",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/PandalHoppingAnthem.mp3",
+        audioUrl: "/audio/.wav",
         theme: "93 Pandals Open Celebration"
       },
       {
@@ -389,7 +389,7 @@ export const calendarDays: CalendarDay[] = [
         title: "আমার পুজোর গান",
         artist: "Srikanto Acharya",
         duration: "4:12",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AmarPujorGaanSrikanto.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Melodic Evening Nostalgia"
       },
       {
@@ -397,7 +397,7 @@ export const calendarDays: CalendarDay[] = [
         title: "জয় জয় দুর্গা মা",
         artist: "Traditional Festival Chorus",
         duration: "3:35",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/JoyJoyDurgaMaaChorus.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sacred Devotional Chants"
       }
     ]
@@ -427,7 +427,7 @@ export const calendarDays: CalendarDay[] = [
         title: "আজি শঙ্খে শঙ্খে মঙ্গল গাও",
         artist: "Dwijen Mukherjee",
         duration: "4:20",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AjiShankheShankheDwijen.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sacred Conches & Bodhon Hymn"
       },
       {
@@ -435,7 +435,7 @@ export const calendarDays: CalendarDay[] = [
         title: "দেবী বোধন স্তোত্র ও শঙ্খধ্বনি",
         artist: "Bel Tree Twilight Ritual",
         duration: "4:45",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/BodhonStotramShankha.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Spiritual Awakening of Devi"
       },
       {
@@ -443,7 +443,7 @@ export const calendarDays: CalendarDay[] = [
         title: "বনেদি বাড়ির ষষ্ঠী পুজো",
         artist: "Classical Esraj & Pakhawaj",
         duration: "3:55",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/BonediBariEsraj.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sovabazar & Laha Bari Nostalgia"
       },
       {
@@ -451,7 +451,7 @@ export const calendarDays: CalendarDay[] = [
         title: "মুখের পরদা খোলো গো মা",
         artist: "Traditional Agomoni",
         duration: "4:02",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/MukherPordaKholoMaa.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Unveiling Maa's Divine Face"
       },
       {
@@ -459,7 +459,7 @@ export const calendarDays: CalendarDay[] = [
         title: "মহাষষ্ঠীর সন্ধ্যারতি",
         artist: "Temple Bells & Gong Chorus",
         duration: "4:15",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/ShashthiSandhyaArati.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Evening Incense & Camphor Dhoop"
       },
       {
@@ -467,7 +467,7 @@ export const calendarDays: CalendarDay[] = [
         title: "মায়ের আগমন গান",
         artist: "Arati Mukherjee",
         duration: "3:50",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/MayerAgomonArati.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Tender Welcome of Devi"
       }
     ]
@@ -497,7 +497,7 @@ export const calendarDays: CalendarDay[] = [
         title: "কলাবউ স্নান আগমনী গীতি",
         artist: "Ganga Ghat Sunrise Procession",
         duration: "4:10",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/KolaBouSnanSunrise.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sacred Hooghly Dawn Rituals"
       },
       {
@@ -505,7 +505,7 @@ export const calendarDays: CalendarDay[] = [
         title: "নবপত্রিকা বরণ গান",
         artist: "Traditional Vedic Chorus",
         duration: "3:55",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/NabapatrikaBoron.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Nine Plants of Mother Nature"
       },
       {
@@ -513,7 +513,7 @@ export const calendarDays: CalendarDay[] = [
         title: "বাবুঘাট সূর্যোদয়ের সানাই",
         artist: "Raga Bhairav Shehnai & Dhaak",
         duration: "4:30",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/BabughatShehnaiBhairav.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Kolkata Ghats Morning Awakening"
       },
       {
@@ -521,7 +521,7 @@ export const calendarDays: CalendarDay[] = [
         title: "সপ্তমীর সকাল বেলা",
         artist: "Indranil Sen",
         duration: "3:40",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/SaptamirShokalBela.mp3",
+        audioUrl: "/audio/.wav",
         theme: "First Morning Puja Anjali"
       },
       {
@@ -529,7 +529,7 @@ export const calendarDays: CalendarDay[] = [
         title: "পূজার ঢোল বাজে রে",
         artist: "Folk Dhol & Khol Ensemble",
         duration: "3:35",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/PujarDholBajeRe.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Festive Joy Across Bengal"
       },
       {
@@ -537,7 +537,7 @@ export const calendarDays: CalendarDay[] = [
         title: "প্রাণ প্রতিষ্ঠা মহামন্ত্র",
         artist: "Sanskrit Vedic Stotram",
         duration: "4:00",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/PranaPratishthaMantra.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sanctifying the Idol"
       }
     ]
@@ -567,7 +567,7 @@ export const calendarDays: CalendarDay[] = [
         title: "উইকএন্ড পুজো ফ্রেঞ্জি",
         artist: "Electronic Dhaak & Brass Fusion",
         duration: "3:45",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/WeekendDhaakFusion.mp3",
+        audioUrl: "/audio/.wav",
         theme: "All-Night Hopping Energy"
       },
       {
@@ -575,7 +575,7 @@ export const calendarDays: CalendarDay[] = [
         title: "৬৬ পল্লী থেকে বাদামতলা",
         artist: "South Kolkata Streets Atmosphere",
         duration: "3:20",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/SouthStreetsPulse.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Nocturnal Walking Rhythm"
       },
       {
@@ -583,7 +583,7 @@ export const calendarDays: CalendarDay[] = [
         title: "কলকাতা মেট্রো নাইট রাইড",
         artist: "Urban Festival Metro Beat",
         duration: "3:15",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/MetroNightRideBeat.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Past 2:00 AM Transit Pulse"
       },
       {
@@ -591,7 +591,7 @@ export const calendarDays: CalendarDay[] = [
         title: "ভোগ আরতি ও ধুনা ধুন",
         artist: "Traditional Dhunuchi Flute",
         duration: "4:10",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/BhogAratiDhuna.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Para Bhog & Coconut Smoke"
       },
       {
@@ -599,7 +599,7 @@ export const calendarDays: CalendarDay[] = [
         title: "মহাসপ্তমী অঞ্জলি বন্দনা",
         artist: "Devotional Stotram Chorus",
         duration: "4:05",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/SaptamiAnjaliChorus.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sacred Offering Songs"
       },
       {
@@ -607,7 +607,7 @@ export const calendarDays: CalendarDay[] = [
         title: "আবার পুজোর দিন এসেছে",
         artist: "Babul Supriyo",
         duration: "3:50",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AbarPujorDinBabul.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Heartfelt City Song"
       }
     ]
@@ -637,7 +637,7 @@ export const calendarDays: CalendarDay[] = [
         title: "মহাঅষ্টমী পুষ্পাঞ্জলি মন্ত্র",
         artist: "Sacred Flower Offering Chants",
         duration: "4:30",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AshtamiPushpanjaliMantram.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Om Jayanti Mangala Kali Hymn"
       },
       {
@@ -645,7 +645,7 @@ export const calendarDays: CalendarDay[] = [
         title: "সন্ধিপুজোর ১০৮ ঢাকের বোল",
         artist: "Intense 48-Minute Sandhi Dhaak",
         duration: "5:10",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/SandhiPuja108DhaakBeats.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Mahishasura Mardini Battle Beats"
       },
       {
@@ -653,7 +653,7 @@ export const calendarDays: CalendarDay[] = [
         title: "কুমারী পূজা বন্দনা",
         artist: "Belur Math Vedic Chants",
         duration: "4:20",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/KumariPujaVandana.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Worship of the Young Goddess"
       },
       {
@@ -661,7 +661,7 @@ export const calendarDays: CalendarDay[] = [
         title: "লাল পাড় শাড়ি অঞ্জলি গীতি",
         artist: "Traditional Female Chorus",
         duration: "3:45",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/LaalPaarSaariGeeti.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Morning Fast & Saree Elegance"
       },
       {
@@ -669,7 +669,7 @@ export const calendarDays: CalendarDay[] = [
         title: "জয় জয় দেবী চামুণ্ডে",
         artist: "Chamunda Stotram",
         duration: "4:00",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/JoyDeviChamunde.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sandhi Puja Apex Climax"
       },
       {
@@ -677,7 +677,7 @@ export const calendarDays: CalendarDay[] = [
         title: "১০৮ প্রদীপ আরতি থিম",
         artist: "Temple Bell & Gong Symphony",
         duration: "4:15",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/108PradipAratiTheme.mp3",
+        audioUrl: "/audio/.wav",
         theme: "108 Lotus Lamps Glow"
       },
       {
@@ -685,7 +685,7 @@ export const calendarDays: CalendarDay[] = [
         title: "অষ্টমীর সন্ধ্যায় ম্যাডক্স",
         artist: "Saptarshi Mukherjee",
         duration: "3:40",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AshtamiEveningMaddox.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Lawn Gathering & Evening Adda"
       }
     ]
@@ -715,7 +715,7 @@ export const calendarDays: CalendarDay[] = [
         title: "ধুনুচি নাচ ধামাকা (আল্টিমেট ঢাক)",
         artist: "Electrifying Fast-paced Dhak",
         duration: "5:30",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/DhunuchiNaachDhamaka.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Swirling Coconut Husk Smoke & Fire"
       },
       {
@@ -723,7 +723,7 @@ export const calendarDays: CalendarDay[] = [
         title: "নবমীর রাতি পোহালে (বেদনার সুর)",
         artist: "Hemanta Mukherjee",
         duration: "4:15",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/NavamirRatiPohaleHemanta.mp3",
+        audioUrl: "/audio/.wav",
         theme: "The Sweet Sorrow of Navami Night"
       },
       {
@@ -731,7 +731,7 @@ export const calendarDays: CalendarDay[] = [
         title: "চালতাবাগান ধুনুচি স্টর্ম",
         artist: "Maniktala Live Dhaak & Kashi",
         duration: "4:45",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/ChaltabaganDhunuchiLive.mp3",
+        audioUrl: "/audio/.wav",
         theme: "North Kolkata Street Frenzy"
       },
       {
@@ -739,7 +739,7 @@ export const calendarDays: CalendarDay[] = [
         title: "নবমী হোম যজ্ঞ মন্ত্র",
         artist: "Vedic Agni Suktam Chants",
         duration: "4:20",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/NavamiYajnaHoma.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Sacred Fire & Ghee Offerings"
       },
       {
@@ -747,7 +747,7 @@ export const calendarDays: CalendarDay[] = [
         title: "শেষ রাতের কলকাতা",
         artist: "Anindya Chatterjee (Chandrabindoo)",
         duration: "3:55",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/SheshRaaterKolkataAnindya.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Dawn Approaching on Navami"
       },
       {
@@ -755,7 +755,7 @@ export const calendarDays: CalendarDay[] = [
         title: "মায়ের বিদায় আসছে কালে",
         artist: "Manna Dey",
         duration: "4:10",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/MayerBidayAscheManna.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Impending Farewell Song"
       }
     ]
@@ -785,7 +785,7 @@ export const calendarDays: CalendarDay[] = [
         title: "আসছে বছর আবার হবে অ্যান্থেম",
         artist: "Kolkata Farewell Chorus",
         duration: "4:20",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AscheBochorAbarHobeChorus.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Triumphant Farewell Cry"
       },
       {
@@ -793,7 +793,7 @@ export const calendarDays: CalendarDay[] = [
         title: "সিঁদুর খেলা উৎসব গীতি",
         artist: "Traditional Boron & Vermilion Song",
         duration: "3:50",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/SindoorKhelaGeeti.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Red Vermilion & Sweet Sweets"
       },
       {
@@ -801,7 +801,7 @@ export const calendarDays: CalendarDay[] = [
         title: "বিসর্জনের ঢাক ও অশ্রু",
         artist: "Babu Ghat Immersion Dhaak",
         duration: "4:45",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/BisorjonDhaakBabuGhat.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Immersion Waters of the Hooghly"
       },
       {
@@ -809,7 +809,7 @@ export const calendarDays: CalendarDay[] = [
         title: "মা গো তুমি বিদায় নিও না",
         artist: "Arati Mukherjee",
         duration: "4:12",
-        audioUrl: "https://ia600301.us.archive.org/15/items/BengaliDevotionalSongs/MaaGoTumiBidayArati.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Heartbreak of Mother's Departure"
       },
       {
@@ -817,7 +817,7 @@ export const calendarDays: CalendarDay[] = [
         title: "শুভ বিজয়া কোলাকুলি সঙ্গীত",
         artist: "Rabindra Sangeet / Bijoya Gaan",
         duration: "3:40",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/ShubhoBijoyaKolakoli.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Embraces & Rosogolla Pronam"
       },
       {
@@ -825,7 +825,7 @@ export const calendarDays: CalendarDay[] = [
         title: "আবার এসো মা হৃদয় মাঝে",
         artist: "Devotional Farewell Ensemble",
         duration: "4:30",
-        audioUrl: "https://ia800301.us.archive.org/15/items/BengaliDevotionalSongs/AbarEsoMaaHridoy.mp3",
+        audioUrl: "/audio/.wav",
         theme: "Prayers for the Coming Year"
       }
     ]
