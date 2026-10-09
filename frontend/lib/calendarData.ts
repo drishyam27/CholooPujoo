@@ -116,6 +116,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "4:02",
                 youtubeId: "zig8mNzJihY",
                 theme: "Heartfelt Homecoming & Sharod Melodies"
+          },
+          {
+                id: "prothoma-7",
+                title: "দুগ্গা এলো ঘরে",
+                artist: "Rahul Majumdar — Festive Dance",
+                duration: "3:48",
+                youtubeId: "5n6T-6jR03s",
+                theme: "Joyous Family Gathering & Pujo Arrival"
+          },
+          {
+                id: "prothoma-8",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
           }
     ]
   },
@@ -187,6 +203,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "4:02",
                 youtubeId: "zig8mNzJihY",
                 theme: "Heartfelt Homecoming & Sharod Melodies"
+          },
+          {
+                id: "dwitiya-7",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
+          },
+          {
+                id: "dwitiya-8",
+                title: "দুগ্গা এলো ঘরে",
+                artist: "Rahul Majumdar — Festive Dance",
+                duration: "3:48",
+                youtubeId: "5n6T-6jR03s",
+                theme: "Joyous Family Gathering & Pujo Arrival"
           }
     ]
   },
@@ -258,6 +290,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "4:12",
                 youtubeId: "sO7n7J4o6y4",
                 theme: "Morning Aahwahan & Devi Vandana"
+          },
+          {
+                id: "tritiya-7",
+                title: "দুগ্গা এলো ঘরে",
+                artist: "Rahul Majumdar — Festive Dance",
+                duration: "3:48",
+                youtubeId: "5n6T-6jR03s",
+                theme: "Joyous Family Gathering & Pujo Arrival"
+          },
+          {
+                id: "tritiya-8",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
           }
     ]
   },
@@ -329,6 +377,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "3:45",
                 youtubeId: "kYJ_tJ-Jb6o",
                 theme: "Agomoni Dawn & Devi Paksha Awakening"
+          },
+          {
+                id: "chaturthi-7",
+                title: "গোলেমালে পীরিত করো না",
+                artist: "Folk Studio Bangla — Baul Dhak Celebration",
+                duration: "4:45",
+                youtubeId: "R9V4a-4nN88",
+                theme: "Bengali Folk & Pandal Celebration"
+          },
+          {
+                id: "chaturthi-8",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
           }
     ]
   },
@@ -399,6 +463,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "4:45",
                 youtubeId: "R9V4a-4nN88",
                 theme: "Bengali Folk & Pandal Celebration"
+          },
+          {
+                id: "panchami-7",
+                title: "দুগ্গা এলো ঘরে",
+                artist: "Rahul Majumdar — Festive Dance",
+                duration: "3:48",
+                youtubeId: "5n6T-6jR03s",
+                theme: "Joyous Family Gathering & Pujo Arrival"
+          },
+          {
+                id: "panchami-8",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
           }
     ]
   },
@@ -469,6 +549,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "3:58",
                 youtubeId: "R9K1zL9l-5s",
                 theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "shashthi-7",
+                title: "ঢাক বাজা কাঁসর বাজা",
+                artist: "Shreya Ghoshal & Jeet Gannguli",
+                duration: "3:35",
+                youtubeId: "id5_3dKvEBg",
+                theme: "Traditional Dhak & Kasor Ghonta Rhythm"
+          },
+          {
+                id: "shashthi-8",
+                title: "ফিরে আয়",
+                artist: "Babul Supriyo & Jeet Gannguli",
+                duration: "4:02",
+                youtubeId: "zig8mNzJihY",
+                theme: "Heartfelt Homecoming & Sharod Melodies"
           }
     ]
   },
@@ -539,6 +635,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "3:50",
                 youtubeId: "xlElO06nQy8",
                 theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "saptami-1-7",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
+          },
+          {
+                id: "saptami-1-8",
+                title: "দুগ্গা এলো ঘরে",
+                artist: "Rahul Majumdar — Festive Dance",
+                duration: "3:48",
+                youtubeId: "5n6T-6jR03s",
+                theme: "Joyous Family Gathering & Pujo Arrival"
           }
     ]
   },
@@ -609,6 +721,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "4:45",
                 youtubeId: "R9V4a-4nN88",
                 theme: "Bengali Folk & Pandal Celebration"
+          },
+          {
+                id: "saptami-2-7",
+                title: "দুগ্গা এলো ঘরে",
+                artist: "Rahul Majumdar — Festive Dance",
+                duration: "3:48",
+                youtubeId: "5n6T-6jR03s",
+                theme: "Joyous Family Gathering & Pujo Arrival"
+          },
+          {
+                id: "saptami-2-8",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
           }
     ]
   },
@@ -679,6 +807,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "3:40",
                 youtubeId: "q6g4hT4o6k4",
                 theme: "Traditional Devotional Shyama Sangeet"
+          },
+          {
+                id: "ashtami-7",
+                title: "দুগ্গা মা (বলো দুগ্গা মাইকি)",
+                artist: "Arijit Singh — SVF Festive Anthem",
+                duration: "3:58",
+                youtubeId: "R9K1zL9l-5s",
+                theme: "Youth Carnival & Joyful Street Energy"
+          },
+          {
+                id: "ashtami-8",
+                title: "ফিরে আয়",
+                artist: "Babul Supriyo & Jeet Gannguli",
+                duration: "4:02",
+                youtubeId: "zig8mNzJihY",
+                theme: "Heartfelt Homecoming & Sharod Melodies"
           }
     ]
   },
@@ -749,6 +893,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "3:50",
                 youtubeId: "xlElO06nQy8",
                 theme: "Autumn Homecoming of Maa Durga"
+          },
+          {
+                id: "navami-7",
+                title: "দুগ্গা এলো ঘরে",
+                artist: "Rahul Majumdar — Festive Dance",
+                duration: "3:48",
+                youtubeId: "5n6T-6jR03s",
+                theme: "Joyous Family Gathering & Pujo Arrival"
+          },
+          {
+                id: "navami-8",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
           }
     ]
   },
@@ -819,6 +979,22 @@ export const calendarDays: CalendarDay[] = [
                 duration: "3:45",
                 youtubeId: "kYJ_tJ-Jb6o",
                 theme: "Agomoni Dawn & Devi Paksha Awakening"
+          },
+          {
+                id: "dashami-7",
+                title: "দুগ্গা এলো ঘরে",
+                artist: "Rahul Majumdar — Festive Dance",
+                duration: "3:48",
+                youtubeId: "5n6T-6jR03s",
+                theme: "Joyous Family Gathering & Pujo Arrival"
+          },
+          {
+                id: "dashami-8",
+                title: "বারান্দায় রোদদূর",
+                artist: "Bhoomi — Bengali Folk Classic",
+                duration: "4:10",
+                youtubeId: "E70oxtms_qg",
+                theme: "Autumn Afternoon Nostalgia & Kolkata Vibe"
           }
     ]
   }
